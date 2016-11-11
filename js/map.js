@@ -11,6 +11,7 @@ Map = function(_parentElement, _data){
 Map.prototype.initVis = function() {
 	var vis = this;
 
+	console.log(vis.data);
 	// TO DO
 
 	vis.wrangleData();
@@ -29,3 +30,6 @@ Map.prototype.updateVis = function() {
 
 	// TO DO
 };
+
+//  This will not end up being the architecture as we
+//  we will have to load in a geoJSON, but it'll work for now.

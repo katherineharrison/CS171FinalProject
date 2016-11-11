@@ -29,3 +29,6 @@ ColorVis.prototype.updateVis = function() {
 
 	// TO DO
 };
+
+//  Data Notes
+//  Colors are generalized by "hue"
