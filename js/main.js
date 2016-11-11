@@ -37,11 +37,21 @@ function loadData() {
         mergedData = [].concat.apply([], allData);
 
         console.log(mergedData);
+
+        createVis();
     });
 
 
 }
 
 function createVis() {
+
     //TO DO: instantiate visualization
+    map = new Map("map", mergedData);
+    timeline = new Timeline("timeline", mergedData);
+    colorVis = new ColorVis("color", mergedData);
+
 }
+
+
+
