@@ -41,6 +41,14 @@ function loadData() {
         createVis();
     });
 
+    var places = '&fields=places&size=10000';
+
+    var place = $.getJSON(proxy + century + places);
+
+    $.when(place).done(function(placeData) {
+        console.log(placeData.records);
+    })
+
 
 }
 
