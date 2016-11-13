@@ -14,3 +14,12 @@ body {
     font-size: 11px;
     fill: #555;
 }
+
+path {
+    fill: none;
+    stroke: white;
+}
+
+.country {
+    fill: #ff9999;
+}
