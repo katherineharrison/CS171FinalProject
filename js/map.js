@@ -18,27 +18,47 @@ Map.prototype.initVis = function() {
 		.attr("width", width)
 		.attr("height", height);
 
-	var projection = d3.geo.mercator()
-		.scale(250)
-		.translate([width / 1.4, height / 2])
-		.precision(.1);
+	// var projection = d3.geo.mercator()
+	// 	.scale(200)
+	// 	.translate([width / 2, height / 2])
+	// 	.precision(.1);
 
-	var path = d3.geo.path()
-		.projection(projection);
+	// var path = d3.geo.path()
+	// 	.projection(projection);
+		// var map = L.map('map');
 
-	// Load shapes of U.S. counties (TopoJSON)
-	d3.json("data/world110-m.json", function(error, data) {
 
-		// Convert TopoJSON to GeoJSON (target object = 'states')
-		var countries = topojson.feature(data, data.objects.countries).features;
+		// var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+		// attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		// subdomains: 'abcd',
+		// minZoom: 1,
+		// maxZoom: 16,
+		// ext: 'png'
+		// });
 
-		// Render the U.S. by using the path generator
-		svg.selectAll(".country")
-			.data(countries)
-			.enter().append("path")
-			.attr("class", "country")
-			.attr("d", path);
-	});
+var map = L.map('map').setView([42.360082, -71.058880], 2);
+
+	// title layer to map
+	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
+		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+
+	// If the images are in the directory "/img":
+	L.Icon.Default.imagePath = '/lab9/img/';
+
+
+	// // Load shapes of U.S. counties (TopoJSON)
+	// d3.json("data/world110-m.json", function(error, data) {
+
+	// 	// Convert TopoJSON to GeoJSON (target object = 'states')
+	// 	var countries = topojson.feature(data, data.objects.countries).features;
+
+	// 	// Render the U.S. by using the path generator
+	// 	svg.selectAll(".country")
+	// 		.data(countries)
+	// 		.enter().append("path")
+	// 		.attr("class", "country")
+	// 		.attr("d", path);
+	// });
 
 	console.log(vis.data);
 	// TO DO

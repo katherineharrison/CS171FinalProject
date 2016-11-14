@@ -34,7 +34,7 @@ ColorVis.prototype.wrangleData = function() {
 	vis.col = vis.data.filter(function(d) {
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
-			if (d.colors[i].hue == "Green") {
+			if (d.colors[i].hue == "Grey") {
 				return d;
 			}
 		}

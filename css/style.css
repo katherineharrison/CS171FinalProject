@@ -23,3 +23,8 @@ path {
 .country {
     fill: #ff9999;
 }
+
+#map {
+    width: 75%;
+    height: 600px;
+}
