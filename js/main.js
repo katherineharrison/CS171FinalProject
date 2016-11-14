@@ -23,46 +23,25 @@ function loadData() {
         var data = function() {
             for (i = 1; i < numberOfPages + 1; i++) {
                 $.getJSON(proxy + url + 'page=' + i + paintings, function (data) {
-
                     allData.push(data.records);
-
                 });
             }
-            mergedData = [].concat.apply([], allData[0]);
-            console.log(mergedData);
             return allData;
         };
 
         data();
-
         console.log(allData);
-
-        console.log(mergedData);
+        createVis();
     });
-
-    createVis();
-    // });
-
-
-    // });
-
-    // var places = '&fields=places&size=10000';
-    //
-    // var place = $.getJSON(proxy + century + places);
-    //
-    // $.when(place).done(function(placeData) {
-    //     console.log(placeData.records);
-    // })
-
 
 }
 
 function createVis() {
 
     //TO DO: instantiate visualization
-    // map = new Map("map", mergedData);
-    // timeline = new Timeline("timeline", mergedData);
-    // colorVis = new ColorVis("color", mergedData);
+    map = new Map("map", allData);
+    timeline = new Timeline("timeline", allData);
+    colorVis = new ColorVis("color", allData);
 
 }
 

@@ -30,8 +30,10 @@ ColorVis.prototype.initVis = function() {
 ColorVis.prototype.wrangleData = function() {
 	var vis = this;
 
+	console.log(vis.data);
 	// TO DO
 	vis.col = vis.data.filter(function(d) {
+		console.log(d.colors);
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
 			if (d.colors[i].hue == "Grey") {
@@ -45,8 +47,6 @@ ColorVis.prototype.wrangleData = function() {
 			return d;
 		}
 	});
-
-	console.log(vis.cats);
 
 	vis.updateVis();	
 };
