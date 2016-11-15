@@ -11,9 +11,9 @@ loadData();
 function loadData() {
     var proxy = 'http://api.harvardartmuseums.org/object?apikey=9257ca00-a202-11e6-9c4e-5b7c6cef1537';
 
-    var url = '&hasimage=1&color=any&title=1&person=any&medium=any&dateend=any&size=100';
+    var url = '&hasimage=1&color=any&title=*&person=any&medium=any&size=100';
 
-    var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20century';
+    var century = '&yearmade=1800-2100&century=any';
 
     var page1 = $.getJSON(proxy + url + '&page=1' + century);
     var page2 = $.getJSON(proxy + url + '&page=2' + century);

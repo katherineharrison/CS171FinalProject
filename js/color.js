@@ -36,7 +36,7 @@ ColorVis.prototype.wrangleData = function() {
 		console.log(d.colors);
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
-			if (d.colors[i].hue == "Grey") {
+			if (d.colors[i].hue == "Blue") {
 				return d;
 			}
 		}

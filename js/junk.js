@@ -1,3 +1,6 @@
+// old century query string as of 11.14.16
+    var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20century';
+
 // Main JS file
 var allData = [];
 var mergedData = [];

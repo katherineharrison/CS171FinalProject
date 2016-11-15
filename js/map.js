@@ -25,18 +25,18 @@ Map.prototype.initVis = function() {
 
 	// var path = d3.geo.path()
 	// 	.projection(projection);
-		// var map = L.map('map');
+	// 	var map = L.map('map');
 
 
-		// var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-		// attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-		// subdomains: 'abcd',
-		// minZoom: 1,
-		// maxZoom: 16,
-		// ext: 'png'
-		// });
+	// 	var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+	// 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	// 	subdomains: 'abcd',
+	// 	minZoom: 1,
+	// 	maxZoom: 16,
+	// 	ext: 'png'
+	// 	});
 
-var map = L.map('map').setView([42.360082, -71.058880], 2);
+var map = L.map('map').setView([42.360082, -71.058880], 3);
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
