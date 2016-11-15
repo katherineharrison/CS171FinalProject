@@ -60,7 +60,7 @@ var map = L.map('map').setView([42.360082, -71.058880], 3);
 	// 		.attr("d", path);
 	// });
 
-	console.log(vis.data);
+	// console.log(vis.data);
 	// TO DO
 
 	vis.wrangleData();

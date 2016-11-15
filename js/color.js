@@ -12,7 +12,7 @@ ColorVis.prototype.initVis = function() {
 	var vis = this;
 
 	// TO DO
-	vis.margin = { top: 0, right: 0, bottom: 60, left: 60 };
+	vis.margin = { top: 0, right: 60, bottom: 60, left: 20 };
 
 	vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
 		vis.height = 300 - vis.margin.top - vis.margin.bottom;
@@ -33,7 +33,6 @@ ColorVis.prototype.wrangleData = function() {
 	console.log(vis.data);
 	// TO DO
 	vis.col = vis.data.filter(function(d) {
-		console.log(d.colors);
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
 			if (d.colors[i].hue == "Blue") {
@@ -42,7 +41,6 @@ ColorVis.prototype.wrangleData = function() {
 		}
 	});
 	vis.filtered = vis.col.filter(function(d) {
-		console.log(d.classification);
 		if (d.classification == "Paintings" || d.classification == "Drawings") {
 			return d;
 		}
@@ -68,10 +66,10 @@ ColorVis.prototype.updateVis = function() {
 		        	return index * vis.width / vis.filtered.length;
 		        })
 		        .attr("y", "0")
-		        .attr("width", function() {
-		        	return vis.width / vis.filtered.length;
-		        })
-		        .attr("height", "200");
+		        .attr("height", "200")
+		        		        .attr("width", "100")
+		        .style("overflow", "hidden")
+		        .style("position", "absolute");
 
 };
 

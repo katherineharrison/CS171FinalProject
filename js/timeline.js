@@ -35,7 +35,7 @@ Timeline.prototype.initVis = function() {
 Timeline.prototype.wrangleData = function() {
 	var vis = this;
 
-	console.log(vis.data);
+	// console.log(vis.data);
 
 	// TO DO
 
