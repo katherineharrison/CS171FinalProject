@@ -41,6 +41,7 @@ ColorVis.prototype.wrangleData = function() {
 		}
 	});
 	vis.filtered = vis.col.filter(function(d) {
+		console.log(d.people);
 		if (d.classification == "Paintings" || d.classification == "Drawings") {
 			return d;
 		}

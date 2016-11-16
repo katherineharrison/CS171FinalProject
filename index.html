@@ -12,19 +12,58 @@
 
 </head>
 <body>
+<nav class="navbar navbar-findcond navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Seeing Through the Fogg</a>
+		</div>
+		<div class="collapse navbar-collapse" id="navbar">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="active"><a href="#">About <span class="sr-only">(current)</span></a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Browse<span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#region">Region</a></li>
+						<li><a href="#time">Time Period</a></li>
+						<li><a href="#color">Color</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> My Gallery <span class="badge">4</span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Painting</span> Example #1</a></li>
+						<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Print</span> Example #2 </a></li>
+						<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Painting</span> Example #3</a></li>
+						<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Photograph</span> Example #4</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
 
-	<h1>Seeing Through the Fogg</h1>
+	<div class="container">
+		<div id="region" class="row">
+			<h2>Art by Region</h2>
+				<div id='map'></div>
+				<!-- <iframe width="600" height="450" src="http://maps.stamen.com/watercolor/embed#-75/38.898648N/77.037692"></iframe> -->
 
-	<h2>Art by Region</h2>
-	<div id='map'></div>
-	<!-- <iframe width="600" height="450" src="http://maps.stamen.com/watercolor/embed#-75/38.898648N/77.037692"></iframe> -->
-	
-
-	<h2>Art by Time</h2>	
-	<div id="timeline"></div>
-
-	<h2>Art by Color</h2>
-	<div id="color"></div>
+				</div>
+		<div id="time" class="row">
+			<h2>Art by Time</h2>
+				<div id="timeline"></div>
+		</div>
+		<div id="color" class="row">
+			<h2>Art by Color</h2>
+			<div id="color"></div>
+		</div>
+	</div>
 
 	<!-- Load JS libraries -->
 	<script src="js/jquery.min.js"></script>
