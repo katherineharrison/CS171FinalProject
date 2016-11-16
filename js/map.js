@@ -36,11 +36,13 @@ Map.prototype.initVis = function() {
 	// 	ext: 'png'
 	// 	});
 
-var map = L.map('map').setView([42.360082, -71.058880], 3);
+var map = L.map('map').setView([14.5994, 28.6731], 3);
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
-		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+		minZoom: 2,
+		maxZoom: 16
+	}).addTo(map);
 
 	// If the images are in the directory "/img":
 	L.Icon.Default.imagePath = '/lab9/img/';
