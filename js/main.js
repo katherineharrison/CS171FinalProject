@@ -3,7 +3,6 @@
 
 // Main JS file
 var allData = [];
-var mergedData = [];
 
 var map;
 var timeline;
@@ -29,7 +28,6 @@ function loadData() {
     }
 
     createPages();
-    console.log(list);
 
     for (var i = 0; i <= 59; i++) {
         $.when(list[i]).done(function(p) {
@@ -39,14 +37,6 @@ function loadData() {
             }
         });
     }
-
-    var places = '&fields=places&size=10000';
-
-    var place = $.getJSON(proxy + century + places);
-
-    $.when(place).done(function(placeData) {
-        console.log(placeData.records);
-    })
 
 }
 

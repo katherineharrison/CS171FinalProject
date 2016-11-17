@@ -1,9 +1,9 @@
 // Map Visualization
-
 Map = function(_parentElement, _data){
 	this.parentElement = _parentElement;
 	this.data = _data;
 	this.displayData = _data;
+	this.placeData = [];
 
 	this.initVis();
 };
@@ -36,7 +36,7 @@ Map.prototype.initVis = function() {
 	// 	ext: 'png'
 	// 	});
 
-var map = L.map('map').setView([42.360082, -71.058880], 3);
+	var map = L.map('map').setView([42.360082, -71.058880], 3);
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
@@ -69,13 +69,63 @@ var map = L.map('map').setView([42.360082, -71.058880], 3);
 Map.prototype.wrangleData = function() {
 	var vis = this;
 
-	// TO DO
+	var proxy = 'http://api.harvardartmuseums.org/object?apikey=9257ca00-a202-11e6-9c4e-5b7c6cef1537';
 
-	vis.updateVis();	
-};
+	var url = '&hasimage=1&color=any&title=*&person=any&medium=any&size=100';
+
+	var century = '&yearmade=1800-2100&century=any';
+
+	var places = '&place=any&fields=places';
+
+	var placeList = [];
+
+	var data = [];
+
+	vis.geoCoord = [];
+
+	var googleAPI = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+
+	function createPlaces() {
+		for (var i = 0; i <= 34; i++) {
+			placeList[i] = $.getJSON(proxy + url + '&page=' + (i + 1) + century + places);
+		}
+
+		return placeList;
+	}
+
+	createPlaces();
+
+	for (var i = 0; i <= 34; i++) {
+		$.when(placeList[i]).done(function (p) {
+			data = data.concat(p.records);
+			if (data.length > 3324) {
+				getCoordinates(data);
+			}
+		});
+	}
+
+	function getCoordinates(data) {
+		data.forEach(function (d) {
+			var nameString = d.places[0].displayname;
+			nameSting = String(nameString);
+			$.getJSON(googleAPI + nameString, function(data) {
+				vis.geoCoord = vis.geoCoord.concat(data.results[0].geometry.location);
+				if (vis.geoCoord.length > 3323) {
+					console.log(vis.geoCoord);
+					vis.placeData = vis.geoCoord;
+				}
+			});
+		});
+	}
+
+	vis.updateVis();
+
+}
 
 Map.prototype.updateVis = function() {
 	var vis = this;
+
+	console.log(vis.placeData);
 
 	// TO DO
 };
