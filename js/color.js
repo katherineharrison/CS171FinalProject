@@ -53,23 +53,44 @@ ColorVis.prototype.updateVis = function() {
 	var vis = this;
 
 	// TO DO
-	vis.images = vis.svg.selectAll("image").data(vis.filtered)
+	// vis.images = vis.svg.selectAll("image").data(vis.filtered)
+	// 			.enter()
+ //            	.append("svg:image")
+ //    	        .attr("xlink:href", function(d, index) {
+ //    	        	var imagesObject = d.images;
+ //    	        	if(imagesObject.length > 0) {
+	//     	        	return imagesObject[0].baseimageurl;
+ //    	        	}
+ //    	        })
+	// 	        .attr("x", function(d, index) {
+	// 	        	return index * vis.width / vis.filtered.length;
+	// 	        })
+	// 	        .attr("y", "0")
+	// 	        .attr("height", "200")
+	// 	        .attr("width", "100")
+	// 	        .style("overflow", "hidden")
+	// 	        .style("position", "absolute");
+
+	vis.rectangles = vis.svg.selectAll("rect").data(vis.filtered)
 				.enter()
-            	.append("svg:image")
-    	        .attr("xlink:href", function(d, index) {
-    	        	var imagesObject = d.images;
-    	        	if(imagesObject.length > 0) {
-	    	        	return imagesObject[0].baseimageurl;
-    	        	}
-    	        })
-		        .attr("x", function(d, index) {
-		        	return index * vis.width / vis.filtered.length;
-		        })
-		        .attr("y", "0")
-		        .attr("height", "200")
-		        		        .attr("width", "100")
-		        .style("overflow", "hidden")
-		        .style("position", "absolute");
+				.append("rect")
+				.attr("x", function(d, index) {
+					return index * vis.width / vis.filtered.length;
+				})
+				.attr("y", "0")
+				.attr("width", function() {
+					return vis.width / vis.filtered.length;
+				})
+				.attr("height", "200")
+				.attr("fill", function(d) {
+					var colorObject = d.colors;
+						for (i = 0; i < colorObject.length; i++) {
+							if (d.colors[i].hue == "Blue") {
+								console.log(d.colors[i].color);
+								return d.colors[i].color;
+							}
+						}
+				});
 
 };
 

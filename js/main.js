@@ -43,7 +43,7 @@ function loadData() {
 function createVis() {
 
     //TO DO: instantiate visualization
-    map = new Map("map", allData);
+    // map = new Map("map", allData);
     timeline = new Timeline("timeline", allData);
     colorVis = new ColorVis("color", allData);
 
