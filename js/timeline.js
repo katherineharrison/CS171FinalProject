@@ -22,10 +22,96 @@ Timeline.prototype.initVis = function() {
 		.append("g")
 		.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-	var minMaxX = d3.extent(vis.data.map(function(d){ return d.dateend; }));
+	var minDate = d3.min(vis.data, function(d) { return d.dateend; });
+	var maxDate = d3.max(vis.data, function(d) { return d.dateend; });
 
-	vis.svg.append("text")
-		.text("minimum and maximum dates: " + minMaxX);
+	vis.x = d3.time.scale()
+		.range([0, vis.width])
+		.domain([minDate, maxDate]);
+
+	vis.xAxis = d3.svg.axis()
+		.scale(vis.x)
+		.orient("top");
+
+	// vis.xMap = function(d) { return vis.x(d.dateend);};
+
+	vis.svg.append("g")
+		.attr("class", "x-axis axis");
+
+	var tooltip = d3.select("body").append("div")
+		.attr("class", "tooltip")
+		.style("opacity", 0);
+
+	var cValue = function(d) { return d.classification;},
+		color = d3.scale.category20();
+
+	var formatTime = d3.time.format("%Y");
+
+	// draw dots
+	vis.svg.selectAll(".dot")
+		.data(vis.data)
+		.enter().append("circle")
+		.attr("class", "dot")
+		.attr("r", 4)
+		.attr("cx", function(d) {
+			return vis.x(d.dateend);
+		})
+		.attr("cy", function(d) {
+			if (d.classification == "Paintings") {
+				return 10;
+			}
+			else if (d.classification == "Prints") {
+				return 20;
+			}
+			else if (d.classification == "Drawings") {
+				return 30;
+			}
+			else if (d.classification == "Photographs") {
+				return 40;
+			}
+			else if (d.classification == "Sculpture") {
+				return 50;
+			}
+			else if (d.classification == "Vessels") {
+				return 60;
+			}
+			else if (d.classification == "Artists' Tools") {
+				return 70;
+			}
+			else if (d.classification == "Multiples") {
+					return 80;
+			}
+			else if (d.classification == "Books") {
+				return 90;
+			}
+			else if (d.classification == "Textile Arts") {
+				return 100;
+			}
+			else if (d.classification == "Medals and Medallions") {
+				return 110;
+			}
+			else if (d.classification == "Furnitures") {
+				return 120;
+			}
+			else {
+				return 130;
+			}
+		})
+		.style("fill", function(d) { return color(cValue(d));})
+		.on("mouseover", function(d) {
+			tooltip.transition()
+				.duration(200)
+				.style("opacity", .9)
+				.style("background", "white");
+			tooltip.html(d.title + "<br/>" + formatTime(d.dateend) + " " + d.classification)
+				.style("left", (d3.event.pageX + 5) + "px")
+				.style("top", (d3.event.pageY - 28) + "px");
+		})
+		.on("mouseout", function(d) {
+			tooltip.transition()
+				.duration(500)
+				.style("opacity", 0);
+		});
 
 	// TO DO
 
@@ -35,7 +121,7 @@ Timeline.prototype.initVis = function() {
 Timeline.prototype.wrangleData = function() {
 	var vis = this;
 
-	// console.log(vis.data);
+	vis.displayData = vis.data;
 
 	// TO DO
 
@@ -44,6 +130,9 @@ Timeline.prototype.wrangleData = function() {
 
 Timeline.prototype.updateVis = function() {
 	var vis = this;
+
+	// Call axis functions with the new domain
+	vis.svg.select(".x-axis").call(vis.xAxis);
 
 	// TO DO
 };

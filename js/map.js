@@ -122,7 +122,6 @@ Map.prototype.wrangleData = function() {
 	}
 
 	vis.updateVis();
-
 }
 
 Map.prototype.updateVis = function() {

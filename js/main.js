@@ -42,6 +42,10 @@ function loadData() {
 
 function createVis() {
 
+    allData.forEach(function(d) {
+        d.dateend = new Date(d.dateend, 0);
+    });
+
     //TO DO: instantiate visualization
     // map = new Map("map", allData);
     timeline = new Timeline("timeline", allData);
