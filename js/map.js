@@ -37,7 +37,7 @@ Map.prototype.initVis = function() {
 	// 	});
 
 
-var map = L.map('map').setView([14.5994, 28.6731], 3);
+var map = L.map('map').setView([14.5994, 28.6731], 2);
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
