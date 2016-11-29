@@ -17,6 +17,10 @@ ColorVis.prototype.initVis = function() {
 	vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
 		vis.height = 300 - vis.margin.top - vis.margin.bottom;
 
+	vis.tooltip = d3.select("#" + vis.parentElement).append("div")
+	.attr("class", "tooltip")
+	.style("opacity", 0);
+
 	// SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
 		.attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -24,18 +28,21 @@ ColorVis.prototype.initVis = function() {
 		.append("g")
 		.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-	vis.wrangleData();
+	vis.wrangleColorData();
 };
 
-ColorVis.prototype.wrangleData = function() {
+ColorVis.prototype.wrangleColorData = function() {
 	var vis = this;
 
 	console.log(vis.data);
-	// TO DO
+	
+	var selectBox = document.getElementById("selectBoxColor");
+    var selection = selectBox.options[selectBox.selectedIndex].value;
+
 	vis.col = vis.data.filter(function(d) {
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
-			if (d.colors[i].hue == "Blue") {
+			if (d.colors[i].hue == selection) {
 				return d;
 			}
 		}
@@ -52,29 +59,16 @@ ColorVis.prototype.wrangleData = function() {
 ColorVis.prototype.updateVis = function() {
 	var vis = this;
 
-	// TO DO
-	// vis.images = vis.svg.selectAll("image").data(vis.filtered)
-	// 			.enter()
- //            	.append("svg:image")
- //    	        .attr("xlink:href", function(d, index) {
- //    	        	var imagesObject = d.images;
- //    	        	if(imagesObject.length > 0) {
-	//     	        	return imagesObject[0].baseimageurl;
- //    	        	}
- //    	        })
-	// 	        .attr("x", function(d, index) {
-	// 	        	return index * vis.width / vis.filtered.length;
-	// 	        })
-	// 	        .attr("y", "0")
-	// 	        .attr("height", "200")
-	// 	        .attr("width", "100")
-	// 	        .style("overflow", "hidden")
-	// 	        .style("position", "absolute");
+	var selectBox = document.getElementById("selectBoxColor");
+    var selection = selectBox.options[selectBox.selectedIndex].value;
 
-	vis.rectangles = vis.svg.selectAll("rect").data(vis.filtered)
-				.enter()
-				.append("rect")
-				.attr("x", function(d, index) {
+	vis.rectangles = vis.svg.selectAll("rect").data(vis.filtered);
+
+	vis.rectangles.enter().append("rect");
+
+	vis.rectangles.exit().remove();
+
+    vis.rectangles.attr("x", function(d, index) {
 					return index * vis.width / vis.filtered.length;
 				})
 				.attr("y", "0")
@@ -84,15 +78,26 @@ ColorVis.prototype.updateVis = function() {
 				.attr("height", "200")
 				.attr("fill", function(d) {
 					var colorObject = d.colors;
-						for (i = 0; i < colorObject.length; i++) {
-							if (d.colors[i].hue == "Blue") {
-								console.log(d.colors[i].color);
-								return d.colors[i].color;
-							}
+					for (i = 0; i < colorObject.length; i++) {
+						if (d.colors[i].hue == selection) {
+							console.log(d.colors[i].color);
+							return d.colors[i].color;
 						}
+					}
+				})
+				.on("mouseover", function(d) {
+					vis.tooltip.transition()
+						.duration(200)
+						.style("opacity", .9)
+						.style("background", "white");
+					vis.tooltip.html(d.title + "<br/>")
+						.style("left", (d3.event.pageX + 5) + "px")
+						.style("top", (d3.event.pageY - 28) + "px");
+				})
+				.on("mouseout", function(d) {
+					vis.tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
 				});
 
 };
-
-//  Data Notes
-//  Colors are generalized by "hue"
