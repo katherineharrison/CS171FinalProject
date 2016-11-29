@@ -42,6 +42,11 @@ Timeline.prototype.initVis = function() {
 		.attr("class", "tooltip")
 		.style("opacity", 0);
 
+	var line = vis.svg.select("g")
+		.append("line")
+		.attr("class", "line")
+		.style("opacity", 0);
+
 	var cValue = function(d) { return d.classification;},
 		color = d3.scale.category20();
 
