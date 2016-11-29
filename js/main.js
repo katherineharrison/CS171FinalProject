@@ -47,9 +47,10 @@ function createVis() {
     });
 
     //TO DO: instantiate visualization
-    // map = new Map("map", allData);
     timeline = new Timeline("timeline", allData);
     colorVis = new ColorVis("color", allData);
+    map = new Map("map", allData); // put map last since it has the most console.log issues 
+
 
 }
 

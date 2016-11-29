@@ -111,6 +111,13 @@ Timeline.prototype.initVis = function() {
 			tooltip.transition()
 				.duration(500)
 				.style("opacity", 0);
+		})
+		.on("click", function(d){
+			// the height is cy 
+			var line = d3.line()
+    		.x(function(d) { return cx; })
+    		.y(function(d) { return cy; })
+    		.style("fill", "black");
 		});
 
 	// TO DO

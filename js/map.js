@@ -44,29 +44,46 @@ var map = L.map('map').setView([14.5994, 28.6731], 2);
 		minZoom: 2,
 		maxZoom: 16
 	}).addTo(map);
+	// .attr("class", "mapClass")
 
-	// If the images are in the directory "/img":
-	L.Icon.Default.imagePath = '/lab9/img/';
+	map.append().translate(0,100);
+
+	// read this to gix dragging http://leafletjs.com/reference.html#map-dragging
+
+	// change map color on hover 
+	map.on('mouseover', function() {
+    this.setStyle({
+        color: 'red'   //or whatever style you wish to use;
+    	});
+	});
+
+	map.on('mouseout', function() {
+    	this.setStyle(initialStyle)
+	});
 
 
-	// // Load shapes of U.S. counties (TopoJSON)
-	// d3.json("data/world110-m.json", function(error, data) {
+	 /* Old Map code 
+	// Load shapes of U.S. counties (TopoJSON)
+	d3.json("data/world110-m.json", function(error, data) {
 
-	// 	// Convert TopoJSON to GeoJSON (target object = 'states')
-	// 	var countries = topojson.feature(data, data.objects.countries).features;
+		// Convert TopoJSON to GeoJSON (target object = 'states')
+		var countries = topojson.feature(data, data.objects.countries).features;
 
-	// 	// Render the U.S. by using the path generator
-	// 	svg.selectAll(".country")
-	// 		.data(countries)
-	// 		.enter().append("path")
-	// 		.attr("class", "country")
-	// 		.attr("d", path);
-	// });
+		// Render the U.S. by using the path generator
+		svg.selectAll(".country")
+			.data(countries)
+			.enter().append("path")
+			.attr("class", "country")
+			.attr("d", path);
+	});
 
-	// console.log(vis.data);
-	// TO DO
+	console.log(vis.data);
+	TO DO
+	*/
+	
 
 	vis.wrangleData();
+
 };
 
 Map.prototype.wrangleData = function() {
@@ -114,12 +131,36 @@ Map.prototype.wrangleData = function() {
 			$.getJSON(googleAPI + nameString, function(data) {
 				vis.geoCoord = vis.geoCoord.concat(data.results[0].geometry.location);
 				if (vis.geoCoord.length > 3323) {
-					console.log(vis.geoCoord);
+					// console.log(vis.geoCoord[0].lat);
+					// console.log(vis.geoCoord);
 					vis.placeData = vis.geoCoord;
 				}
 			});
 		});
-	}
+	
+	// bind circles to map
+		var svgMap = d3.select("#map").select("svg"),
+		g = svgMap.append("g");
+		
+		// d3.json("artGeo.json", function(collection) {
+		// 	/* Add a LatLng object to each item in the dataset */
+		// 	collection.objects.forEach(function(d) {
+		// 		d.LatLng = new L.LatLng(d.circle.coordinates[0],
+		// 								d.circle.coordinates[1])
+		// 	})
+			
+		// 	var feature = g.selectAll("circle")
+		// 		.data(collection.objects)
+		// 		.enter().append("circle")
+		// 		.style("stroke", "black")  
+		// 		.style("opacity", .6) 
+		// 		.style("fill", "red")
+		// 		.attr("r", 20);  
+		// 	});
+
+
+
+	} // ending bracket for funcation getCoordinates(data)
 
 	vis.updateVis();
 }
@@ -129,7 +170,7 @@ Map.prototype.updateVis = function() {
 
 	console.log(vis.placeData);
 
-	// TO DO
+	// move bind circles bit to here once we globalize place data 
 };
 
 //  This will not end up being the architecture as we

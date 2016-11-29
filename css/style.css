@@ -16,7 +16,7 @@ body {
 }
 
 path {
-    fill: none;
+    fill: black;
     stroke: white;
 }
 
@@ -27,6 +27,17 @@ path {
 #map {
     width: 75%;
     height: 600px;
+}
+
+:target:before {
+  content:"";
+  display:block;
+  height:60px; /* fixed header height*/
+  margin:-30px 0 0; /* negative fixed header height */
+}
+
+.dropPadding{
+    padding-top: 2%;
 }
 
 nav.navbar-findcond { background: #fff; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }
