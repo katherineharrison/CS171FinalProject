@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/leaflet.css">
+	<script src="http://d3js.org/d3.v2.js"></script>
 
 </head>
 <body>
@@ -50,13 +51,29 @@
 
 	<br>
 
+	<!-- Introductory Story -->
+	<div id="storyBox" class="story">
+	<div id="story"></div>
+		<p id="tagline">Pieces in the Harvard Art Museum's collection from 1800 to today.</p>
+		<p id="problemText">
+			The Harvard Art Museum, with its vast collection of works, serves as an ideal teaching tool for students, however, its very strength in size presents a daunting task when it comes to visualizing its capabilities. <br><br>
+
+
+			Our website will allow students to view and sort pieces in the collection by region, date, color, artist, and movement, featuring a comparison tool so that students can visualize the collection in a more digestible way. <br><br>
+
+
+			We will provide users with different tools with which to examine the collection in the hopes that we can better represent what the Harvard Art Museums have to offer. <br>
+		</p>
+	</div>
+
+	<!-- Visualizations -->
+
 	<div class="container">
 		<div id="region" class="row">
 			<h2 class="dropPadding">Art by Region</h2>
 				<div id="map"></div>
-				<!-- <iframe width="600" height="450" src="http://maps.stamen.com/watercolor/embed#-75/38.898648N/77.037692"></iframe> -->
 		</div>
-	
+
 	<div id="time" class="row">
 		<h2>Art by Time</h2>
 		<div id="timeline"></div>
@@ -91,6 +108,7 @@
 	<script src="js/map.js"></script>
 	<script src="js/timeline.js"></script>
 	<script src="js/color.js"></script>
+	<script src="js/story.js"></script>
 	
 </body>
 </html>

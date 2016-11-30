@@ -40,6 +40,34 @@ path {
     padding-top: 2%;
 }
 
+.story{
+  padding-top: 5%;
+  text-align: center;
+  fill: #555;
+}
+
+.txt{
+  font-family: avenir;
+  text-align: center;
+  font-size: 150px;
+}
+
+#tagline{
+  font-size: 27px;
+  fill: #555;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+#problemText{
+  padding-top: 7px;
+  padding-left: 25%;
+  padding-right: 25%;
+  text-align: center;
+  font-size: 15px;
+  fill: #555;
+}
+
 nav.navbar-findcond { background: #fff; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }
 nav.navbar-findcond a { color: #6C7B8B; }
 nav.navbar-findcond ul.navbar-nav a { color: #6C7B8B; border-style: solid; border-width: 0 0 2px 0; border-color: #fff; }
