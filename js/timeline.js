@@ -223,40 +223,40 @@ Timeline.prototype.updateVis = function() {
 						return 10;
 					}
 					else if (d.classification == "Prints") {
-						return 20;
-					}
-					else if (d.classification == "Drawings") {
 						return 30;
 					}
-					else if (d.classification == "Photographs") {
-						return 40;
-					}
-					else if (d.classification == "Sculpture") {
+					else if (d.classification == "Drawings") {
 						return 50;
 					}
+					else if (d.classification == "Photographs") {
+						return 70;
+					}
+					else if (d.classification == "Sculpture") {
+						return 90;
+					}
 					else if (d.classification == "Vessels") {
-						return 60;
+						return 110;
 					}
 					else if (d.classification == "Artists' Tools") {
-						return 70;
+						return 130;
 					}
 					else if (d.classification == "Multiples") {
 							return 80;
 					}
 					else if (d.classification == "Books") {
-						return 90;
+						return 150;
 					}
 					else if (d.classification == "Textile Arts") {
-						return 100;
+						return 170;
 					}
 					else if (d.classification == "Medals and Medallions") {
-						return 110;
+						return 190;
 					}
 					else if (d.classification == "Furnitures") {
-						return 120;
+						return 210;
 					}
 					else {
-						return 130;
+						return 230;
 					}
 				})
 				.attr("x1", vis.x(d.dateend))
