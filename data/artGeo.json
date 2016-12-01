@@ -1,9 +1,3 @@
-/* 	How to get the lat and lng objects to print as an array from insite the map.js vis.geoCoord function
-*	str = JSON.stringify(vis.geoCoord);
-*	str = JSON.stringify(vis.geoCoord, null, 4); // (Optional) beautiful indented output.
-*	console.log(str); // Logs output to dev tools console.
-*	alert(str); // Displays output using window.alert()
-*/
 [
     {
         "lat": 36.204824,

@@ -39,13 +39,13 @@ Map.prototype.initVis = function() {
 	// 	});
 
 
-var map = L.map('map').setView([14.5994, 28.6731], 2);
+vis.map = L.map('map').setView([14.5994, 28.6731], 2);
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
 		minZoom: 2,
 		maxZoom: 16
-	}).addTo(map);
+	}).addTo(vis.map);
 	// .attr("class", "mapClass")
 
 	// map.append().translate(0,100);
@@ -53,13 +53,13 @@ var map = L.map('map').setView([14.5994, 28.6731], 2);
 	// read this to gix dragging http://leafletjs.com/reference.html#map-dragging
 
 	// change map color on hover 
-	map.on('mouseover', function() {
+	vis.map.on('mouseover', function() {
     this.setStyle({
         color: 'red'   //or whatever style you wish to use;
     	});
 	});
 
-	map.on('mouseout', function() {
+	vis.map.on('mouseout', function() {
     	this.setStyle(initialStyle)
 	});
 
@@ -146,32 +146,38 @@ Map.prototype.wrangleData = function() {
 		
 		d3.json("data/artGeo.json", function(collection) {
 			console.log(collection);
-			/* Add a LatLng object to each item in the dataset */
-			collection.objects.forEach(function(d) {
-				d.LatLng = new L.LatLng(d[0],
-										d[1])
+
+			collection.forEach(function(d) {
+				var marker = L.marker([d.lat, d.lng]).addTo(vis.map);
 			});
-			
-			var feature = g.selectAll("circle")
-				.data(collection.objects)
-				.enter().append("circle")
-				.style("stroke", "black")
-				.style("opacity", .6)
-				.style("fill", "red")
-				.attr("r", 20);
-
-		map.on("viewreset", update);
-		update();
-
-		function update() {
-			feature.attr("transform",
-				function(d) {
-					return "translate("+
-						map.latLngToLayerPoint(d.LatLng).x +","+
-						map.latLngToLayerPoint(d.LatLng).y +")";
-				}
-			)
-		}
+			/* Add a LatLng object to each item in the dataset */
+			// collection.forEach(function(d) {
+			// 	d.LatLng = new L.LatLng(d.lat,
+			// 							d.lng)
+			// });
+            //
+			// var feature = g.selectAll("circle")
+			// 	.data(collection)
+			// 	.enter().append("circle")
+			// 	.attr("cx", function(d) {return d.lat;})
+			// 	.attr("cy", function(d) {
+			// 		return d.lng;
+			// 	})
+			// 	.style("stroke", "black")
+			// 	.style("opacity", .6)
+			// 	.style("fill", "red")
+			// 	.attr("r", 5);
+		// update();
+        //
+		// function update() {
+		// 	feature.attr("transform",
+		// 		function(d) {
+		// 			return "translate("+
+		// 				vis.map.latLngToLayerPoint(d.LatLng).x +","+
+		// 				vis.map.latLngToLayerPoint(d.LatLng).y +")";
+		// 		}
+		// 	)
+		// }
 	});
 
 	vis.updateVis();
