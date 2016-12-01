@@ -22,6 +22,7 @@ var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20ce
 
 // Main JS file
 var allData = [];
+var placeData = [];
 
 var map;
 var timeline;
@@ -37,6 +38,11 @@ function loadData() {
     var century = '&yearmade=1800-2100&century=any';
 
     var list = [];
+
+    d3.json("data/artGeo.json", function(collection) {
+        console.log(collection);
+    });
+
 
     function createPages() {
         for (var i = 0; i <= 59; i++) {
@@ -59,6 +65,10 @@ function loadData() {
 
 }
 
+function updateTimeline() {
+    timeline.wrangleData();
+}
+
 function createVis() {
 
     allData.forEach(function(d) {
@@ -68,8 +78,9 @@ function createVis() {
     //TO DO: instantiate visualization
     timeline = new Timeline("timeline", allData);
     colorVis = new ColorVis("color", allData);
-    map = new Map("map", allData); // put map last since it has the most console.log issues 
+    map = new Map("map", allData); // put map last since it has the most console.log issues
 
+    updateTimeline();
 
 }
 

@@ -1,15 +1,17 @@
 // Map Visualization
-Map = function(_parentElement, _data){
+Map = function(_parentElement, _data, _placeData){
 	this.parentElement = _parentElement;
 	this.data = _data;
 	this.displayData = _data;
-	this.placeData = [];
+	this.placeData = _placeData;
 
 	this.initVis();
 };
 
 Map.prototype.initVis = function() {
 	var vis = this;
+
+	console.log(vis.data.length);
 
 	var width = 900,
 		height = 600;
@@ -37,27 +39,27 @@ Map.prototype.initVis = function() {
 	// 	});
 
 
-var map = L.map('map').setView([14.5994, 28.6731], 2);
+vis.map = L.map('map').setView([14.5994, 28.6731], 2);
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
 		minZoom: 2,
 		maxZoom: 16
-	}).addTo(map);
+	}).addTo(vis.map);
 	// .attr("class", "mapClass")
 
-	map.append().translate(0,100);
+	// map.append().translate(0,100);
 
 	// read this to gix dragging http://leafletjs.com/reference.html#map-dragging
 
 	// change map color on hover 
-	map.on('mouseover', function() {
+	vis.map.on('mouseover', function() {
     this.setStyle({
         color: 'red'   //or whatever style you wish to use;
     	});
 	});
 
-	map.on('mouseout', function() {
+	vis.map.on('mouseout', function() {
     	this.setStyle(initialStyle)
 	});
 
@@ -115,60 +117,82 @@ Map.prototype.wrangleData = function() {
 
 	createPlaces();
 
-	for (var i = 0; i <= 34; i++) {
-		$.when(placeList[i]).done(function (p) {
-			data = data.concat(p.records);
-			if (data.length > 3324) {
-				getCoordinates(data);
-			}
-		});
-	}
+	// for (var i = 0; i <= 34; i++) {
+	// 	$.when(placeList[i]).done(function (p) {
+	// 		data = data.concat(p.records);
+	// 		if (data.length > 3324) {
+	// 			getCoordinates(data);
+	// 		}
+	// 	});
+	// }
 
-	function getCoordinates(data) {
-		data.forEach(function (d) {
-			var nameString = d.places[0].displayname;
-			nameSting = String(nameString);
-			$.getJSON(googleAPI + nameString, function(data) {
-				vis.geoCoord = vis.geoCoord.concat(data.results[0].geometry.location);
-				if (vis.geoCoord.length > 3323) {
-					// console.log(vis.geoCoord[0].lat);
-					// console.log(vis.geoCoord);
-					vis.placeData = vis.geoCoord;
-				}
-			});
-		});
+	// function getCoordinates(data) {
+	// 	data.forEach(function (d) {
+	// 		var nameString = d.places[0].displayname;
+	// 		nameSting = String(nameString);
+	// 		$.getJSON(googleAPI + nameString, function(data) {
+	// 			vis.geoCoord = vis.geoCoord.concat(data.results[0].geometry.location);
+	// 			if (vis.geoCoord.length > 3323) {
+	// 				// console.log(vis.geoCoord[0].lat);
+	// 				// console.log(vis.geoCoord);
+	// 				vis.placeData = vis.geoCoord;
+	// 			}
+	// 		});
+	// 	});
 	
 	// bind circles to map
 		var svgMap = d3.select("#map").select("svg"),
 		g = svgMap.append("g");
 		
-		// d3.json("artGeo.json", function(collection) {
-		// 	/* Add a LatLng object to each item in the dataset */
-		// 	collection.objects.forEach(function(d) {
-		// 		d.LatLng = new L.LatLng(d.circle.coordinates[0],
-		// 								d.circle.coordinates[1])
-		// 	})
-			
-		// 	var feature = g.selectAll("circle")
-		// 		.data(collection.objects)
-		// 		.enter().append("circle")
-		// 		.style("stroke", "black")  
-		// 		.style("opacity", .6) 
-		// 		.style("fill", "red")
-		// 		.attr("r", 20);  
-		// 	});
+		d3.json("data/artGeo.json", function(collection) {
+			console.log(collection);
 
+			collection.forEach(function(d) {
+				var circle = L.circleMarker([d.lat, d.lng], {
+					color: "red",
+					fillColor: '#f03',
+					fillOpacity: 0.5,
+					radius: 7
+				}).addTo(vis.map);
+			});
 
-
-	} // ending bracket for funcation getCoordinates(data)
+			/* Add a LatLng object to each item in the dataset */
+			// collection.forEach(function(d) {
+			// 	d.LatLng = new L.LatLng(d.lat,
+			// 							d.lng)
+			// });
+            //
+			// var feature = g.selectAll("circle")
+			// 	.data(collection)
+			// 	.enter().append("circle")
+			// 	.attr("cx", function(d) {return d.lat;})
+			// 	.attr("cy", function(d) {
+			// 		return d.lng;
+			// 	})
+			// 	.style("stroke", "black")
+			// 	.style("opacity", .6)
+			// 	.style("fill", "red")
+			// 	.attr("r", 5);
+		// update();
+        //
+		// function update() {
+		// 	feature.attr("transform",
+		// 		function(d) {
+		// 			return "translate("+
+		// 				vis.map.latLngToLayerPoint(d.LatLng).x +","+
+		// 				vis.map.latLngToLayerPoint(d.LatLng).y +")";
+		// 		}
+		// 	)
+		// }
+	});
 
 	vis.updateVis();
-}
+
+} // ending bracket for function getCoordinates(data)
+
 
 Map.prototype.updateVis = function() {
 	var vis = this;
-
-	console.log(vis.placeData);
 
 	// move bind circles bit to here once we globalize place data 
 };
