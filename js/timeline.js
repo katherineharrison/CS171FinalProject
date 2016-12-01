@@ -22,12 +22,9 @@ Timeline.prototype.initVis = function() {
 		.append("g")
 		.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-	var minDate = d3.min(vis.data, function(d) { return d.dateend; });
-	var maxDate = d3.max(vis.data, function(d) { return d.dateend; });
-
 	vis.x = d3.time.scale()
-		.range([0, vis.width])
-		.domain([minDate, maxDate]);
+		.range([0, vis.width]);
+
 
 	vis.xAxis = d3.svg.axis()
 		.scale(vis.x)
@@ -38,23 +35,112 @@ Timeline.prototype.initVis = function() {
 	vis.svg.append("g")
 		.attr("class", "x-axis axis");
 
-	var tooltip = d3.select("body").append("div")
-		.attr("class", "tooltip")
-		.style("opacity", 0);
-
 	var line = vis.svg.select("g")
 		.append("line")
 		.attr("class", "line")
 		.style("opacity", 0);
 
-	var cValue = function(d) { return d.classification;},
-		color = d3.scale.category20();
+	vis.cValue = function(d) { return d.classification;};
+	vis.color = d3.scale.category20();
+
+	// draw dots
+
+	// function updateTimeline() {
+	// 	var selectBox = document.getElementById("selectBox");
+	// 	var selection = selectBox.options[selectBox.selectedIndex].value;
+    //
+	// 	if (selection == "eighteenth") {
+	// 		vis.x.domain([1800, 1899]);
+	// 	}
+	// };
+
+
+	// TO DO
+
+	vis.wrangleData();
+};
+
+Timeline.prototype.wrangleData = function() {
+	var vis = this;
+
+	var selectBox = document.getElementById("selectBox");
+	var selection = selectBox.options[selectBox.selectedIndex].value;
+
+	console.log(selection);
+
+		if (selection == "all") {
+			vis.displayData = vis.data;
+
+		}
+		else if (selection == "nineteen") {
+			vis.displayData = vis.data.filter(function(d) {
+				return d.dateend > new Date(1800, 0) && d.dateend < new Date(1899, 0);
+			});
+
+		}
+		else if (selection == "twenty") {
+			vis.displayData = vis.data.filter(function(d) {
+				return d.dateend > new Date(1900, 0) && d.dateend < new Date(1999, 0);
+			});
+
+		}
+		else if (selection == "twentyfirst") {
+			vis.displayData = vis.data.filter(function (d) {
+				return d.dateend > new Date(2000, 0) && d.dateend < new Date(2099, 0);
+			});
+
+		}
+
+		var movement = document.getElementById("selectBox2");
+		var movementSelect = movement.options[movement.selectedIndex].value;
+
+		console.log(movementSelect);
+
+		if (movementSelect == "mod") {
+			vis.displayData = vis.displayData.filter(function(d) {
+				return d.division == "Modern and Contemporary Art";
+			});
+		}
+		else if (movementSelect == "euro") {
+			vis.displayData = vis.displayData.filter(function(d) {
+				return d.division == "European and American Art";
+			});
+		}
+		else if (movementSelect == "asia") {
+			vis.displayData = vis.displayData.filter(function(d) {
+				return d.division == "Asian and Mediterranean Art";
+			});
+		}
+
+		vis.x.domain(d3.extent(vis.displayData, function (d) {
+			return d.dateend;
+		}));
+
+		vis.updateVis();
+
+	// TO DO
+
+
+};
+
+Timeline.prototype.updateVis = function() {
+	var vis = this;
+
+	console.log(vis.displayData.length);
+
+	// Call axis functions with the new domain
+	vis.svg.select(".x-axis").call(vis.xAxis);
+
+	var tooltip = d3.select("body").append("div")
+		.attr("class", "tooltip")
+		.style("opacity", 0);
 
 	var formatTime = d3.time.format("%Y");
 
-	// draw dots
+	vis.svg.selectAll('.dot').data(vis.displayData).exit().remove();
+
 	vis.svg.selectAll(".dot")
-		.data(vis.data)
+		.data(vis.displayData)
 		.enter().append("circle")
 		.attr("class", "dot")
 		.attr("r", 4)
@@ -84,7 +170,7 @@ Timeline.prototype.initVis = function() {
 				return 70;
 			}
 			else if (d.classification == "Multiples") {
-					return 80;
+				return 80;
 			}
 			else if (d.classification == "Books") {
 				return 90;
@@ -102,7 +188,7 @@ Timeline.prototype.initVis = function() {
 				return 130;
 			}
 		})
-		.style("fill", function(d) { return color(cValue(d));})
+		.style("fill", function(d) { return vis.color(vis.cValue(d));})
 		.on("mouseover", function(d) {
 			tooltip.transition()
 				.duration(200)
@@ -118,33 +204,12 @@ Timeline.prototype.initVis = function() {
 				.style("opacity", 0);
 		})
 		.on("click", function(d){
-			// the height is cy 
+			// the height is cy
 			var line = d3.line()
-    		.x(function(d) { return cx; })
-    		.y(function(d) { return cy; })
-    		.style("fill", "black");
+				.x(function(d) { return cx; })
+				.y(function(d) { return cy; })
+				.style("fill", "black");
 		});
-
-	// TO DO
-
-	vis.wrangleData();
-};
-
-Timeline.prototype.wrangleData = function() {
-	var vis = this;
-
-	vis.displayData = vis.data;
-
-	// TO DO
-
-	vis.updateVis();	
-};
-
-Timeline.prototype.updateVis = function() {
-	var vis = this;
-
-	// Call axis functions with the new domain
-	vis.svg.select(".x-axis").call(vis.xAxis);
 
 	// TO DO
 };
