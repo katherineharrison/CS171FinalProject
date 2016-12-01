@@ -11,6 +11,8 @@ Map = function(_parentElement, _data, _placeData){
 Map.prototype.initVis = function() {
 	var vis = this;
 
+	console.log(vis.data.length);
+
 	var width = 900,
 		height = 600;
 

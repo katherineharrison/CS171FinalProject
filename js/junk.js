@@ -75,5 +75,25 @@ function createVis() {
 
 }
 
+//  Color Visual with image access
+    // TO DO
+    vis.images = vis.svg.selectAll("image").data(vis.filtered)
+             .enter()
+             .append("svg:image")
+             .attr("xlink:href", function(d, index) {
+                 var imagesObject = d.images;
+                 if(imagesObject.length > 0) {
+                     return imagesObject[0].baseimageurl;
+                 }
+             })
+             .attr("x", function(d, index) {
+                 return index * vis.width / vis.filtered.length;
+             })
+             .attr("y", "0")
+             .attr("height", "200")
+             .attr("width", "100")
+             .style("overflow", "hidden")
+             .style("position", "absolute");
+
 
 
