@@ -143,7 +143,8 @@ Timeline.prototype.updateVis = function() {
 		.data(vis.displayData)
 		.enter().append("circle")
 		.attr("class", "dot")
-		.attr("r", 4)
+		.style("opacity", 0.5)
+		.attr("r", 6)
 		.attr("cx", function(d) {
 			return vis.x(d.dateend);
 		})
@@ -152,40 +153,40 @@ Timeline.prototype.updateVis = function() {
 				return 10;
 			}
 			else if (d.classification == "Prints") {
-				return 20;
-			}
-			else if (d.classification == "Drawings") {
 				return 30;
 			}
-			else if (d.classification == "Photographs") {
-				return 40;
-			}
-			else if (d.classification == "Sculpture") {
+			else if (d.classification == "Drawings") {
 				return 50;
 			}
-			else if (d.classification == "Vessels") {
-				return 60;
-			}
-			else if (d.classification == "Artists' Tools") {
+			else if (d.classification == "Photographs") {
 				return 70;
 			}
-			else if (d.classification == "Multiples") {
-				return 80;
-			}
-			else if (d.classification == "Books") {
+			else if (d.classification == "Sculpture") {
 				return 90;
 			}
-			else if (d.classification == "Textile Arts") {
-				return 100;
-			}
-			else if (d.classification == "Medals and Medallions") {
+			else if (d.classification == "Vessels") {
 				return 110;
 			}
+			else if (d.classification == "Artists' Tools") {
+				return 130;
+			}
+			else if (d.classification == "Multiples") {
+				return 150;
+			}
+			else if (d.classification == "Books") {
+				return 170;
+			}
+			else if (d.classification == "Textile Arts") {
+				return 190;
+			}
+			else if (d.classification == "Medals and Medallions") {
+				return 210;
+			}
 			else if (d.classification == "Furnitures") {
-				return 120;
+				return 230;
 			}
 			else {
-				return 130;
+				return 250;
 			}
 		})
 		.style("fill", function(d) { return vis.color(vis.cValue(d));})
