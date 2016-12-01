@@ -11,7 +11,10 @@
 	<link rel="stylesheet" href="css/leaflet.css">
 
 </head>
+
+
 <body>
+<div id="loading"></div>
 <nav class="navbar navbar-findcond navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -48,6 +51,8 @@
 	</div>
 </nav>
 
+<div id="page">
+
 	<br>
 
 	<div class="container">
@@ -64,7 +69,7 @@
 	<div id="color" class="row">
 		<h2>Art by Color</h2>
         <div class="user-control">
-	        <select id="selectBoxColor" class="form-control" onchange="">
+	        <select id="selectBoxColor" class="form-control" onchange="ColorVis.prototype.wrangleColorData">
 	            <option value="Red">Red</option>
 	            <option value="Orange">Orange</option>
 	            <option value="Yellow">Yellow</option>
@@ -74,6 +79,8 @@
 	    </div>
 		<div id="color"></div>
 	</div>
+
+</div>
 
 	<!-- Load JS libraries -->
 	<script src="js/jquery.min.js"></script>

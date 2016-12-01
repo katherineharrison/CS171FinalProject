@@ -33,6 +33,9 @@ Timeline.prototype.initVis = function() {
 		.scale(vis.x)
 		.orient("top");
 
+	vis.focus = vis.svg.append("g")
+        .style("display", "none");
+
 	// vis.xMap = function(d) { return vis.x(d.dateend);};
 
 	vis.svg.append("g")
@@ -41,6 +44,8 @@ Timeline.prototype.initVis = function() {
 	var tooltip = d3.select("body").append("div")
 		.attr("class", "tooltip")
 		.style("opacity", 0);
+
+	    // Append the x line
 
 	var cValue = function(d) { return d.classification;},
 		color = d3.scale.category20();
@@ -114,10 +119,61 @@ Timeline.prototype.initVis = function() {
 		})
 		.on("click", function(d){
 			// the height is cy 
-			var line = d3.line()
-    		.x(function(d) { return cx; })
-    		.y(function(d) { return cy; })
-    		.style("fill", "black");
+			console.log(d);
+
+		    vis.focus.append("line")
+		        .attr("class", "x")
+		        .style("stroke", "black")
+				.attr("y1", 0)
+				.attr("y2", function() {
+					if (d.classification == "Paintings") {
+						return 10;
+					}
+					else if (d.classification == "Prints") {
+						return 20;
+					}
+					else if (d.classification == "Drawings") {
+						return 30;
+					}
+					else if (d.classification == "Photographs") {
+						return 40;
+					}
+					else if (d.classification == "Sculpture") {
+						return 50;
+					}
+					else if (d.classification == "Vessels") {
+						return 60;
+					}
+					else if (d.classification == "Artists' Tools") {
+						return 70;
+					}
+					else if (d.classification == "Multiples") {
+							return 80;
+					}
+					else if (d.classification == "Books") {
+						return 90;
+					}
+					else if (d.classification == "Textile Arts") {
+						return 100;
+					}
+					else if (d.classification == "Medals and Medallions") {
+						return 110;
+					}
+					else if (d.classification == "Furnitures") {
+						return 120;
+					}
+					else {
+						return 130;
+					}
+				})
+				.attr("x1", vis.x(d.dateend))
+				.attr("x2", vis.x(d.dateend));
+
+			vis.focus.style("display", null);
+			// var line = d3.line()
+			   //  		.x(function(d) { return cx; })
+			   //  		.y(function(d) { return cy; })
+			   //  		.style("fill", "black");
 		});
 
 	// TO DO
