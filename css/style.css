@@ -2,6 +2,10 @@ body {
     font-family: avenir;
 }
 
+h2 {
+  text-align: center;
+}
+
 .axis line,
 .axis path {
     fill: none;
@@ -86,6 +90,23 @@ nav.navbar-findcond ul.dropdown-menu > li > a:hover { background: #6C7B8B; color
 nav.navbar-findcond span.badge { background: #6C7B8B; font-weight: normal; font-size: 11px; margin: 0 4px; }
 nav.navbar-findcond span.badge.new { background: #6C7B8B; color: #fff; }
 
+
 h2 {
     text-align: center;
+
+#page {
+    display: none;
+}
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(192, 192, 192, 0.5);
+    background-image: url("http://i.stack.imgur.com/MnyxU.gif");
+    background-repeat: no-repeat;
+    background-position: center;
 }

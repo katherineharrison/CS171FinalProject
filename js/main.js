@@ -1,5 +1,24 @@
+function onReady(callback) {
+    var intervalID = window.setInterval(checkReady, 1000);
+    function checkReady() {
+        if (document.getElementsByTagName('body')[0] !== undefined) {
+            window.clearInterval(intervalID);
+            callback.call(this);
+        }
+    }
+}
+
+function show(id, value) {
+    document.getElementById(id).style.display = value ? 'block' : 'none';
+}
+
+onReady(function () {
+    show('page', true);
+    show('loading', false);
+});
+
 // old century query string as of 11.14.16
-    var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20century';
+var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20century';
 
 // Main JS file
 var allData = [];
