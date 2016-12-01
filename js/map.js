@@ -148,8 +148,14 @@ Map.prototype.wrangleData = function() {
 			console.log(collection);
 
 			collection.forEach(function(d) {
-				var marker = L.marker([d.lat, d.lng]).addTo(vis.map);
+				var circle = L.circleMarker([d.lat, d.lng], {
+					color: "red",
+					fillColor: '#f03',
+					fillOpacity: 0.5,
+					radius: 7
+				}).addTo(vis.map);
 			});
+
 			/* Add a LatLng object to each item in the dataset */
 			// collection.forEach(function(d) {
 			// 	d.LatLng = new L.LatLng(d.lat,
