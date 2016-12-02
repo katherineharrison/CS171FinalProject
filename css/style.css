@@ -6,6 +6,27 @@ h2 {
   text-align: center;
 }
 
+hr {
+  width: 700px;
+}
+
+/*title {
+  margin-bottom: 5%;
+  margin-top: 5%;
+}
+*/
+
+#RedGroup {
+  font-size: 70px;
+  color: red;
+  text-align: center;
+}
+
+.colorText {
+  font-size: 60px;
+  text-align: center;
+}
+
 .axis line,
 .axis path {
     fill: none;
@@ -31,6 +52,16 @@ path {
 #map {
     width: 75%;
     height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    filter: gray; /* IE6-9 */
+    filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+}
+
+#map:hover {
+  filter: none;
+  -webkit-filter: grayscale(0);
 }
 
 :target:before {
@@ -93,8 +124,11 @@ nav.navbar-findcond span.badge.new { background: #6C7B8B; color: #fff; }
 
 h2 {
     text-align: center;
+    margin-bottom: 5%;
+    margin-top: 2%;
+}
 
-#page {
+/*#page {
     display: none;
 }
 #loading {
@@ -109,4 +143,4 @@ h2 {
     background-image: url("http://i.stack.imgur.com/MnyxU.gif");
     background-repeat: no-repeat;
     background-position: center;
-}
+}*/

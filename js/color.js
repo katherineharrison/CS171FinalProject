@@ -15,7 +15,7 @@ ColorVis.prototype.initVis = function() {
 	vis.margin = { top: 0, right: 60, bottom: 60, left: 20 };
 
 	vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-		vis.height = 150 - vis.margin.top - vis.margin.bottom;
+		vis.height = 200 - vis.margin.top - vis.margin.bottom;
 
 	vis.tooltip = d3.select("#" + vis.parentElement).append("div")
 	.attr("class", "tooltip")
@@ -33,8 +33,6 @@ ColorVis.prototype.initVis = function() {
 
 ColorVis.prototype.wrangleColorData = function() {
 	var vis = this;
-
-	console.log(vis.data);
 	
 	// var selectBox = document.getElementById("selectBoxColor");
  //    var selection = selectBox.options[selectBox.selectedIndex].value;
@@ -59,8 +57,31 @@ ColorVis.prototype.wrangleColorData = function() {
 ColorVis.prototype.updateVis = function() {
 	var vis = this;
 
-	// var selectBox = document.getElementById(vis.parentElement);
- //    var selection = selectBox.options[selectBox.selectedIndex].value;
+ 	var start_val = 0,
+    duration = 5000,
+    end_val = [vis.filtered.length];
+
+	var qSVG = d3.select("#" + vis.parentElement + "Count").append("svg").attr("width", 100).attr("height", 60);
+
+	qSVG.text(vis.filtered.length);
+	    // .data(end_val)
+	    // .enter()
+	    // .append("text")
+	    // .text(start_val)
+	    // .attr("class", "colorText")
+	    // .attr("x", 0)
+	    // .attr("y", 50)
+	    // .transition()
+	    // .duration(3000)
+	    //     .tween("text", function(d) {
+	    //         var i = d3.interpolate(this.textContent, d),
+	    //             prec = (d + "").split("."),
+	    //             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+	    //         return function(t) {
+	    //             this.textContent = Math.round(i(t) * round) / round;
+	    //         };
+	    //     });
 
 	vis.rectangles = vis.svg.selectAll("rect").data(vis.filtered);
 
@@ -75,12 +96,11 @@ ColorVis.prototype.updateVis = function() {
 				.attr("width", function() {
 					return vis.width / vis.filtered.length;
 				})
-				.attr("height", "150")
+				.attr("height", "200")
 				.attr("fill", function(d) {
 					var colorObject = d.colors;
 					for (i = 0; i < colorObject.length; i++) {
 						if (d.colors[i].hue == vis.parentElement) {
-							console.log(d.colors[i].color);
 							return d.colors[i].color;
 						}
 					}
