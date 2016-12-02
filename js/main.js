@@ -26,7 +26,12 @@ var placeData = [];
 
 var map;
 var timeline;
-var colorVis;
+var red;
+var orange;
+var yellow;
+var green;
+var blue;
+
 
 loadData();
 
@@ -77,7 +82,11 @@ function createVis() {
 
     //TO DO: instantiate visualization
     timeline = new Timeline("timeline", allData);
-    colorVis = new ColorVis("color", allData);
+    red = new ColorVis("Red", allData);
+    orange = new ColorVis("Orange", allData);
+    yellow = new ColorVis("Yellow", allData);
+    green = new ColorVis("Green", allData);
+    blue = new ColorVis("Blue", allData);
     map = new Map("map", allData); // put map last since it has the most console.log issues
 
     updateTimeline();

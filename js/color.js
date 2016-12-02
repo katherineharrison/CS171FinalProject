@@ -15,7 +15,7 @@ ColorVis.prototype.initVis = function() {
 	vis.margin = { top: 0, right: 60, bottom: 60, left: 20 };
 
 	vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-		vis.height = 300 - vis.margin.top - vis.margin.bottom;
+		vis.height = 150 - vis.margin.top - vis.margin.bottom;
 
 	vis.tooltip = d3.select("#" + vis.parentElement).append("div")
 	.attr("class", "tooltip")
@@ -36,13 +36,13 @@ ColorVis.prototype.wrangleColorData = function() {
 
 	console.log(vis.data);
 	
-	var selectBox = document.getElementById("selectBoxColor");
-    var selection = selectBox.options[selectBox.selectedIndex].value;
+	// var selectBox = document.getElementById("selectBoxColor");
+ //    var selection = selectBox.options[selectBox.selectedIndex].value;
 
 	vis.col = vis.data.filter(function(d) {
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
-			if (d.colors[i].hue == selection) {
+			if (d.colors[i].hue == vis.parentElement) {
 				return d;
 			}
 		}
@@ -59,8 +59,8 @@ ColorVis.prototype.wrangleColorData = function() {
 ColorVis.prototype.updateVis = function() {
 	var vis = this;
 
-	var selectBox = document.getElementById("selectBoxColor");
-    var selection = selectBox.options[selectBox.selectedIndex].value;
+	// var selectBox = document.getElementById(vis.parentElement);
+ //    var selection = selectBox.options[selectBox.selectedIndex].value;
 
 	vis.rectangles = vis.svg.selectAll("rect").data(vis.filtered);
 
@@ -75,11 +75,11 @@ ColorVis.prototype.updateVis = function() {
 				.attr("width", function() {
 					return vis.width / vis.filtered.length;
 				})
-				.attr("height", "200")
+				.attr("height", "150")
 				.attr("fill", function(d) {
 					var colorObject = d.colors;
 					for (i = 0; i < colorObject.length; i++) {
-						if (d.colors[i].hue == selection) {
+						if (d.colors[i].hue == vis.parentElement) {
 							console.log(d.colors[i].color);
 							return d.colors[i].color;
 						}
