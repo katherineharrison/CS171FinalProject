@@ -10,21 +10,30 @@ hr {
   width: 700px;
 }
 
+.colorImage {
+  width: 200px;
+  height: 200px;
+}
+
 /*title {
   margin-bottom: 5%;
   margin-top: 5%;
 }
 */
 
-#RedGroup {
-  font-size: 70px;
-  color: red;
-  text-align: center;
+#ColorTitle {
+  font-family: Georgia;
+  text-align: left;
 }
 
-.colorText {
-  font-size: 60px;
-  text-align: center;
+.RedGroup .OrangeGroup .YellowGroup .GreenGroup .BlueGroup {
+  font-family: Georgia;
+  text-align: left;
+}
+
+.RedInfo .OrangeInfo .YellowInfo .GreenInfo .BlueInfo {
+  font-family: Georgia;
+  font-style: italic;
 }
 
 .axis line,
