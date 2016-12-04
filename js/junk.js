@@ -1,81 +1,4 @@
-// Main JS file
-var allData = [];
-var mergedData = [];
-
-var map;
-var timeline;
-var colorVis;
-
-loadData();
-
-function loadData() {
-    var proxy = 'http://api.harvardartmuseums.org/object?apikey=9257ca00-a202-11e6-9c4e-5b7c6cef1537';
-
-    var url = '&hasimage=1&color=any&title=*&person=any&medium=any&size=100';
-
-    var century = '&yearmade=1800-2100&century=any';
-
-    var page1 = $.getJSON(proxy + url + '&page=1' + century);
-    var page2 = $.getJSON(proxy + url + '&page=2' + century);
-    var page3 = $.getJSON(proxy + url + '&page=3' + century);
-    var page4 = $.getJSON(proxy + url + '&page=4' + century);
-    var page5 = $.getJSON(proxy + url + '&page=5' + century);
-    var page6 = $.getJSON(proxy + url + '&page=6' + century);
-    var page7 = $.getJSON(proxy + url + '&page=7' + century);
-    var page8 = $.getJSON(proxy + url + '&page=8' + century);
-    var page9 = $.getJSON(proxy + url + '&page=9' + century);
-    var page10 = $.getJSON(proxy + url + '&page=10' + century);
-    var page11 = $.getJSON(proxy + url + '&page=11' + century);
-    var page12 = $.getJSON(proxy + url + '&page=12' + century);
-    console.log(page12);
-
-    $.when(page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11, page12)
-        .done(function(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12) {
-
-        console.log(p12[0]);
-        allData.push(p1[0].records);
-        allData.push(p2[0].records);
-        allData.push(p3[0].records);
-        allData.push(p4[0].records);
-        allData.push(p5[0].records);
-        allData.push(p6[0].records);
-        allData.push(p7[0].records);
-        allData.push(p8[0].records);
-        allData.push(p9[0].records);
-        allData.push(p10[0].records);
-        allData.push(p11[0].records);
-        allData.push(p12[0].records);
-
-        console.log(allData);
-
-        mergedData = [].concat.apply([], allData);
-
-        console.log(mergedData);
-
-        createVis();
-    });
-
-    var places = '&fields=places&size=10000';
-
-    var place = $.getJSON(proxy + century + places);
-
-    $.when(place).done(function(placeData) {
-        console.log(placeData.records);
-    })
-
-
-}
-
-function createVis() {
-
-    //TO DO: instantiate visualization
-    map = new Map("map", mergedData);
-    timeline = new Timeline("timeline", mergedData);
-    colorVis = new ColorVis("color", mergedData);
-
-}
-
-//  Color Visual with image access
+  // Color Visual with image access
     // TO DO
     vis.images = vis.svg.selectAll("image").data(vis.filtered)
              .enter()
@@ -95,5 +18,197 @@ function createVis() {
              .style("overflow", "hidden")
              .style("position", "absolute");
 
+        // Fisheye distortion code
+(function() {
+  d3.fisheye = {
+    scale: function(scaleType) {
+          return d3_fisheye_scale(scaleType(), 3, 0);
+      },
+    ordinal: function() {
+        return d3_fisheye_scale_ordinal(d3.scale.ordinal(), 3, 0)
+    },
+    circular: function() {
+        var radius = 200,
+            distortion = 2,
+            k0,
+            k1,
+            focus = [0, 0];
+
+        function fisheye(d) {
+            var dx = d.x - focus[0],
+                dy = d.y - focus[1],
+                dd = Math.sqrt(dx * dx + dy * dy);
+            if (!dd || dd >= radius) return {x: d.x, y: d.y, z: 1};
+            var k = k0 * (1 - Math.exp(-dd * k1)) / dd * .75 + .25;
+            return {x: focus[0] + dx * k, y: focus[1] + dy * k, z: Math.min(k, 10)};
+        }
+
+        function rescale() {
+            k0 = Math.exp(distortion);
+            k0 = k0 / (k0 - 1) * radius;
+            k1 = distortion / radius;
+            return fisheye;
+        }
+
+        fisheye.radius = function(_) {
+            if (!arguments.length) return radius;
+            radius = +_;
+            return rescale();
+        };
+
+        fisheye.distortion = function(_) {
+            if (!arguments.length) return distortion;
+            distortion = +_;
+            return rescale();
+        };
+
+        fisheye.focus = function(_) {
+            if (!arguments.length) return focus;
+            focus = _;
+            return fisheye;
+        };
+
+        return rescale();
+    },
+  };
+
+    function d3_fisheye_scale(scale, d, a) {
+
+      function fisheye(_) {
+          var x = scale(_),
+              left = x < a,
+              range = d3.extent(scale.range()),
+              min = range[0],
+              max = range[1],
+              m = left ? a - min : max - a;
+          if (m == 0) m = max - min;
+          return (left ? -1 : 1) * m * (d + 1) / (d + (m / Math.abs(x - a))) + a;
+      }
+
+      fisheye.distortion = function (_) {
+          if (!arguments.length) return d;
+          d = +_;
+          return fisheye;
+      };
+
+      fisheye.focus = function (_) {
+          if (!arguments.length) return a;
+          a = +_;
+          return fisheye;
+      };
+
+      fisheye.copy = function () {
+          return d3_fisheye_scale(scale.copy(), d, a);
+      };
+
+      fisheye.nice = scale.nice;
+      fisheye.ticks = scale.ticks;
+      fisheye.tickFormat = scale.tickFormat;
+      return d3.rebind(fisheye, scale, "domain", "range");
+    };
+
+    function d3_fisheye_scale_ordinal(scale, d, a) {
+
+        function scale_factor(x) {
+            var 
+                left = x < a,
+                range = scale.rangeExtent(),
+                min = range[0],
+                max = range[1],
+                m = left ? a - min : max - a;
+
+            if (m == 0) m = max - min;
+            var factor = (left ? -1 : 1) * m * (d + 1) / (d + (m / Math.abs(x - a)));
+            return factor + a;
+        };
+
+        function fisheye(_) {
+            return scale_factor(scale(_));
+        };
+
+        fisheye.distortion = function (_) {
+            if (!arguments.length) return d;
+            d = +_;
+            return fisheye;
+        };
+
+        fisheye.focus = function (_) {
+            if (!arguments.length) return a;
+            a = +_;
+            return fisheye;
+        };
+
+        fisheye.copy = function () {
+            return d3_fisheye_scale_ordinal(scale.copy(), d, a);
+        };
+
+        fisheye.rangeBand = function (_) {
+            var band = scale.rangeBand(),
+                x = scale(_),
+                x1 = scale_factor(x),
+                x2 = scale_factor(x + band);
+
+            return Math.abs(x2 - x1);
+        };
+
+       
+        fisheye.rangeRoundBands = function (x, padding, outerPadding) {
+            var roundBands = arguments.length === 3 ? scale.rangeRoundBands(x, padding, outerPadding) : arguments.length === 2 ? scale.rangeRoundBands(x, padding) : scale.rangeRoundBands(x);
+            fisheye.padding = padding * scale.rangeBand();
+            fisheye.outerPadding = outerPadding;
+            return fisheye;
+        };
+
+        return d3.rebind(fisheye, scale, "domain",  "rangeExtent", "range");
+    };
+        
+})();
+
+var w = 960,
+h = 500,
+p = [20, 50, 30, 20];
+
+//fisheye distortion scale
+x = d3.fisheye.ordinal().rangeRoundBands([0, w - p[1] - p[3]]).distortion(0.9),
+x.domain([0,2000]);
+
+var svg = d3.select("body").append("svg:svg")
+.attr("width", w)
+.attr("height", h)
+.append("svg:g")
+.attr("transform", "translate(" + p[3] + "," + (h - p[2]) + ")");
+
+var cause = svg.selectAll("g.cause")
+.data(vis.filtered)
+.enter().append("svg:g")
+.attr("class", "cause")
+.style("fill", "blue")
+.style("stroke", "red");
+
+// Add a rect for each date.
+var rect = svg.selectAll("rect")
+.data(vis.filtered)
+.enter().append("svg:rect")
+.attr("x", function(d, index) {
+          return x(index * 5);
+        })
+.attr("y", "0")
+.attr("height", "350")
+.attr("width", function(d, index) {
+  return x.rangeBand(index * 5);
+});
+
+svg.on("mousemove", function() {
+    var mouse = d3.mouse(this);
+    
+    //refocus the distortion
+    x.focus(mouse[0]);
+    //redraw the bars
+    rect
+    .attr("x", function(d, index) { return x(index * 5); })
+    .attr("y", "0")
+    .attr("width", function(d, index) {return x.rangeBand(index * 5);});
+   
+});
 
 
