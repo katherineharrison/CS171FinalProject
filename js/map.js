@@ -39,29 +39,37 @@ Map.prototype.initVis = function() {
 	// 	});
 
 
-vis.map = L.map('map').setView([14.5994, 28.6731], 2);
+vis.map = L.map('map', {maxBounds: L.latLngBounds(L.latLng(-81, -181, true), L.latLng(91, 191, true))});
 
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
-		minZoom: 2,
-		maxZoom: 16
+		minZoom: 1.5,
+		maxZoom: 4
 	}).addTo(vis.map);
 	// .attr("class", "mapClass")
+
+	vis.map.fitWorld().zoomOut();
+
+	vis.map.on('resize', function(e) {
+		map.fitWorld({reset: true}).zoomIn();
+	});
+
+
 
 	// map.append().translate(0,100);
 
 	// read this to gix dragging http://leafletjs.com/reference.html#map-dragging
 
 	// change map color on hover 
-	vis.map.on('mouseover', function() {
-    this.setStyle({
-        color: 'red'   //or whatever style you wish to use;
-    	});
-	});
-
-	vis.map.on('mouseout', function() {
-    	this.setStyle(initialStyle)
-	});
+	// vis.map.on('mouseover', function() {
+    // this.setStyle({
+     //    color: 'red'   //or whatever style you wish to use;
+    	// });
+	// });
+    //
+	// vis.map.on('mouseout', function() {
+    	// this.setStyle(initialStyle)
+	// });
 
 
 	 /* Old Map code 
@@ -125,20 +133,28 @@ Map.prototype.wrangleData = function() {
 	// 		}
 	// 	});
 	// }
-
+    //
 	// function getCoordinates(data) {
 	// 	data.forEach(function (d) {
 	// 		var nameString = d.places[0].displayname;
 	// 		nameSting = String(nameString);
-	// 		$.getJSON(googleAPI + nameString, function(data) {
-	// 			vis.geoCoord = vis.geoCoord.concat(data.results[0].geometry.location);
-	// 			if (vis.geoCoord.length > 3323) {
-	// 				// console.log(vis.geoCoord[0].lat);
-	// 				// console.log(vis.geoCoord);
-	// 				vis.placeData = vis.geoCoord;
+	// 		// var pieceInfo = {"name": nameString, "id": d.id};
+	// 		// vis.placeData = vis.placeData.concat(pieceInfo);
+	// 		$.getJSON(googleAPI + nameString, function (data) {
+	// 			var pieceInfo = {"name": nameString, "id": d.id, "location": data.results[0].geometry.location};
+	// 			// vis.geoCoord = vis.geoCoord.concat(data.results[0].geometry.location);
+	// 			vis.geoCoord = vis.geoCoord.concat(pieceInfo);
+	// 			for (var i=0; i<1; i++) {
+	// 				var str;
+	// 				// How to get the lat and lng objects to print as an array from insite the map.js vis.geoCoord function
+	// 				// str = JSON.stringify(vis.geoCoord);
+	// 				str = JSON.stringify(vis.geoCoord, null, 4); // (Optional) beautiful indented output.
+	// 				console.log(str); // Logs output to dev tools console
+	// 				// alert(str); // Displays output using window.alert()
 	// 			}
 	// 		});
 	// 	});
+	// }
 	
 	// bind circles to map
 		var svgMap = d3.select("#map").select("svg"),
@@ -146,66 +162,23 @@ Map.prototype.wrangleData = function() {
 		
 		d3.json("data/artGeo.json", function(collection) {
 			console.log(collection);
+			var circles = L.markerClusterGroup();
 
 			collection.forEach(function(d) {
-				var circle = L.circleMarker([d.lat, d.lng], {
+				var circle = L.circleMarker([d.location.lat, d.location.lng], {
 					color: "red",
 					fillColor: '#f03',
 					fillOpacity: 0.5,
 					radius: 7
-				}).addTo(vis.map);
+				});
 
-			// var tooltip = d3.select("body").append("div")
-			// 	.attr("class", "tooltip")
-			// 	.style("opacity", 0);
+				circle.bindPopup(d.name).openTooltip();
 
-			// 	circle
-			// 	.data(vis.displayData)
-			// 	.enter()
-			// 			.on("mouseover", function(d) {
-			// 		tooltip.transition()
-			// 			.duration(200)
-			// 			.style("opacity", .9)
-			// 			.style("background", "white");
-			// 		tooltip.html(d.title + "<br/>" + formatTime(d.dateend) + " " + d.classification)
-			// 			.style("left", (d3.event.pageX + 5) + "px")
-			// 			.style("top", (d3.event.pageY - 28) + "px");
-			// 	})
-			// 	.on("mouseout", function(d) {
-			// 		tooltip.transition()
-			// 			.duration(500)
-			// 			.style("opacity", 0);
-			// 	});
+				circles.addLayer(circle);
+
+				vis.map.addLayer(circles);
 			});
 
-			/* Add a LatLng object to each item in the dataset */
-			// collection.forEach(function(d) {
-			// 	d.LatLng = new L.LatLng(d.lat,
-			// 							d.lng)
-			// });
-            //
-			// var feature = g.selectAll("circle")
-			// 	.data(collection)
-			// 	.enter().append("circle")
-			// 	.attr("cx", function(d) {return d.lat;})
-			// 	.attr("cy", function(d) {
-			// 		return d.lng;
-			// 	})
-			// 	.style("stroke", "black")
-			// 	.style("opacity", .6)
-			// 	.style("fill", "red")
-			// 	.attr("r", 5);
-		// update();
-        //
-		// function update() {
-		// 	feature.attr("transform",
-		// 		function(d) {
-		// 			return "translate("+
-		// 				vis.map.latLngToLayerPoint(d.LatLng).x +","+
-		// 				vis.map.latLngToLayerPoint(d.LatLng).y +")";
-		// 		}
-		// 	)
-		// }
 	});
 
 	vis.updateVis();

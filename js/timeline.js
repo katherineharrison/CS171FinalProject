@@ -72,9 +72,9 @@ Timeline.prototype.wrangleData = function() {
 	console.log(selection);
 
 		if (selection == "all") {
-			vis.displayData = vis.data;
+		vis.displayData = vis.data;
 
-		}
+	}
 		else if (selection == "nineteen") {
 			vis.displayData = vis.data.filter(function(d) {
 				return d.dateend > new Date(1800, 0) && d.dateend < new Date(1899, 0);
