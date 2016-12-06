@@ -20,24 +20,6 @@ Map.prototype.initVis = function() {
 		.attr("width", width)
 		.attr("height", height);
 
-	// var projection = d3.geo.mercator()
-	// 	.scale(200)
-	// 	.translate([width / 2, height / 2])
-	// 	.precision(.1);
-
-	// var path = d3.geo.path()
-	// 	.projection(projection);
-	// 	var map = L.map('map');
-
-
-	// 	var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-	// 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-	// 	subdomains: 'abcd',
-	// 	minZoom: 1,
-	// 	maxZoom: 16,
-	// 	ext: 'png'
-	// 	});
-
 
 vis.map = L.map('map', {maxBounds: L.latLngBounds(L.latLng(-81, -181, true), L.latLng(91, 191, true))});
 

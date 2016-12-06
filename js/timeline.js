@@ -221,6 +221,31 @@ Timeline.prototype.updateVis = function() {
 				.duration(500)
 				.style("opacity", 0);
 		})
+		.on("click", onclick)
+
+
+	// information on click 
+	var infoTable = d3.select("#timecard");
+		infoTable.append("h2").attr("id", "title");
+		infoTable.append("div")
+			.data(vis.displayData)
+			.attr("id", "stats")
+			.attr("class", "table");
+
+	// onclick update info on table
+	function onclick(d){
+
+		console.log(d);
+
+		// var imagesObject = d.images;
+  //    	if(imagesObject.length > 0) {
+		// 	$("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
+		// }
+		// $("#" + vis.parentElement + "Info").html(d.title);
+
+			    vis.focus.append("line")
+		        .attr("class", "x")
+		        .style("stroke", "black")
 		.on("click", function(d) {
 			// the height is cy
 
@@ -285,7 +310,26 @@ Timeline.prototype.updateVis = function() {
 				// .x(function(d) { return cx; })
 				// .y(function(d) { return cy; })
 				// .style("fill", "black");
+	
+
+		document.getElementById("title").innerHTML
+			= "<h2>" + d.title + "</h2>";
+
+		document.getElementById("stats").innerHTML
+			= "<table><tr><th>Year: </th><td>" + formatTime(d.dateend)
+            + "</td></tr><tr><th>Medium: </th><td>" + d.classification
+            + "</td></tr></tr></table>";
+
+  //       document.getElementById("pic").innerHTML
+  //       	= var imagesObject = d.images;
+  //    	if(imagesObject.length > 0) {
+		// 	$("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
+		// }
+		// $("#" + vis.parentElement + "Info").html(d.title);
+	}
+
 		// });
+
 
 	// TO DO
 };

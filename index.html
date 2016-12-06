@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="css/MarkerCluster.Default.css">
 	<link rel="stylesheet" href="css/sweetalert.css">
 	<script src="http://d3js.org/d3.v2.js"></script>
+	<link rel="stylesheet" href="css/d3.slider.css">
 
 </head>
 
@@ -41,6 +42,7 @@
 						<li><a href="#color">Color</a></li>
 					</ul>
 				</li>
+				<li class="active"><a href="#team">Team <span class="sr-only">(current)</span></a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> My Gallery <span class="badge">4</span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -108,6 +110,7 @@
 				</select></div>
 				<div id="timeline_brushed"></div>
 				<div id="timeline"></div>
+				<div id="timecard"></div>
 		</div>
 
 		<br>
@@ -187,6 +190,51 @@
 	</div>
 </div>
 
+<br>
+	<hr class="style1">
+<br>
+
+	<div id="team" class="story">
+		<h2 class="title">Meet Our Team</h2>
+		<div class="container">
+			<div class="column-left">
+				<img class="img-circle" src="/img/square.png">
+				<h5>Katherine Harrison</h5>
+				<p>
+				Sophomore, Winthrop House <br>
+				blahblahblahblaghblahblahblahblahblahbla<br>
+				blahblahblahblahblaghblahblahblahblahblahbl<br>
+				lahblahblahblahblaghblahblahblahblahblahbla<br>
+				lahblahblahblaghblahblahblahblahblahblaghbl<br>
+				lahblaghblahblah</p>
+			</div>
+			
+			<div class="column-center">
+				<img class="img-circle" src="/img/square.png">
+				<h5>Maria McLaughlin</h5>
+				<p>
+				Junior, Dunster House <br>
+				blahblahblahblaghblahblahblahblahblahbla<br>
+				blahblahblahblahblaghblahblahblahblahblahbl<br>
+				lahblahblahblahblaghblahblahblahblahblahbla<br>
+				lahblahblahblaghblahblahblahblahblahblaghbl<br>
+				lahblaghblahblah</p>			
+			</div>
+
+			<div class="column-right">
+				<img class="img-circle" src="/img/square.png">
+				<h5>Maia Suazo-Maler</h5>
+				<p>
+				Sophomore, Winthrop House <br>
+				blahblahblahblaghblahblahblahblahblahbla<br>
+				blahblahblahblahblaghblahblahblahblahblahbl<br>
+				lahblahblahblahblaghblahblahblahblahblahbla<br>
+				lahblahblahblaghblahblahblahblahblahblaghbl<br>
+				lahblaghblahblah</p>			
+			</div>
+		</div>
+	</div>
+
 	<!-- Load JS libraries -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -197,8 +245,9 @@
 	<script src="js/d3.tip.js"></script>
 	<script src="js/leaflet.js"></script>
 	<script src="js/leaflet.markercluster.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="js/d3.slider.js"></script>
 	<script src="js/sweetalert-dev.js"></script>
-
 
 	<!-- Choropleth and second visualization -->
 	<script src="js/main.js"></script>

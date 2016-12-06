@@ -117,6 +117,16 @@ path {
   fill: #555;
 }
 
+.img-circle {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+.column-left{ float: left; width: 33%; }
+.column-right{ float: right; width: 33%; }
+.column-center{ display: inline-block; width: 33%; }
+
 nav.navbar-findcond { background: #fff; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }
 nav.navbar-findcond a { color: #6C7B8B; }
 nav.navbar-findcond ul.navbar-nav a { color: #6C7B8B; border-style: solid; border-width: 0 0 2px 0; border-color: #fff; }
