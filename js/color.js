@@ -37,6 +37,10 @@ ColorVis.prototype.wrangleColorData = function() {
 	// var selectBox = document.getElementById("selectBoxColor");
  //    var selection = selectBox.options[selectBox.selectedIndex].value;
 
+  // var slider = d3.slider().axis(true).min(2000).max(2100).step(5);
+
+  // vis.svg.append(slider);
+
 	vis.col = vis.data.filter(function(d) {
 		var colorObjects = d.colors;
 		for (i = 0; i < colorObjects.length; i++) {
