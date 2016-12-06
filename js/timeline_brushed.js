@@ -87,11 +87,9 @@ Brushed.prototype.updateVis = function() {
     var cValue = function(d) { return d.classification;},
         color = d3.scale.category20();
 
-    // vis.circles = vis.svg.selectAll('.dot').data(vis.displayData);
+    vis.dots = vis.svg.selectAll('.dot').data(vis.displayData);
 
-    vis.circles.exit().remove();
-
-    vis.circles.enter()
+    vis.dots.enter()
         .append("circle")
         .style("opacity", 0.5)
         .attr("r", 4)
@@ -209,6 +207,8 @@ Brushed.prototype.updateVis = function() {
                 .attr("x1", vis.x(d.dateend))
                 .attr("x2", vis.x(d.dateend))
         });
+
+    vis.dots.exit().remove();
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);

@@ -54,44 +54,6 @@ vis.map = L.map('map', {maxBounds: L.latLngBounds(L.latLng(-81, -181, true), L.l
 		map.fitWorld({reset: true}).zoomIn();
 	});
 
-
-
-	// map.append().translate(0,100);
-
-	// read this to gix dragging http://leafletjs.com/reference.html#map-dragging
-
-	// change map color on hover 
-	// vis.map.on('mouseover', function() {
-    // this.setStyle({
-     //    color: 'red'   //or whatever style you wish to use;
-    	// });
-	// });
-    //
-	// vis.map.on('mouseout', function() {
-    	// this.setStyle(initialStyle)
-	// });
-
-
-	 /* Old Map code 
-	// Load shapes of U.S. counties (TopoJSON)
-	d3.json("data/world110-m.json", function(error, data) {
-
-		// Convert TopoJSON to GeoJSON (target object = 'states')
-		var countries = topojson.feature(data, data.objects.countries).features;
-
-		// Render the U.S. by using the path generator
-		svg.selectAll(".country")
-			.data(countries)
-			.enter().append("path")
-			.attr("class", "country")
-			.attr("d", path);
-	});
-
-	console.log(vis.data);
-	TO DO
-	*/
-	
-
 	vis.wrangleData();
 
 };
@@ -187,9 +149,16 @@ Map.prototype.wrangleData = function() {
 					}
 
 					var object = findPiece(id);
-
+					console.log(object);
 					console.log(object[0].title);
-					swal("this is the piece", id);
+
+					if (object[0].images[0].baseimageurl) {
+						swal({title: object[0].title, text: object[0].people[0].displayname,imageUrl: object[0].images[0].baseimageurl});
+					}
+					else {
+						swal({title: object[0].title, text: object[0].people[0].displayname});
+					}
+
 				}
 
 				circles.addLayer(circle);
