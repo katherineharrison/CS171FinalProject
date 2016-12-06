@@ -158,3 +158,10 @@ h2 {
     background-repeat: no-repeat;
     background-position: center;
 }*/
+
+
+.brush .extent {
+    stroke: #fff;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}

@@ -22,10 +22,10 @@ var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20ce
 
 // Main JS file
 var allData = [];
-var placeData = [];
 
 var map;
 var timeline;
+var timeline_brushed;
 var red;
 var orange;
 var yellow;
@@ -82,6 +82,7 @@ function createVis() {
 
     //TO DO: instantiate visualization
     timeline = new Timeline("timeline", allData);
+    timeline_brushed = new Brushed("timeline_brushed", allData);
     red = new ColorVis("Red", allData);
     orange = new ColorVis("Orange", allData);
     yellow = new ColorVis("Yellow", allData);
@@ -92,6 +93,18 @@ function createVis() {
     updateTimeline();
 
 }
+
+function brushed() {
+    // TO-DO: React to 'brushed' event
+    // Set new domain if brush (user selection) is not empty
+    timeline_brushed.x.domain(
+        timeline.brush.empty() ? timeline.x.domain() : timeline.brush.extent()
+    );
+
+    timeline_brushed.wrangleData();
+}
+
+
 
 
 

@@ -44,7 +44,7 @@ vis.map = L.map('map', {maxBounds: L.latLngBounds(L.latLng(-81, -181, true), L.l
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
 		minZoom: 1.5,
-		maxZoom: 4
+		maxZoom: 13
 	}).addTo(vis.map);
 	// .attr("class", "mapClass")
 
@@ -165,14 +165,32 @@ Map.prototype.wrangleData = function() {
 			var circles = L.markerClusterGroup();
 
 			collection.forEach(function(d) {
+				var id = d.id;
+
 				var circle = L.circleMarker([d.location.lat, d.location.lng], {
 					color: "red",
 					fillColor: '#f03',
 					fillOpacity: 0.5,
 					radius: 7
-				});
+				}).on("click", onClick);
 
 				circle.bindPopup(d.name).openTooltip();
+
+				function onClick() {
+
+					function findPiece(e) {
+						var something = vis.data.filter(function(d) {
+							return d.id == e;
+						});
+
+						return something;
+					}
+
+					var object = findPiece(id);
+
+					console.log(object[0].title);
+					swal("this is the piece", id);
+				}
 
 				circles.addLayer(circle);
 

@@ -25,7 +25,6 @@ Timeline.prototype.initVis = function() {
 	vis.x = d3.time.scale()
 		.range([0, vis.width]);
 
-
 	vis.xAxis = d3.svg.axis()
 		.scale(vis.x)
 		.orient("top");
@@ -46,19 +45,22 @@ Timeline.prototype.initVis = function() {
 	vis.cValue = function(d) { return d.classification;};
 	vis.color = d3.scale.category20();
 
-	// draw dots
+	// TO-DO: Initialize brush component
+	// Initialize brush component
+	var brush = d3.svg.brush()
+		.x(vis.x)
+		.on("brush", brushed);
 
-	// function updateTimeline() {
-	// 	var selectBox = document.getElementById("selectBox");
-	// 	var selection = selectBox.options[selectBox.selectedIndex].value;
-    //
-	// 	if (selection == "eighteenth") {
-	// 		vis.x.domain([1800, 1899]);
-	// 	}
-	// };
+	vis.brush = brush;
 
-
-	// TO DO
+	// TO-DO: Append brush component here
+	vis.svg.append("g")
+		.attr("class", "brush")
+		.call(brush)
+		.selectAll("rect")
+		.attr("y", -6)
+		.attr("transform", "translate(0, 10)")
+		.attr("height", vis.height - vis.margin.top - 30);
 
 	vis.wrangleData();
 };
@@ -74,20 +76,23 @@ Timeline.prototype.wrangleData = function() {
 		if (selection == "all") {
 		vis.displayData = vis.data;
 
-	}
+		}
 		else if (selection == "nineteen") {
+			vis.svg.select("line").remove();
 			vis.displayData = vis.data.filter(function(d) {
 				return d.dateend > new Date(1800, 0) && d.dateend < new Date(1899, 0);
 			});
 
 		}
 		else if (selection == "twenty") {
+			vis.svg.select("line").remove();
 			vis.displayData = vis.data.filter(function(d) {
 				return d.dateend > new Date(1900, 0) && d.dateend < new Date(1999, 0);
 			});
 
 		}
 		else if (selection == "twentyfirst") {
+			vis.svg.select("line").remove();
 			vis.displayData = vis.data.filter(function (d) {
 				return d.dateend > new Date(2000, 0) && d.dateend < new Date(2099, 0);
 			});
@@ -100,16 +105,19 @@ Timeline.prototype.wrangleData = function() {
 		console.log(movementSelect);
 
 		if (movementSelect == "mod") {
+			vis.svg.select("line").remove();
 			vis.displayData = vis.displayData.filter(function(d) {
 				return d.division == "Modern and Contemporary Art";
 			});
 		}
 		else if (movementSelect == "euro") {
+			vis.svg.select("line").remove();
 			vis.displayData = vis.displayData.filter(function(d) {
 				return d.division == "European and American Art";
 			});
 		}
 		else if (movementSelect == "asia") {
+			vis.svg.select("line").remove();
 			vis.displayData = vis.displayData.filter(function(d) {
 				return d.division == "Asian and Mediterranean Art";
 			});
@@ -144,13 +152,14 @@ Timeline.prototype.updateVis = function() {
 	var formatTime = d3.time.format("%Y");
 
 	vis.svg.selectAll('.dot').data(vis.displayData).exit().remove();
+	// vis.svg.selectAll('.brush').remove();
 
 	vis.svg.selectAll(".dot")
 		.data(vis.displayData)
 		.enter().append("circle")
 		.attr("class", "dot")
 		.style("opacity", 0.5)
-		.attr("r", 6)
+		.attr("r", 4)
 		.attr("cx", function(d) {
 			return vis.x(d.dateend);
 		})
@@ -159,43 +168,45 @@ Timeline.prototype.updateVis = function() {
 				return 10;
 			}
 			else if (d.classification == "Prints") {
-				return 30;
+				return 20;
 			}
 			else if (d.classification == "Drawings") {
-				return 50;
+				return 30;
 			}
 			else if (d.classification == "Photographs") {
-				return 70;
+				return 40;
 			}
 			else if (d.classification == "Sculpture") {
-				return 90;
+				return 50;
 			}
 			else if (d.classification == "Vessels") {
-				return 110;
+				return 60;
 			}
 			else if (d.classification == "Artists' Tools") {
-				return 130;
+				return 70;
 			}
 			else if (d.classification == "Multiples") {
-				return 150;
+				return 80;
 			}
 			else if (d.classification == "Books") {
-				return 170;
+				return 90;
 			}
 			else if (d.classification == "Textile Arts") {
-				return 190;
+				return 100;
 			}
 			else if (d.classification == "Medals and Medallions") {
-				return 210;
+				return 110;
 			}
 			else if (d.classification == "Furnitures") {
-				return 230;
+				return 120;
 			}
 			else {
-				return 250;
+				return 130;
 			}
 		})
-		.style("fill", function(d) { return vis.color(vis.cValue(d));})
+		.style("fill", function(d) {
+			return vis.color(vis.cValue(d));
+		})
 		.on("mouseover", function(d) {
 			tooltip.transition()
 				.duration(200)
@@ -210,57 +221,59 @@ Timeline.prototype.updateVis = function() {
 				.duration(500)
 				.style("opacity", 0);
 		})
-		.on("click", function(d){
-			// the height is cy 
-			console.log(d);
+		.on("click", function(d) {
+			// the height is cy
 
-		    vis.focus.append("line")
-		        .attr("class", "x")
-		        .style("stroke", "black")
+			vis.svg.select("line").remove();
+
+			vis.focus.append("line")
+				.attr("class", "line")
+				.style("stroke", "black")
 				.attr("y1", 0)
-				.attr("y2", function() {
+				.attr("y2", function () {
 					if (d.classification == "Paintings") {
 						return 10;
 					}
 					else if (d.classification == "Prints") {
-						return 30;
+						return 20;
 					}
 					else if (d.classification == "Drawings") {
-						return 50;
+						return 30;
 					}
 					else if (d.classification == "Photographs") {
-						return 70;
+						return 40;
 					}
 					else if (d.classification == "Sculpture") {
-						return 90;
+						return 50;
 					}
 					else if (d.classification == "Vessels") {
-						return 110;
+						return 60;
 					}
 					else if (d.classification == "Artists' Tools") {
-						return 130;
+						return 70;
 					}
 					else if (d.classification == "Multiples") {
-							return 80;
+						return 80;
 					}
 					else if (d.classification == "Books") {
-						return 150;
+						return 90;
 					}
 					else if (d.classification == "Textile Arts") {
-						return 170;
+						return 100;
 					}
 					else if (d.classification == "Medals and Medallions") {
-						return 190;
+						return 110;
 					}
 					else if (d.classification == "Furnitures") {
-						return 210;
+						return 120;
 					}
 					else {
-						return 230;
+						return 130;
 					}
 				})
 				.attr("x1", vis.x(d.dateend))
 				.attr("x2", vis.x(d.dateend));
+		});
 
 			vis.focus.style("display", null);
 			// var line = d3.line()
@@ -272,7 +285,7 @@ Timeline.prototype.updateVis = function() {
 				// .x(function(d) { return cx; })
 				// .y(function(d) { return cy; })
 				// .style("fill", "black");
-		});
+		// });
 
 	// TO DO
 };
