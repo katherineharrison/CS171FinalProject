@@ -157,33 +157,6 @@ Map.prototype.wrangleData = function() {
 					console.log(object);
 					console.log(object[0].title);
 
-
-// 					if (object[0].images.length == 0) {
-// 						swal({title: object[0].title,
-// 								text: object[0].people[0].displayname,
-// 								showCancelButton: true,
-// 								confirmButtonColor: "#7FD87F",
-// 								confirmButtonText: "Add to Gallery!",
-// 								closeOnConfirm: false},
-// 							function(){
-// 								addToGallery(id);
-// 								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-// 							});
-// 					}
-// 					else {
-// 						swal({title: object[0].title,
-// 								text: object[0].people[0].displayname,
-// 								imageUrl: object[0].images[0].baseimageurl,
-// 								showCancelButton: true,
-// 								confirmButtonColor: "#7FD87F",
-// 								confirmButtonText: "Add to Gallery!",
-// 								closeOnConfirm: false},
-// 							function(){
-// 								addToGallery(id);
-// 								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-// 							});
-// 					}
-
 					// // sweet alert tooltip 
 					// swal({
 					// 	title: object[0].title,
@@ -213,20 +186,13 @@ Map.prototype.wrangleData = function() {
 									showCancelButton: true,
 									confirmButtonColor: "#8CD4F5",
 									confirmButtonText: "Add to Gallery",
-									cancelButtonText: "Ok",
+									cancelButtonText: "Cancel",
 									closeOnConfirm: false
 								},
-								function(isConfirm){
-								  if (isConfirm) {
-								    swal("Added!", object[0].title + " has been added to your gallery!", "success");
-								  } 
-
-								  function addToGallery() {
-								  		
-								  }
-
-
-								});
+									function(){
+										addToGallery(id);
+										swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+									});
 							}
 
 							else{

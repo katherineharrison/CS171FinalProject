@@ -99,7 +99,7 @@ function addToGallery(id) {
     var value = myGallery.length;
     count.html(value);
 
-    createGallery();
+    // createGallery();
 }
 
 function createVis() {
