@@ -55,11 +55,9 @@ Brushed.prototype.initVis = function() {
     vis.g = vis.svg.append('g')
          .attr('transform', 'translate(32,32)');
 
-    // vis.circles = vis.g.append('g');
-    //
-    // vis.dots = vis.circles.selectAll(".dot").data(vis.data);
+    vis.circles = vis.g.append('g');
 
-    vis.circles = vis.svg.selectAll('.dot').data(vis.displayData);
+    vis.dots = vis.circles.selectAll(".dot").data(vis.data);
 
     vis.wrangleData();
 };
@@ -87,7 +85,7 @@ Brushed.prototype.updateVis = function() {
     var cValue = function(d) { return d.classification;},
         color = d3.scale.category20();
 
-    vis.dot = vis.svg.selectAll('.dot').data(vis.displayData);
+    vis.dot = vis.circles.selectAll('.dot').data(vis.displayData);
 
     vis.dot.enter().append("circle").attr("class", "dot");
 
@@ -211,16 +209,16 @@ Brushed.prototype.updateVis = function() {
         });
 
     // Define the clipping region
-    // vis.svg.append("defs").append("clipPath")
-    //     .attr("id", "clip")
-    //     .append("rect")
-    //     .attr("width", vis.width)
-    //     .attr("height", vis.height);
+    vis.svg.append("defs").append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", vis.width)
+        .attr("height", vis.height);
 
-    // vis.____ --> What to put here?
-    //     .datum(vis.displayData)
-    //     .attr("d", vis.dot)
-    //     .attr("clip-path", "url(#clip)");
+    vis.circles
+        .datum(vis.displayData)
+        .attr("d", vis.dot)
+        .attr("clip-path", "url(#clip)");
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
