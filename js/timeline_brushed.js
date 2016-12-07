@@ -1,7 +1,7 @@
 /**
  * Created by mariamclaughlin on 12/5/16.
  */
-// Timeline Visualization
+// Top Timeline Visualization that results from the brushing of the bottom timeline visualization
 Brushed = function(_parentElement, _data){
     this.parentElement = _parentElement;
     this.data = _data;
@@ -87,11 +87,13 @@ Brushed.prototype.updateVis = function() {
     var cValue = function(d) { return d.classification;},
         color = d3.scale.category20();
 
-    vis.dots = vis.svg.selectAll('.dot').data(vis.displayData);
+    vis.dot = vis.svg.selectAll('.dot').data(vis.displayData);
 
-    vis.dots.enter()
-        .append("circle")
-        .style("opacity", 0.5)
+    vis.dot.enter().append("circle").attr("class", "dot");
+
+    vis.dot.exit().remove();
+
+    vis.dot.style("opacity", 0.5)
         .attr("r", 4)
         .attr("cx", function(d) {
             return vis.x(d.dateend);
@@ -208,7 +210,17 @@ Brushed.prototype.updateVis = function() {
                 .attr("x2", vis.x(d.dateend))
         });
 
-    vis.dots.exit().remove();
+    // Define the clipping region
+    // vis.svg.append("defs").append("clipPath")
+    //     .attr("id", "clip")
+    //     .append("rect")
+    //     .attr("width", vis.width)
+    //     .attr("height", vis.height);
+
+    // vis.____ --> What to put here?
+    //     .datum(vis.displayData)
+    //     .attr("d", vis.dot)
+    //     .attr("clip-path", "url(#clip)");
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
