@@ -151,14 +151,15 @@ Timeline.prototype.updateVis = function() {
 
 	var formatTime = d3.time.format("%Y");
 
-	vis.svg.selectAll('.dot').data(vis.displayData).exit().remove();
-	// vis.svg.selectAll('.brush').remove();
+	// vis.svg.selectAll('.brush').remove();	
 
-	vis.svg.selectAll(".dot")
-		.data(vis.displayData)
-		.enter().append("circle")
-		.attr("class", "dot")
-		.style("opacity", 0.5)
+	vis.dot = vis.svg.selectAll('.dot').data(vis.displayData);
+
+	vis.dot.enter().append("circle").attr("class", "dot");
+
+	vis.dot.exit().remove();
+
+	vis.dot.style("opacity", 0.5)
 		.attr("r", 4)
 		.attr("cx", function(d) {
 			return vis.x(d.dateend);

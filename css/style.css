@@ -26,9 +26,20 @@ hr {
 }
 */
 
+.visDescrip {
+  text-align: center;
+  font-family: avenir;
+  font-size: 17px;
+  margin-bottom: 3%;
+}
+
 #ColorTitle {
   font-family: Georgia;
   text-align: left;
+}
+
+#timeline #timeline_brushed #timecard {
+  font-family: avenir;
 }
 
 .RedGroup .OrangeGroup .YellowGroup .GreenGroup .BlueGroup {
@@ -49,7 +60,7 @@ hr {
 }
 
 .tick text {
-    font-family: sans-serif;
+    font-family: avenir;
     font-size: 11px;
     fill: #555;
 }
