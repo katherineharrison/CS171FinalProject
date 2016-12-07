@@ -134,13 +134,31 @@ Map.prototype.wrangleData = function() {
 					console.log(object);
 					console.log(object[0].title);
 
-					if (object[0].images[0].baseimageurl) {
-						swal({title: object[0].title, text: object[0].people[0].displayname,imageUrl: object[0].images[0].baseimageurl});
+					if (object[0].images.length == 0) {
+						swal({title: object[0].title,
+								text: object[0].people[0].displayname,
+								showCancelButton: true,
+								confirmButtonColor: "#7FD87F",
+								confirmButtonText: "Add to Gallery!",
+								closeOnConfirm: false},
+							function(){
+								addToGallery(id);
+								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+							});
 					}
 					else {
-						swal({title: object[0].title, text: object[0].people[0].displayname});
+						swal({title: object[0].title,
+								text: object[0].people[0].displayname,
+								imageUrl: object[0].images[0].baseimageurl,
+								showCancelButton: true,
+								confirmButtonColor: "#7FD87F",
+								confirmButtonText: "Add to Gallery!",
+								closeOnConfirm: false},
+							function(){
+								addToGallery(id);
+								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+							});
 					}
-
 				}
 
 				circles.addLayer(circle);

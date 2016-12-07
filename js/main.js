@@ -22,10 +22,12 @@ var century = '&q=century:20th%20century,21st%20century,19th%20century,18th%20ce
 
 // Main JS file
 var allData = [];
+var myGallery = [];
 
 var map;
 var timeline;
 var timeline_brushed;
+var gallery;
 var red;
 var orange;
 var yellow;
@@ -74,6 +76,32 @@ function updateTimeline() {
     timeline.wrangleData();
 }
 
+function addToGallery(id) {
+    var galleryPiece = allData.filter(function(d) {
+        return d.id == id;
+    });
+
+    myGallery = myGallery.concat(galleryPiece);
+    console.log(myGallery);
+
+    function truncate(string){
+        if (string.length > 10)
+            return string.substring(0,10)+'...';
+        else
+            return string;
+    }
+
+    var gallery = $("#mygallery");
+    gallery.append("<li><a href='gallery.html'><i class='fa fa-fw fa-tag'></i><span class='badge'>"
+    + galleryPiece[0].classification + "</span>" + truncate(galleryPiece[0].title) + "</a></li>");
+
+    var count = $("#count");
+    var value = myGallery.length;
+    count.html(value);
+
+    createGallery();
+}
+
 function createVis() {
 
     allData.forEach(function(d) {
@@ -92,6 +120,10 @@ function createVis() {
 
     updateTimeline();
 
+}
+
+function createGallery() {
+    gallery = new Gallery("gallery", myGallery);
 }
 
 function brushed() {
