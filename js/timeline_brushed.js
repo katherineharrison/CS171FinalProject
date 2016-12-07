@@ -162,56 +162,61 @@ Brushed.prototype.updateVis = function() {
         })
         .on("click", function(d) {
             // the height is cy
+            console.log(d.datebegin);
 
-            vis.svg.select("line").remove();
+            if (d != null){
+                console.log(d.division);
 
-            vis.focus.append("line")
-                .attr("class", "x")
-                .style("stroke", "black")
-                .attr("y1", 0)
-                .attr("y2", function () {
-                    if (d.classification == "Paintings") {
-                        return 10;
-                    }
-                    else if (d.classification == "Prints") {
-                        return 20;
-                    }
-                    else if (d.classification == "Drawings") {
-                        return 30;
-                    }
-                    else if (d.classification == "Photographs") {
-                        return 40;
-                    }
-                    else if (d.classification == "Sculpture") {
-                        return 50;
-                    }
-                    else if (d.classification == "Vessels") {
-                        return 60;
-                    }
-                    else if (d.classification == "Artists' Tools") {
-                        return 70;
-                    }
-                    else if (d.classification == "Multiples") {
-                        return 80;
-                    }
-                    else if (d.classification == "Books") {
-                        return 90;
-                    }
-                    else if (d.classification == "Textile Arts") {
-                        return 100;
-                    }
-                    else if (d.classification == "Medals and Medallions") {
-                        return 110;
-                    }
-                    else if (d.classification == "Furnitures") {
-                        return 120;
-                    }
-                    else {
-                        return 130;
-                    }
-                })
-                .attr("x1", vis.x(d.dateend))
-                .attr("x2", vis.x(d.dateend))
+                                var objectContent = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
+                                    + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
+                                    + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
+                                    + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
+                                    + "</td></tr></tr></table>";
+
+                            if (d.images.length > 0){
+                                swal({
+                                    title: d.title,
+                                    text:  objectContent,
+                                    // "Artist: " object[0].people[0].displayname ,
+                                    imageUrl: d.images[0].baseimageurl,
+                                    html: true,
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#8CD4F5",
+                                    confirmButtonText: "Add to Gallery",
+                                    cancelButtonText: "Cancel",
+                                    closeOnConfirm: false
+                                },
+                                    function(){
+                                        addToGallery(d.id);
+                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+                                    });
+                            }
+
+                            else{
+                                swal({
+                                    title: d.title,
+                                    text: objectContent,
+                                    imageUrl: "img/noimage.jpg",
+                                    html: true,
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#8CD4F5",
+                                    confirmButtonText: "Add to Gallery",
+                                    cancelButtonText: "Cancel",
+                                    closeOnConfirm: false
+                                },
+                                    function(){
+                                        addToGallery(d.id);
+                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+                                    });
+                            }
+                        }
+
+                        if(d.length == 0){
+                            swal({
+                                title: "Sorry! No info to display.",
+                                imageUrl: "img/noimage.jpg"
+                            });
+                        }
         });
 
     // Define the clipping region
