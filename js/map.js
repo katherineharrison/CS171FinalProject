@@ -172,8 +172,7 @@ Map.prototype.wrangleData = function() {
 								var objectContent = "<table><tr><th>Artist: </th><td>" + object[0].people[0].displayname 
 									+ "</td></tr><tr><th>Year: </th><td>" + object[0].datebegin 
 									+ "</td></tr><tr><th>Medium: </th><td>" + object[0].classification
-									+ "</td></tr><tr><th>Dimensions: </th><td>" + object[0].dimensions
-									+ "</td></tr><tr><th>Division: </th><td>" + object[0].division
+									+ "</td></tr><tr><th>Category: </th><td>" + object[0].division
 									+ "</td></tr></tr></table>";
 
 							if (object[0].images.length > 0){
@@ -200,8 +199,17 @@ Map.prototype.wrangleData = function() {
 									title: object[0].title,
 									text: objectContent,
 									imageUrl: "img/noimage.jpg",
-									html: true
-								});
+									html: true,
+									showCancelButton: true,
+									confirmButtonColor: "#8CD4F5",
+									confirmButtonText: "Add to Gallery",
+									cancelButtonText: "Cancel",
+									closeOnConfirm: false
+								},
+									function(){
+										addToGallery(id);
+										swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+									});
 							}
 						}
 
