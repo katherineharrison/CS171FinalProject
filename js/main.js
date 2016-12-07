@@ -34,8 +34,8 @@ var yellow;
 var green;
 var blue;
 
-
 loadData();
+createGallery();
 
 function loadData() {
     var proxy = 'http://api.harvardartmuseums.org/object?apikey=9257ca00-a202-11e6-9c4e-5b7c6cef1537';
@@ -123,7 +123,24 @@ function createVis() {
 }
 
 function createGallery() {
-    gallery = new Gallery("gallery", myGallery);
+    if (myGallery.length > 0) {
+        $(".testPopup").magnificPopup({ items: {
+            src: '<div class="white-popup"><p>' + myGallery[0].title + '</p><br><p>' +
+            myGallery[0].people[0].displayname + '</p></div>',
+            image: myGallery[0].images[0].baseimageurl,
+            type: 'inline',
+            midClick: true
+        }
+        });
+    }
+    else {
+        $(".testPopup").magnificPopup({ items: {
+            src: '<div class="white-popup">You have nothing in your gallery at the moment!</div>',
+            type: 'inline',
+            midClick: true
+        }
+        });
+    }
 }
 
 function brushed() {

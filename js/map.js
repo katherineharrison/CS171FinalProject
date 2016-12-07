@@ -129,7 +129,7 @@ Map.prototype.wrangleData = function() {
 						console.log("people: " + people);
 					}
 
-					circle.bindPopup("hi").openTooltip(); //google how to bind popup to on hover 
+					// circle.bindPopup("hi").openTooltip(); //google how to bind popup to on hover
 				}
 
 				// till here 
