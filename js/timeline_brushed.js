@@ -29,13 +29,17 @@ Brushed.prototype.initVis = function() {
         .range([0, vis.width])
         .domain(d3.extent(vis.data, function(d) { return d.dateend; }));
 
-    vis.y = d3.scale.ordinal()
+    vis.y = d3.scale.linear()
+        .domain([10, 140])
+        .range([10, vis.height - vis.margin.left - vis.margin.right]);
+
+    vis.names = d3.scale.ordinal()
         .domain(["Paintings", "Prints", "Drawings", "Photographs",  "Sculpture", "Vessels", "Artists' Tools", "Multiples",
-            "Books", "Textile Arts", "Medals and Medallions", "Furniture", "Other"])
-        .rangePoints([10, vis.height]);
+            "Books", "Textile Arts", "Medallions", "Furniture", "Other"])
+        .rangeRoundBands([10, vis.height]);
 
     vis.yAxis = d3.svg.axis()
-        .scale(vis.y)
+        .scale(vis.names)
         .orient("left");
 
     vis.xAxis = d3.svg.axis()
@@ -43,23 +47,23 @@ Brushed.prototype.initVis = function() {
         .orient("top");
 
     vis.svg.append("g")
-        .attr("class", "x-axis axis");
+        .attr("class", "x-axis axis")
+        .attr("transform", "translate(29, 35)");
 
     vis.svg.append("g")
         .attr("class", "y-axis axis")
-        .attr("transform", "translate(10, 0)");
+        .attr("transform", "translate(29, 25)");
 
     vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
 
     vis.g = vis.svg.append('g')
-         .attr('transform', 'translate(32,32)');
+         .attr('transform', 'translate(32, 32)');
 
-    // vis.circles = vis.g.append('g');
-    //
-    // vis.dots = vis.circles.selectAll(".dot").data(vis.data);
+    vis.circles = vis.g.append('g')
+        .attr("transform", "translate(0, 5)");
 
-    vis.circles = vis.svg.selectAll('.dot').data(vis.displayData);
+    vis.dots = vis.circles.selectAll(".dot").data(vis.data);
 
     vis.wrangleData();
 };
@@ -87,7 +91,7 @@ Brushed.prototype.updateVis = function() {
     var cValue = function(d) { return d.classification;},
         color = d3.scale.category20();
 
-    vis.dot = vis.svg.selectAll('.dot').data(vis.displayData);
+    vis.dot = vis.circles.selectAll('.dot').data(vis.displayData);
 
     vis.dot.enter().append("circle").attr("class", "dot");
 
@@ -100,43 +104,43 @@ Brushed.prototype.updateVis = function() {
         })
         .attr("cy", function(d) {
             if (d.classification == "Paintings") {
-                return 10;
+                return vis.y(10);
             }
             else if (d.classification == "Prints") {
-                return 20;
+                return vis.y(20);
             }
             else if (d.classification == "Drawings") {
-                return 30;
+                return vis.y(30);
             }
             else if (d.classification == "Photographs") {
-                return 40;
+                return vis.y(40);
             }
             else if (d.classification == "Sculpture") {
-                return 50;
+                return vis.y(50);
             }
             else if (d.classification == "Vessels") {
-                return 60;
+                return vis.y(60);
             }
             else if (d.classification == "Artists' Tools") {
-                return 70;
+                return vis.y(70);
             }
             else if (d.classification == "Multiples") {
-                return 80;
+                return vis.y(80);
             }
             else if (d.classification == "Books") {
-                return 90;
+                return vis.y(90);
             }
             else if (d.classification == "Textile Arts") {
-                return 100;
+                return vis.y(100);
             }
             else if (d.classification == "Medals and Medallions") {
-                return 110;
+                return vis.y(110);
             }
             else if (d.classification == "Furnitures") {
-                return 120;
+                return vis.y(120);
             }
             else {
-                return 130;
+                return vis.y(130);
             }
         })
         .style("fill", function(d) {
@@ -211,16 +215,16 @@ Brushed.prototype.updateVis = function() {
         });
 
     // Define the clipping region
-    // vis.svg.append("defs").append("clipPath")
-    //     .attr("id", "clip")
-    //     .append("rect")
-    //     .attr("width", vis.width)
-    //     .attr("height", vis.height);
+    vis.svg.append("defs").append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", vis.width)
+        .attr("height", vis.height);
 
-    // vis.____ --> What to put here?
-    //     .datum(vis.displayData)
-    //     .attr("d", vis.dot)
-    //     .attr("clip-path", "url(#clip)");
+    vis.circles
+        .datum(vis.displayData)
+        .attr("d", vis.dot)
+        .attr("clip-path", "url(#clip)");
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);

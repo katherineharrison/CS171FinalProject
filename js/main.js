@@ -92,14 +92,14 @@ function addToGallery(id) {
     }
 
     var gallery = $("#mygallery");
-    gallery.append("<li><a href='gallery.html'><i class='fa fa-fw fa-tag'></i><span class='badge'>"
+    gallery.append("<li><a><i class='fa fa-fw fa-tag'></i><span class='badge'>"
     + galleryPiece[0].classification + "</span>" + truncate(galleryPiece[0].title) + "</a></li>");
 
     var count = $("#count");
     var value = myGallery.length;
     count.html(value);
 
-    // createGallery();
+    createGallery();
 }
 
 function createVis() {
