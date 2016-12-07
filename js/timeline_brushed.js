@@ -160,7 +160,7 @@ Brushed.prototype.updateVis = function() {
             vis.svg.select("line").remove();
 
             vis.focus.append("line")
-                .attr("class", "line")
+                .attr("class", "x")
                 .style("stroke", "black")
                 .attr("y1", 0)
                 .attr("y2", function () {
