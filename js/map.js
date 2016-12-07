@@ -12,6 +12,7 @@ Map.prototype.initVis = function() {
 	var vis = this;
 
 	console.log(vis.data.length);
+	console.log(vis.data);
 
 	var width = 900,
 		height = 600;
@@ -116,9 +117,22 @@ Map.prototype.wrangleData = function() {
 					fillColor: '#f03',
 					fillOpacity: 0.5,
 					radius: 7
-				}).on("click", onClick);
+				}).on("mouseover", onHover)
+				.on("click", onClick);
 
-				circle.bindPopup(d.name).openTooltip();
+				// I was here trying to bind categories from vis.data to the clicked object based on cross checking ID
+				
+				function onHover(){
+					var checkID = vis.data.id;
+					if (id == checkID){
+						var people = vis.data[d].object[d].people[0].displayname;
+						console.log("people: " + people);
+					}
+
+					circle.bindPopup("hi").openTooltip(); //google how to bind popup to on hover 
+				}
+
+				// till here 
 
 				function onClick() {
 
@@ -128,37 +142,109 @@ Map.prototype.wrangleData = function() {
 						});
 
 						return something;
+						console.log("nothing happens here fyi");
 					}
 
 					var object = findPiece(id);
+
+					if (!object){
+						swal({
+							title: "Sorry! No info to display.",
+							imageUrl: "img/noimage.jpg"
+						});
+					}
+
 					console.log(object);
 					console.log(object[0].title);
 
-					if (object[0].images.length == 0) {
-						swal({title: object[0].title,
-								text: object[0].people[0].displayname,
-								showCancelButton: true,
-								confirmButtonColor: "#7FD87F",
-								confirmButtonText: "Add to Gallery!",
-								closeOnConfirm: false},
-							function(){
-								addToGallery(id);
-								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+
+// 					if (object[0].images.length == 0) {
+// 						swal({title: object[0].title,
+// 								text: object[0].people[0].displayname,
+// 								showCancelButton: true,
+// 								confirmButtonColor: "#7FD87F",
+// 								confirmButtonText: "Add to Gallery!",
+// 								closeOnConfirm: false},
+// 							function(){
+// 								addToGallery(id);
+// 								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+// 							});
+// 					}
+// 					else {
+// 						swal({title: object[0].title,
+// 								text: object[0].people[0].displayname,
+// 								imageUrl: object[0].images[0].baseimageurl,
+// 								showCancelButton: true,
+// 								confirmButtonColor: "#7FD87F",
+// 								confirmButtonText: "Add to Gallery!",
+// 								closeOnConfirm: false},
+// 							function(){
+// 								addToGallery(id);
+// 								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+// 							});
+// 					}
+
+					// // sweet alert tooltip 
+					// swal({
+					// 	title: object[0].title,
+					// 	text: 
+					// 		"Artist: " + object[0].people[0].displayname,
+
+					// 	imageUrl: "img/noimage.jpg"
+					// });
+
+					// functions for sweetalerts
+						if (object.length > 0){
+
+								var objectContent = "<table><tr><th>Artist: </th><td>" + object[0].people[0].displayname 
+									+ "</td></tr><tr><th>Year: </th><td>" + object[0].datebegin 
+									+ "</td></tr><tr><th>Medium: </th><td>" + object[0].classification
+									+ "</td></tr><tr><th>Dimensions: </th><td>" + object[0].dimensions
+									+ "</td></tr><tr><th>Division: </th><td>" + object[0].division
+									+ "</td></tr></tr></table>";
+
+							if (object[0].images.length > 0){
+								swal({
+									title: object[0].title,
+									text:  objectContent,
+									// "Artist: " object[0].people[0].displayname ,
+									imageUrl: object[0].images[0].baseimageurl,
+									html: true,
+									showCancelButton: true,
+									confirmButtonColor: "#8CD4F5",
+									confirmButtonText: "Add to Gallery",
+									cancelButtonText: "Ok",
+									closeOnConfirm: false
+								},
+								function(isConfirm){
+								  if (isConfirm) {
+								    swal("Added!", object[0].title + " has been added to your gallery!", "success");
+								  } 
+
+								  function addToGallery() {
+								  		
+								  }
+
+
+								});
+							}
+
+							else{
+								swal({
+									title: object[0].title,
+									text: objectContent,
+									imageUrl: "img/noimage.jpg",
+									html: true
+								});
+							}
+						}
+
+						if(object[0].length == 0){
+							swal({
+								title: "Sorry! No info to display.",
+								imageUrl: "img/noimage.jpg"
 							});
-					}
-					else {
-						swal({title: object[0].title,
-								text: object[0].people[0].displayname,
-								imageUrl: object[0].images[0].baseimageurl,
-								showCancelButton: true,
-								confirmButtonColor: "#7FD87F",
-								confirmButtonText: "Add to Gallery!",
-								closeOnConfirm: false},
-							function(){
-								addToGallery(id);
-								swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-							});
-					}
+						}
 				}
 
 				circles.addLayer(circle);
