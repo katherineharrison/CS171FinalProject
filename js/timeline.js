@@ -68,60 +68,94 @@ Timeline.prototype.initVis = function() {
 Timeline.prototype.wrangleData = function() {
 	var vis = this;
 
-	var selectBox = document.getElementById("selectBox");
+	var selectBox = document.getElementById("selectBoxMedium");
 	var selection = selectBox.options[selectBox.selectedIndex].value;
 
 	console.log(selection);
 
-		if (selection == "all") {
-		vis.displayData = vis.data;
+	vis.displayData = vis.data;
 
-		}
-		else if (selection == "nineteen") {
-			vis.svg.select("line").remove();
-			vis.displayData = vis.data.filter(function(d) {
-				return d.dateend > new Date(1800, 0) && d.dateend < new Date(1899, 0);
-			});
-
-		}
-		else if (selection == "twenty") {
-			vis.svg.select("line").remove();
-			vis.displayData = vis.data.filter(function(d) {
-				return d.dateend > new Date(1900, 0) && d.dateend < new Date(1999, 0);
-			});
-
-		}
-		else if (selection == "twentyfirst") {
-			vis.svg.select("line").remove();
-			vis.displayData = vis.data.filter(function (d) {
-				return d.dateend > new Date(2000, 0) && d.dateend < new Date(2099, 0);
-			});
-
-		}
-
-		var movement = document.getElementById("selectBox2");
-		var movementSelect = movement.options[movement.selectedIndex].value;
-
-		console.log(movementSelect);
-
-		if (movementSelect == "mod") {
-			vis.svg.select("line").remove();
-			vis.displayData = vis.displayData.filter(function(d) {
-				return d.division == "Modern and Contemporary Art";
-			});
-		}
-		else if (movementSelect == "euro") {
-			vis.svg.select("line").remove();
-			vis.displayData = vis.displayData.filter(function(d) {
-				return d.division == "European and American Art";
-			});
-		}
-		else if (movementSelect == "asia") {
-			vis.svg.select("line").remove();
-			vis.displayData = vis.displayData.filter(function(d) {
-				return d.division == "Asian and Mediterranean Art";
-			});
-		}
+			if (selection == "all") {
+				vis.displayData = vis.data;
+			}
+	        else if (selection == "Paintings") {
+	            vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Paintings";
+				});    
+            }
+            else if (selection == "Prints") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Prints";
+				}); 
+            }
+            else if (selection == "Drawings") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Drawings";
+				}); 
+            }
+            else if (selection == "Photographs") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Photographs";
+				}); 
+            }
+            else if (selection == "Sculpture") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Sculpture";
+				}); 
+            }
+            else if (selection == "Vessels") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Vessels";
+				}); 
+            }
+            else if (selection == "Artists' Tools") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Artists' Tools";
+				}); 
+            }
+            else if (selection == "Multiples") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Multiples";
+				}); 
+            }
+            else if (selection == "Books") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Books";
+				}); 
+            }
+            else if (selection == "Textile Arts") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Textile Arts";
+				}); 
+            }
+            else if (selection == "Medals and Medallions") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Medals and Medallions";
+				}); 
+            }
+            else if (selection == "Furnitures") {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Furnitures";
+				}); 
+            }
+            else {
+                vis.svg.select("line").remove();
+				vis.displayData = vis.displayData.filter(function(d) {
+					return d.classification == "Other";
+				}); 
+            }
 
 		vis.x.domain(d3.extent(vis.displayData, function (d) {
 			return d.dateend;
@@ -209,18 +243,18 @@ Timeline.prototype.updateVis = function() {
 			return vis.color(vis.cValue(d));
 		})
 		.on("mouseover", function(d) {
-			tooltip.transition()
-				.duration(200)
-				.style("opacity", .9)
-				.style("background", "white");
-			tooltip.html(d.title + "<br/>" + formatTime(d.dateend) + " " + d.classification)
-				.style("left", (d3.event.pageX + 5) + "px")
-				.style("top", (d3.event.pageY - 28) + "px");
+			// tooltip.transition()
+			// 	.duration(200)
+			// 	.style("opacity", .9)
+			// 	.style("background", "white");
+			// tooltip.html(d.title + "<br/>" + formatTime(d.dateend) + " " + d.classification)
+			// 	.style("left", (d3.event.pageX + 5) + "px")
+			// 	.style("top", (d3.event.pageY - 28) + "px");
 		})
 		.on("mouseout", function(d) {
-			tooltip.transition()
-				.duration(500)
-				.style("opacity", 0);
+			// tooltip.transition()
+			// 	.duration(500)
+			// 	.style("opacity", 0);
 		})
 		.on("click", onclick)
 

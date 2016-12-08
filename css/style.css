@@ -26,6 +26,11 @@ hr {
 }
 */
 
+.selectBoxes {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .visDescrip {
   text-align: center;
   font-family: avenir;

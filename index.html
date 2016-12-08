@@ -96,21 +96,25 @@
 
 		<div id="time" class="row">
 			<h2 class="title">Explore Art by Century</h2>
-			<div class="visDescrip">This is what this visualization does and how you should use it.</div>
-				<div class="col-md-3"><h4>Century</h4><br>
-				<select id="selectBox" class="form-control" onchange="updateTimeline()">
-					<option value="all">All</option>
-					<option value="nineteen">19th Century</option>
-					<option value="twenty">20th Century</option>
-					<option value="twentyfirst">21st Century</option>
-				</select></div>
-				<div class="col-md-3"><h4>Category</h4><br>
-				<select id="selectBox2" class="form-control" onchange="updateTimeline()">
-					<option value="all">All</option>
-					<option value="mod">Modern and Contemporary Art</option>
-					<option value="euro">European and American Art</option>
-					<option value="asia">Asian and Mediterranean Art</option>
-				</select></div>
+			<div class="visDescrip">Brush the bottom timeline to explore a time period of interest. Use the drop down boxes to filter by century or movement. Click the dots to view art and add it to your gallery.</div>
+				<div class="selectBoxes">
+					<div class="col-md-3"><h4>Medium</h4><br>
+						<select id="selectBoxMedium" class="form-control" onchange="updateTimeline()">
+							<option value="all">All</option>
+							<option value="Paintings">Paintings</option>
+							<option value="Prints">Prints</option>
+							<option value="Drawings">Drawings</option>
+							<option value="Photographs">Photographs</option>
+							<option value="Sculpture">Sculpture</option>
+							<option value="Vessels">Vessels</option>
+							<option value="Artists' Tools">Artists' Tools</option>
+							<option value="Multiples">Multiples</option>
+							<option value="Books">Books</option>
+							<option value="Textile Arts">Textile Arts</option>
+							<option value="Medal and Medallions">Medals and Medallions</option>
+							<option value="Furnitures">Furnitures</option>
+					</select></div>
+				</div>
 				<div id="timeline_brushed"></div>
 				<div id="timeline"></div>
 				<div id="timecard"></div>
