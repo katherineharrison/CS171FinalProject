@@ -59,8 +59,8 @@ Timeline.prototype.initVis = function() {
 		.call(brush)
 		.selectAll("rect")
 		.attr("y", -6)
-		.attr("transform", "translate(0, 10)")
-		.attr("height", vis.height - vis.margin.top - 30);
+		.attr("transform", "translate(0, 0)")
+		.attr("height", vis.height);
 
 	vis.wrangleData();
 };
@@ -75,93 +75,97 @@ Timeline.prototype.wrangleData = function() {
 
 	vis.displayData = vis.data;
 
-			if (selection == "all") {
-				vis.displayData = vis.data;
-			}
-	        else if (selection == "Paintings") {
-	            vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Paintings";
-				});    
-            }
-            else if (selection == "Prints") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Prints";
-				}); 
-            }
-            else if (selection == "Drawings") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Drawings";
-				}); 
-            }
-            else if (selection == "Photographs") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Photographs";
-				}); 
-            }
-            else if (selection == "Sculpture") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Sculpture";
-				}); 
-            }
-            else if (selection == "Vessels") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Vessels";
-				}); 
-            }
-            else if (selection == "Artists' Tools") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Artists' Tools";
-				}); 
-            }
-            else if (selection == "Multiples") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Multiples";
-				}); 
-            }
-            else if (selection == "Books") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Books";
-				}); 
-            }
-            else if (selection == "Textile Arts") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Textile Arts";
-				}); 
-            }
-            else if (selection == "Medals and Medallions") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Medals and Medallions";
-				}); 
-            }
-            else if (selection == "Furnitures") {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Furnitures";
-				}); 
-            }
-            else {
-                vis.svg.select("line").remove();
-				vis.displayData = vis.displayData.filter(function(d) {
-					return d.classification == "Other";
-				}); 
-            }
+	vis.displayData.sort(function(a,b) {
+		return (a.dateend - b.dateend);
+	});
 
-		vis.x.domain(d3.extent(vis.displayData, function (d) {
-			return d.dateend;
-		}));
+	if (selection == "all") {
+		vis.displayData = vis.data;
+	}
+    else if (selection == "Paintings") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Paintings";
+		});    
+    }
+    else if (selection == "Prints") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Prints";
+		}); 
+    }
+    else if (selection == "Drawings") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Drawings";
+		}); 
+    }
+    else if (selection == "Photographs") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Photographs";
+		}); 
+    }
+    else if (selection == "Sculpture") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Sculpture";
+		}); 
+    }
+    else if (selection == "Vessels") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Vessels";
+		}); 
+    }
+    else if (selection == "Artists' Tools") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Artists' Tools";
+		}); 
+    }
+    else if (selection == "Multiples") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Multiples";
+		}); 
+    }
+    else if (selection == "Books") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Books";
+		}); 
+    }
+    else if (selection == "Textile Arts") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Textile Arts";
+		}); 
+    }
+    else if (selection == "Medals and Medallions") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Medals and Medallions";
+		}); 
+    }
+    else if (selection == "Furnitures") {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Furnitures";
+		}); 
+    }
+    else {
+        vis.svg.select("line").remove();
+		vis.displayData = vis.displayData.filter(function(d) {
+			return d.classification == "Other";
+		}); 
+    }
 
-		vis.updateVis();
+	vis.x.domain(d3.extent(vis.displayData, function (d) {
+		return d.dateend;
+	}));
+
+	vis.updateVis();
 
 	// TO DO
 
@@ -185,6 +189,8 @@ Timeline.prototype.updateVis = function() {
 
 	var formatTime = d3.time.format("%Y");
 
+	vis.timeArray = [0,1];
+
 	// vis.svg.selectAll('.brush').remove();	
 
 	vis.dot = vis.svg.selectAll('.dot').data(vis.displayData);
@@ -194,50 +200,64 @@ Timeline.prototype.updateVis = function() {
 	vis.dot.exit().remove();
 
 	vis.dot.style("opacity", 0.5)
-		.attr("r", 4)
+		.attr("r", 2)
 		.attr("cx", function(d) {
 			return vis.x(d.dateend);
 		})
 		.attr("cy", function(d) {
-			if (d.classification == "Paintings") {
-				return 10;
+			if (vis.timeArray[0] == 0) {
+				vis.timeArray[0] = d.dateend;
+				return (2 * vis.timeArray[1]);
 			}
-			else if (d.classification == "Prints") {
-				return 20;
-			}
-			else if (d.classification == "Drawings") {
-				return 30;
-			}
-			else if (d.classification == "Photographs") {
-				return 40;
-			}
-			else if (d.classification == "Sculpture") {
-				return 50;
-			}
-			else if (d.classification == "Vessels") {
-				return 60;
-			}
-			else if (d.classification == "Artists' Tools") {
-				return 70;
-			}
-			else if (d.classification == "Multiples") {
-				return 80;
-			}
-			else if (d.classification == "Books") {
-				return 90;
-			}
-			else if (d.classification == "Textile Arts") {
-				return 100;
-			}
-			else if (d.classification == "Medals and Medallions") {
-				return 110;
-			}
-			else if (d.classification == "Furnitures") {
-				return 120;
+			else if (vis.timeArray[0] >= d.dateend) {
+				vis.timeArray[1] = vis.timeArray[1] + 1;
+				return (2 * vis.timeArray[1]);
 			}
 			else {
-				return 130;
+				vis.timeArray[0] = d.dateend;
+				vis.timeArray[1] = 1;
+				return (2 * vis.timeArray[1]);
 			}
+
+			// if (d.classification == "Paintings") {
+			// 	return 10;
+			// }
+			// else if (d.classification == "Prints") {
+			// 	return 20;
+			// }
+			// else if (d.classification == "Drawings") {
+			// 	return 30;
+			// }
+			// else if (d.classification == "Photographs") {
+			// 	return 40;
+			// }
+			// else if (d.classification == "Sculpture") {
+			// 	return 50;
+			// }
+			// else if (d.classification == "Vessels") {
+			// 	return 60;
+			// }
+			// else if (d.classification == "Artists' Tools") {
+			// 	return 70;
+			// }
+			// else if (d.classification == "Multiples") {
+			// 	return 80;
+			// }
+			// else if (d.classification == "Books") {
+			// 	return 90;
+			// }
+			// else if (d.classification == "Textile Arts") {
+			// 	return 100;
+			// }
+			// else if (d.classification == "Medals and Medallions") {
+			// 	return 110;
+			// }
+			// else if (d.classification == "Furnitures") {
+			// 	return 120;
+			// }
+			// else {
+			// 	return 130;
+			// }
 		})
 		.style("fill", function(d) {
 			return vis.color(vis.cValue(d));
