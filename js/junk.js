@@ -927,4 +927,151 @@ vis.x = d3.fisheye.scale(d3.time.scale).range([0, vis.width])
 
 };
 
+FINAL Color
+// Color Visualization
+
+ColorVis = function(_parentElement, _data){
+    this.parentElement = _parentElement;
+    this.data = _data;
+    this.displayData = _data;
+
+    this.initVis();
+};
+
+ColorVis.prototype.initVis = function() {
+    var vis = this;
+
+    // TO DO
+    vis.margin = { top: 0, right: 60, bottom: 60, left: 20 };
+
+    vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
+        vis.height = 350 - vis.margin.top - vis.margin.bottom;
+
+    vis.tooltip = d3.select("#" + vis.parentElement).append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+    // SVG drawing area
+    vis.svg = d3.select("#" + vis.parentElement).append("svg")
+        .attr("width", vis.width + vis.margin.left + vis.margin.right)
+        .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
+    vis.wrangleColorData();
+};
+
+ColorVis.prototype.wrangleColorData = function() {
+    var vis = this;
+
+  // var slider = d3.slider().axis(true).min(2000).max(2100).step(5);
+
+  // vis.svg.append(slider);
+
+  function convertHex(hex) {
+    if (hex.length > 2) {
+      result = [0, 0, 0];
+      return result;
+    }
+    else {
+      hex = hex.replace('#','');
+      r = parseInt(hex.substring(0,2), 16);
+      g = parseInt(hex.substring(2,4), 16);
+      b = parseInt(hex.substring(4,6), 16);
+
+      result = [r, g, b];
+      return result;
+    }
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255, g /= 255, b /= 255;
+
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if (max == min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+
+      h /= 6;
+    }
+
+    return [ h, s, l ];
+  }
+
+  vis.displayData = vis.data;
+
+  vis.cleaned = vis.displayData;
+
+  // vis.cleaned.forEach(function(d) {
+  //   var colorObjects = d.colors;
+  //   for (i = 0; i < colorObjects.length; i++) {
+  //       console.log(d.colors[i].color);
+  //       d.colors[i].color = d.colors[i].color;
+  //   }
+  // });
+
+  // console.log(vis.cleaned);
+
+  vis.cleaned.forEach(function(d) {
+    var colorObjects = d.colors;
+    for (i = 0; i < colorObjects.length; i++) {
+      console.log(d.colors[i].css3);
+        var rgb = convertHex(d.colors[i].css3);
+        var hsl = rgbToHsl(rgb[0],rgb[1],rgb[2]);
+        d.colors[i].color = [d.colors[i].color,hsl];
+      }
+  });
+
+    vis.col = vis.cleaned.filter(function(d) {
+        var colorObjects = d.colors;
+        for (i = 0; i < colorObjects.length; i++) {
+            if (d.colors[i].hue == vis.parentElement) {
+                return d;
+            }
+        }
+    });
+
+  vis.col.sort(function(a,b) {
+    var c1 = a.colors;
+    var c2 = b.colors;
+    for (i = 0; i < c1.length; i++) {
+      if (a.colors[i].hue == vis.parentElement) {
+        for (j = 0; j < c2.length; j++) {
+          if (b.colors[j].hue == vis.parentElement) {
+            console.log(a.colors[i].color[1][2]);
+            return (a.colors[i].color[1][2] - b.colors[j].color[1][2]);
+          }
+        }
+      }
+    }
+  });
+
+    vis.filtered = vis.col.filter(function(d) {
+        if (d.classification == "Paintings" || d.classification == "Drawings") {
+            return d;
+        }
+    });
+
+    vis.updateVis();    
+};
+
+
+
+
+
+
+
+
+
+
 
