@@ -74,6 +74,7 @@ function loadData() {
 
 function updateTimeline() {
     timeline.wrangleData();
+    timeline_brushed.wrangleData();
 }
 
 function addToGallery(id) {
