@@ -27,7 +27,7 @@ vis.map = L.map('map', {maxBounds: L.latLngBounds(L.latLng(-81, -181, true), L.l
 	// title layer to map
 	L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png', {
 		minZoom: 1.5,
-		maxZoom: 13
+		maxZoom: 10
 	}).addTo(vis.map);
 	// .attr("class", "mapClass")
 
@@ -142,7 +142,6 @@ Map.prototype.wrangleData = function() {
 						});
 
 						return something;
-						console.log("nothing happens here fyi");
 					}
 
 					var object = findPiece(id);

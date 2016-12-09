@@ -93,7 +93,7 @@ function addToGallery(id) {
     }
 
     var gallery = $("#mygallery");
-    gallery.append("<li><a href='#test-popup'><i class='fa fa-fw fa-tag'></i><span class='badge'>"
+    gallery.append("<li><a onclick='onClick(" + galleryPiece[0].id + ")'><i class='fa fa-fw fa-tag'></i><span class='badge'>"
     + galleryPiece[0].classification + "</span>" + truncate(galleryPiece[0].title) + "</a></li>");
 
     var count = $("#count");
@@ -101,6 +101,53 @@ function addToGallery(id) {
     count.html(value);
 
     createGallery();
+}
+
+function onClick(id) {
+    function findPiece(e) {
+        var something = allData.filter(function(d) {
+            return d.id == e;
+        });
+
+        return something;
+    }
+
+    var object = findPiece(id);
+
+    if (object.length > 0){
+
+        var objectContent = "<table style='width: auto;'><tr><th>Artist: </th><td class='alnleft'>" + object[0].people[0].displayname
+            + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + object[0].datebegin
+            + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + object[0].classification
+            + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + object[0].division
+            + "</td></tr></tr></table>";
+
+        if (object[0].images.length > 0){
+            swal({
+                    title: object[0].title,
+                    text:  objectContent,
+                    // "Artist: " object[0].people[0].displayname ,
+                    imageUrl: object[0].images[0].baseimageurl,
+                    html: true,
+                })
+        }
+
+        else{
+            swal({
+                    title: object[0].title,
+                    text: objectContent,
+                    imageUrl: "img/noimage.jpg",
+                    html: true,
+                    closeOnConfirm: true
+                })
+        }
+    } else {
+        console.log("here");
+        swal({
+            title: "Sorry! No info to display.",
+            imageUrl: "img/noimage.jpg"
+        });
+    }
 }
 
 function createVis() {
@@ -125,13 +172,31 @@ function createVis() {
 
 function createGallery() {
     if (myGallery.length > 0) {
-        $(".testPopup").magnificPopup({ items: {
-            src: '<div class="white-popup"><p>' + myGallery[0].title + '</p><br><p>' +
-            myGallery[0].people[0].displayname + '</p></div>',
-            image: myGallery[0].images[0].baseimageurl,
-            type: 'inline',
-            midClick: true
-        }
+        var items = [];
+
+        myGallery.forEach(function(d) {
+            if (d.images.length > 0) {
+                items.push({
+                    src: d.images[0].baseimageurl,
+                    title: d.title
+                });
+            }
+            else {
+                items.push({
+                    src: "img/noimage.jpg",
+                    title: d.title
+                })
+            }
+        });
+
+        $(".testPopup").magnificPopup({
+            items: items,
+            gallery:{
+                enabled:true,
+                tPrev: $(this).data('prev-text'),
+                tNext: $(this).data('next-text')
+            },
+            type: 'image'
         });
     }
     else {
