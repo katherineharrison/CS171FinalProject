@@ -1,54 +1,54 @@
 // Color Visualization
 
 ColorVis = function(_parentElement, _data){
-	this.parentElement = _parentElement;
-	this.data = _data;
-	this.displayData = _data;
+  this.parentElement = _parentElement;
+  this.data = _data;
+  this.displayData = _data;
 
-	this.initVis();
+  this.initVis();
 };
 
 ColorVis.prototype.initVis = function() {
-	var vis = this;
+  var vis = this;
 
-	// TO DO
-	vis.margin = { top: 0, right: 60, bottom: 60, left: 20 };
+  // TO DO
+  vis.margin = { top: 0, right: 60, bottom: 60, left: 20 };
 
-	vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-		vis.height = 350 - vis.margin.top - vis.margin.bottom;
+  vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
+    vis.height = 350 - vis.margin.top - vis.margin.bottom;
 
-	vis.tooltip = d3.select("#" + vis.parentElement).append("div")
-	.attr("class", "tooltip")
-	.style("opacity", 0);
+  vis.tooltip = d3.select("#" + vis.parentElement).append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
 
-	// SVG drawing area
-	vis.svg = d3.select("#" + vis.parentElement).append("svg")
-		.attr("width", vis.width + vis.margin.left + vis.margin.right)
-		.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
-		.append("g")
-		.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+  // SVG drawing area
+  vis.svg = d3.select("#" + vis.parentElement).append("svg")
+    .attr("width", vis.width + vis.margin.left + vis.margin.right)
+    .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-	vis.wrangleColorData();
+  vis.wrangleColorData();
 };
 
 ColorVis.prototype.wrangleColorData = function() {
-	var vis = this;
-	
-	// var selectBox = document.getElementById("selectBoxColor");
+  var vis = this;
+  
+  // var selectBox = document.getElementById("selectBoxColor");
  //    var selection = selectBox.options[selectBox.selectedIndex].value;
 
   // var slider = d3.slider().axis(true).min(2000).max(2100).step(5);
 
   // vis.svg.append(slider);
 
-	vis.col = vis.data.filter(function(d) {
-		var colorObjects = d.colors;
-		for (i = 0; i < colorObjects.length; i++) {
-			if (d.colors[i].hue == vis.parentElement) {
-				return d;
-			}
-		}
-	});
+  vis.col = vis.data.filter(function(d) {
+    var colorObjects = d.colors;
+    for (i = 0; i < colorObjects.length; i++) {
+      if (d.colors[i].hue == vis.parentElement) {
+        return d;
+      }
+    }
+  });
 
   vis.col.sort(function(a,b) {
     var c1 = a.colors;
@@ -64,20 +64,20 @@ ColorVis.prototype.wrangleColorData = function() {
     }
   });
 
-	vis.filtered = vis.col.filter(function(d) {
-		if (d.classification == "Paintings" || d.classification == "Drawings") {
-			return d;
-		}
-	});
+  vis.filtered = vis.col.filter(function(d) {
+    if (d.classification == "Paintings" || d.classification == "Drawings") {
+      return d;
+    }
+  });
 
-	vis.updateVis();	
+  vis.updateVis();  
 };
 
 ColorVis.prototype.updateVis = function() {
-	var vis = this;
+  var vis = this;
 
-	// $("#" + vis.parentElement + "Count").html(vis.filtered.length);
-	(function() {
+  // $("#" + vis.parentElement + "Count").html(vis.filtered.length);
+  (function() {
   d3.fisheye = {
     scale: function(scaleType) {
           return d3_fisheye_scale(scaleType(), 3, 0);
@@ -222,75 +222,128 @@ ColorVis.prototype.updateVis = function() {
         
 })();
 
-	var xScale = d3.fisheye.scale(d3.scale.linear).domain([0, 520]).range([0, vis.width]).focus(vis.width/2);
+  var xScale = d3.fisheye.scale(d3.scale.linear).domain([0, 520]).range([0, vis.width]).focus(vis.width/2);
 
-	var bar = vis.svg.selectAll("rect").data(vis.filtered);
+  var bar = vis.svg.selectAll("rect").data(vis.filtered);
 
-	bar.enter().append("rect").attr("class", "bar");
+  bar.enter().append("rect").attr("class", "bar");
 
-	bar.exit().remove();
+  bar.exit().remove();
 
     bar.attr("x", function(d, index) {
-					return index * vis.width / vis.filtered.length;
-				})
-				.attr("y", "40")
-				.attr("width", function() {
-					return vis.width / vis.filtered.length;
-				})
-				.attr("height", "350")
-				.attr("fill", function(d) {
-					var colorObject = d.colors;
-					for (i = 0; i < colorObject.length; i++) {
-						if (d.colors[i].hue == vis.parentElement) {
-							return d.colors[i].color[0];
-						}
-					}
-				})
-				.call(position);
+          return index * vis.width / vis.filtered.length;
+        })
+        .attr("y", "40")
+        .attr("width", function() {
+          return vis.width / vis.filtered.length;
+        })
+        .attr("height", "350")
+        .attr("fill", function(d) {
+          var colorObject = d.colors;
+          for (i = 0; i < colorObject.length; i++) {
+            if (d.colors[i].hue == vis.parentElement) {
+              return d.colors[i].color[0];
+            }
+          }
+        })
+        .call(position);
 
-	function position(bar) {
-	    bar.attr("x", function(d, index) {
-	        return xScale(index);
-	    });
-	    bar.attr("width", function(d, index) {
-	        return xScale(index+2) - xScale(index);
-	    })
-	}
+  function position(bar) {
+      bar.attr("x", function(d, index) {
+          return xScale(index);
+      });
+      bar.attr("width", function(d, index) {
+          return xScale(index+2) - xScale(index);
+      })
+  }
 
-	vis.svg.on("mousemove", function() {
-	    var mouse = d3.mouse(this);
-	    xScale.distortion(7).focus(mouse[0]);
+  vis.svg.on("mousemove", function() {
+      var mouse = d3.mouse(this);
+      xScale.distortion(7).focus(mouse[0]);
 
-	    bar.call(position);
-	});
+      bar.call(position);
+  });
 
-	bar.on("mouseover", function(d) {
-		vis.tooltip.transition()
-			.duration(200)
-			.style("opacity", .9)
-			.style("background", "white");
-		vis.tooltip.html(d.title + "<br/>")
-			.style("left", (d3.event.pageX + 5) + "px")
-			.style("top", (d3.event.pageY - 28) + "px");
-	})
-	.on("mouseout", function(d) {
-		vis.tooltip.transition()
-			.duration(500)
-			.style("opacity", 0);
-	})
-	.on("click", function(d) {
-		var imagesObject = d.images;
-     	if(imagesObject.length > 0) {
-			$("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
-		}
-		$("#" + vis.parentElement + "Info").html(d.title);
-	});
+  bar.on("mouseover", function(d) {
+    vis.tooltip.transition()
+      .duration(200)
+      .style("opacity", .9)
+      .style("background", "white");
+    vis.tooltip.html(d.title + "<br/>")
+      .style("left", (d3.event.pageX + 5) + "px")
+      .style("top", (d3.event.pageY - 28) + "px");
+  })
+  .on("mouseout", function(d) {
+    vis.tooltip.transition()
+      .duration(500)
+      .style("opacity", 0);
+  })
+  .on("click", function(d) {
+            // the height is cy
+            console.log(d.datebegin);
+
+            if (d != null){
+                console.log(d.division);
+
+              var objectContent = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
+              + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
+              + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
+              + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
+              + "</td></tr></tr></table>";
+
+              if (d.images.length > 0){
+                swal({
+                    title: d.title,
+                                    text:  objectContent,
+                                    // "Artist: " object[0].people[0].displayname ,
+                                    imageUrl: d.images[0].baseimageurl,
+                                    html: true,
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#8CD4F5",
+                                    confirmButtonText: "Add to Gallery",
+                                    cancelButtonText: "Cancel",
+                                    closeOnConfirm: false
+                                },
+                                    function(){
+                                        addToGallery(d.id);
+                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+                                    });
+                            }
+
+                            else{
+                                swal({
+                                    title: d.title,
+                                    text: objectContent,
+                                    imageUrl: "img/noimage.jpg",
+                                    html: true,
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#8CD4F5",
+                                    confirmButtonText: "Add to Gallery",
+                                    cancelButtonText: "Cancel",
+                                    closeOnConfirm: false
+                                },
+                                    function(){
+                                        addToGallery(d.id);
+                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+                                    });
+                            }
+                        }
+
+                        if(d.length == 0){
+                            swal({
+                                title: "Sorry! No info to display.",
+                                imageUrl: "img/noimage.jpg"
+                            });
+                        }
+        
+    // var imagesObject = d.images;
+    //   if(imagesObject.length > 0) {
+    //   $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
+    // }
+    // $("#" + vis.parentElement + "Info").html(d.title);
+
+
+  });
 
 
 };
-
-
-
-
-
-

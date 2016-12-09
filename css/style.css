@@ -39,7 +39,7 @@ hr {
 }
 
 #ColorTitle {
-  font-family: Georgia;
+  font-family: avenir;
   text-align: left;
 }
 
@@ -48,12 +48,12 @@ hr {
 }
 
 .RedGroup .OrangeGroup .YellowGroup .GreenGroup .BlueGroup {
-  font-family: Georgia;
+  font-family: avenir;
   text-align: left;
 }
 
 .RedInfo .OrangeInfo .YellowInfo .GreenInfo .BlueInfo {
-  font-family: Georgia;
+  font-family: avenir;
   font-style: italic;
 }
 
@@ -149,6 +149,11 @@ table {
 
 .alnleft { 
   text-align: left; 
+}
+
+#radioBtns{
+  text-align: center;
+  padding-right: 5px;
 }
 
 nav.navbar-findcond { background: #fff; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }

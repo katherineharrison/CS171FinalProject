@@ -230,6 +230,3 @@ Map.prototype.updateVis = function() {
 
 	// move bind circles bit to here once we globalize place data 
 };
-
-//  This will not end up being the architecture as we
-//  we will have to load in a geoJSON, but it'll work for now.

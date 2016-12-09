@@ -135,7 +135,7 @@ function onClick(id) {
 function createVis() {
 
     function convertHex(hex) {
-          console.log(hex); 
+          // console.log(hex); 
           hex = hex.replace('#','');
           r = parseInt(hex.substring(0,2), 16);
           g = parseInt(hex.substring(2,4), 16);
