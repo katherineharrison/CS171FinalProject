@@ -70,6 +70,35 @@ ColorVis.prototype.wrangleColorData = function() {
     }
   });
 
+// // radio button functinality 
+//   var selectBox = document.getElementById("radioBtns");
+//   var selection = selectBox.options[selectBox.selectedIndex].value;
+
+//   console.log(selection);
+
+//   if (selection == "red") {
+//     red = new ColorVis("Red", allData);
+//   }
+//     else if (selection == "orange") {
+//            orange = new ColorVis("Orange", allData);
+   
+//     }
+//     else if (selection == "yellow") {
+//      yellow = new ColorVis("Yellow", allData);
+    
+//     }
+//     else if (selection == "green") {
+//    green = new ColorVis("Green", allData);
+    
+//     }
+//     else if (selection == "blue") {
+//  blue = new ColorVis("Blue", allData);
+//     }
+//     else {
+// red = new ColorVis("Red", allData);
+
+//     }
+
   vis.updateVis();  
 };
 
