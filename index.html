@@ -83,7 +83,7 @@
 	<div class="container">
 		<div id="region" class="row">
 			<h2 class="title">Explore Art by Region</h2>
-			<div class="visDescrip">This is what this visualization does and how you should use it.</div>
+			<div class="visDescrip">Zoom into the map to explore art by location. Click on a cluster to see all of the art pieces in the collection created in that place. Click the dots to view art and add it to your gallery.</div>
 			<div id="map"></div>
 		</div>
 
@@ -123,8 +123,17 @@
 
 		<div id="color" class="row">
 			<h2 class="title">Explore Art by Color</h2>
-			<div class="visDescrip">This visual took way too long and doesn't really do anything,
-				but if you mouse over it there's a cool fisheye effect so. Also, the color gradient, while not exactly beautiful, took like nine years, so please just appreciate the effort. Thank you. That is all.</div>
+			<div class="visDescrip">Move through the color spectrum to view art pieces by predominant color value. Click on a bar to view art and add it to your gallery.</div>
+
+			<div id="radioBtns">
+				<form action="">
+	  				<input type="radio" name="colorBtn" value="red"> Red  
+	  				<input type="radio" name="colorBtn" value="orange"> Orange  
+	  				<input type="radio" name="colorBtn" value="yellow"> Yellow   
+	  				<input type="radio" name="colorBtn" value="green"> Green  
+	  				<input type="radio" name="colorBtn" value="blue"> Blue  
+				</form>
+			</div>
 	<!--         <div class="user-control">
 		        <select id="selectBoxColor" class="form-control" onchange="ColorVis.prototype.wrangleColorData">
 		            <option value="Red">Red</option>
@@ -138,7 +147,7 @@
 		    
 		    <div class="row">
 			    <div class="col-sm-2 RedGroup">
-			      <h1 id="ColorTitle">Red</h1>
+			      <h2 id="ColorTitle">Red</h2>
 			      <div id="RedCount"></div>
 			      <div id="RedImage"></div>
 			      <div id="RedInfo"></div>
@@ -149,7 +158,7 @@
 			</div>
 		    <div class="row">
 			    <div class="col-sm-2">
-			      <h1 id="ColorTitle">Orange</h1>
+			      <h2 id="ColorTitle">Orange</h2>
 			      <div id="OrangeCount"></div>
 			      <div id="OrangeImage"></div>
 			      <div id="OrangeInfo"></div>
@@ -160,7 +169,7 @@
 			</div>
 			<div class="row">
 			    <div class="col-sm-2">
-			      <h1 id="ColorTitle">Yellow</h1>
+			      <h2 id="ColorTitle">Yellow</h2>
 			      <div id="YellowCount"></div>
 			      <div id="YellowImage"></div>
 			      <div id="YellowInfo"></div>
@@ -171,7 +180,7 @@
 			</div>
 			<div class="row">
 			    <div class="col-sm-2">
-			      <h1 id="ColorTitle">Green</h1>
+			      <h2 id="ColorTitle">Green</h2>
 			      <div id="GreenCount"></div>
 			      <div id="GreenImage"></div>
 			      <div id="GreenInfo"></div>
@@ -182,7 +191,7 @@
 			</div>
 			<div class="row">
 			    <div class="col-sm-2">
-			      <h1 id="ColorTitle">Blue</h1>
+			      <h2 id="ColorTitle">Blue</h2>
 			      <div id="BlueCount"></div>
 			      <div id="BlueImage"></div>
 			      <div id="BlueInfo"></div>

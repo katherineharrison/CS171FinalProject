@@ -367,13 +367,13 @@ Timeline.prototype.updateVis = function() {
 				// .style("fill", "black");
 	
 
-		document.getElementById("title").innerHTML
-			= "<h2>" + d.title + "</h2>";
+		// document.getElementById("title").innerHTML
+		// 	= "<h2>" + d.title + "</h2>";
 
-		document.getElementById("stats").innerHTML
-			= "<table><tr><th>Year: </th><td>" + formatTime(d.dateend)
-            + "</td></tr><tr><th>Medium: </th><td>" + d.classification
-            + "</td></tr></tr></table>";
+		// document.getElementById("stats").innerHTML
+		// 	= "<table><tr><th>Year: </th><td>" + formatTime(d.dateend)
+  //           + "</td></tr><tr><th>Medium: </th><td>" + d.classification
+  //           + "</td></tr></tr></table>";
 
   //       document.getElementById("pic").innerHTML
   //       	= var imagesObject = d.images;
