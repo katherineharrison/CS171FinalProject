@@ -49,6 +49,21 @@ ColorVis.prototype.wrangleColorData = function() {
 			}
 		}
 	});
+
+  vis.col.sort(function(a,b) {
+    var c1 = a.colors;
+    var c2 = b.colors;
+    for (i = 0; i < c1.length; i++) {
+      if (a.colors[i].hue == vis.parentElement) {
+        for (j = 0; j < c2.length; j++) {
+          if (b.colors[j].hue == vis.parentElement) {
+            return (a.colors[i].color[1][2] - b.colors[j].color[1][2]);
+          }
+        }
+      }
+    }
+  });
+
 	vis.filtered = vis.col.filter(function(d) {
 		if (d.classification == "Paintings" || d.classification == "Drawings") {
 			return d;
@@ -227,7 +242,7 @@ ColorVis.prototype.updateVis = function() {
 					var colorObject = d.colors;
 					for (i = 0; i < colorObject.length; i++) {
 						if (d.colors[i].hue == vis.parentElement) {
-							return d.colors[i].color;
+							return d.colors[i].color[0];
 						}
 					}
 				})
