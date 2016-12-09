@@ -30,8 +30,8 @@ Brushed.prototype.initVis = function() {
         .domain(d3.extent(vis.data, function(d) { return d.dateend; }));
 
     vis.y = d3.scale.linear()
-        .domain([10, 140])
-        .range([10, vis.height - vis.margin.left - vis.margin.right]);
+        .domain([10, 130])
+        .range([10, vis.height - 30]);
 
     vis.names = d3.scale.ordinal()
         .domain(["Paintings", "Prints", "Drawings", "Photographs",  "Sculpture", "Vessels", "Artists' Tools", "Multiples",
@@ -65,6 +65,9 @@ Brushed.prototype.initVis = function() {
 
     vis.dots = vis.circles.selectAll(".dot").data(vis.data);
 
+    vis.cValue = function(d) { return d.classification;};
+    vis.color = d3.scale.category20();
+
     vis.wrangleData();
 };
 
@@ -73,6 +76,94 @@ Brushed.prototype.wrangleData = function() {
 
     vis.displayData = vis.data;
     // TO DO
+    var selectBox = document.getElementById("selectBoxMedium");
+    var selection = selectBox.options[selectBox.selectedIndex].value;
+
+    console.log(selection);
+
+    vis.displayData = vis.data;
+
+            if (selection == "all") {
+                vis.displayData = vis.data;
+            }
+            else if (selection == "Paintings") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Paintings";
+                });    
+            }
+            else if (selection == "Prints") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Prints";
+                }); 
+            }
+            else if (selection == "Drawings") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Drawings";
+                }); 
+            }
+            else if (selection == "Photographs") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Photographs";
+                }); 
+            }
+            else if (selection == "Sculpture") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Sculpture";
+                }); 
+            }
+            else if (selection == "Vessels") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Vessels";
+                }); 
+            }
+            else if (selection == "Artists' Tools") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Artists' Tools";
+                }); 
+            }
+            else if (selection == "Multiples") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Multiples";
+                }); 
+            }
+            else if (selection == "Books") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Books";
+                }); 
+            }
+            else if (selection == "Textile Arts") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Textile Arts";
+                }); 
+            }
+            else if (selection == "Medals and Medallions") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Medals and Medallions";
+                }); 
+            }
+            else if (selection == "Furnitures") {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Furnitures";
+                }); 
+            }
+            else {
+                vis.svg.select("line").remove();
+                vis.displayData = vis.displayData.filter(function(d) {
+                    return d.classification == "Other";
+                }); 
+            }
 
     vis.updateVis();
 };
@@ -144,7 +235,7 @@ Brushed.prototype.updateVis = function() {
             }
         })
         .style("fill", function(d) {
-            return color(cValue(d));
+            return vis.color(vis.cValue(d));
         })
         .on("mouseover", function(d) {
             tooltip.transition()

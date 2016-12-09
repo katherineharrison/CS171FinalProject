@@ -26,6 +26,11 @@ hr {
 }
 */
 
+.selectBoxes {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .visDescrip {
   text-align: center;
   font-family: avenir;
@@ -193,4 +198,13 @@ h2 {
     stroke: #fff;
     fill-opacity: .125;
     shape-rendering: crispEdges;
+}
+
+.white-popup {
+    position: relative;
+    background: #FFF;
+    padding: 20px;
+    width: auto;
+    max-width: 500px;
+    margin: 20px auto;
 }
