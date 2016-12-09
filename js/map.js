@@ -147,15 +147,9 @@ Map.prototype.wrangleData = function() {
 
 					var object = findPiece(id);
 
-					if (!object){
-						swal({
-							title: "Sorry! No info to display.",
-							imageUrl: "img/noimage.jpg"
-						});
-					}
-
+			
 					console.log(object);
-					console.log(object[0].title);
+					//console.log(object[0].title);
 
 					// // sweet alert tooltip 
 					// swal({
@@ -211,9 +205,8 @@ Map.prototype.wrangleData = function() {
 										swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
 									});
 							}
-						}
-
-						if(object[0].length == 0){
+						} else {
+							console.log("here");
 							swal({
 								title: "Sorry! No info to display.",
 								imageUrl: "img/noimage.jpg"
