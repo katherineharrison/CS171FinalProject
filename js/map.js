@@ -169,7 +169,7 @@ Map.prototype.wrangleData = function() {
 					// functions for sweetalerts
 						if (object.length > 0){
 
-								var objectContent = "<table><tr><th>Artist: </th><td class='alnleft'>" + object[0].people[0].displayname 
+								var objectContent = "<table style='width: auto;'><tr><th>Artist: </th><td class='alnleft'>" + object[0].people[0].displayname
                                     + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + object[0].datebegin 
                                     + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + object[0].classification
                                     + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + object[0].division
