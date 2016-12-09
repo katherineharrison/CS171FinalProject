@@ -179,6 +179,8 @@ Brushed.prototype.updateVis = function() {
 
     var formatTime = d3.time.format("%Y");
 
+    vis.timeArray = [0,1];
+
     var cValue = function(d) { return d.classification;},
         color = d3.scale.category20();
 
@@ -188,52 +190,52 @@ Brushed.prototype.updateVis = function() {
 
     vis.dot.exit().remove();
 
-    vis.dot.style("opacity", 0.5)
+    vis.dot.style("opacity", 0.7)
         .attr("r", 4)
         .attr("cx", function(d) {
             return vis.x(d.dateend);
         })
         .attr("cy", function(d) {
-            if (d.classification == "Paintings") {
-                return vis.y(10);
-            }
-            else if (d.classification == "Prints") {
-                return vis.y(20);
-            }
-            else if (d.classification == "Drawings") {
-                return vis.y(30);
-            }
-            else if (d.classification == "Photographs") {
-                return vis.y(40);
-            }
-            else if (d.classification == "Sculpture") {
-                return vis.y(50);
-            }
-            else if (d.classification == "Vessels") {
-                return vis.y(60);
-            }
-            else if (d.classification == "Artists' Tools") {
-                return vis.y(70);
-            }
-            else if (d.classification == "Multiples") {
-                return vis.y(80);
-            }
-            else if (d.classification == "Books") {
-                return vis.y(90);
-            }
-            else if (d.classification == "Textile Arts") {
-                return vis.y(100);
-            }
-            else if (d.classification == "Medals and Medallions") {
-                return vis.y(110);
-            }
-            else if (d.classification == "Furnitures") {
-                return vis.y(120);
-            }
-            else {
-                return vis.y(130);
-            }
-        })
+                if (d.classification == "Paintings") {
+                    return vis.y(10);
+                }
+                else if (d.classification == "Prints") {
+                    return vis.y(20);
+                }
+                else if (d.classification == "Drawings") {
+                    return vis.y(30);
+                }
+                else if (d.classification == "Photographs") {
+                    return vis.y(40);
+                }
+                else if (d.classification == "Sculpture") {
+                    return vis.y(50);
+                }
+                else if (d.classification == "Vessels") {
+                    return vis.y(60);
+                }
+                else if (d.classification == "Artists' Tools") {
+                    return vis.y(70);
+                }
+                else if (d.classification == "Multiples") {
+                    return vis.y(80);
+                }
+                else if (d.classification == "Books") {
+                    return vis.y(90);
+                }
+                else if (d.classification == "Textile Arts") {
+                    return vis.y(100);
+                }
+                else if (d.classification == "Medals and Medallions") {
+                    return vis.y(110);
+                }
+                else if (d.classification == "Furnitures") {
+                    return vis.y(120);
+                }
+                else {
+                    return vis.y(130);
+                }
+            })
         .style("fill", function(d) {
             return vis.color(vis.cValue(d));
         })
