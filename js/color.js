@@ -267,6 +267,8 @@ ColorVis.prototype.updateVis = function() {
           return vis.width / vis.filtered.length;
         })
         .attr("height", "350")
+        .attr("stroke", "white")
+        .attr("stroke-width", ".2")
         .attr("fill", function(d) {
           var colorObject = d.colors;
           for (i = 0; i < colorObject.length; i++) {
