@@ -129,6 +129,10 @@ path {
   padding-right: 5px;
 }
 
+input[type=checkbox], input[type=radio] {
+    margin-left: 10px;
+}
+
 /* Map Visual */
 
 .country {
