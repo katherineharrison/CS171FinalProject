@@ -129,7 +129,6 @@ path {
   padding-right: 5px;
 }
 
-
 table {
   margin: 0 auto;
   background-color: #f6f6f6;
@@ -158,6 +157,9 @@ img{
   display: block;
 }
 
+input[type=checkbox], input[type=radio] {
+    margin-left: 10px;
+}
 
 /* Map Visual */
 

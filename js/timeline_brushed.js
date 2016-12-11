@@ -80,19 +80,24 @@ Brushed.prototype.initVis = function() {
 Brushed.prototype.wrangleData = function() {
     var vis = this;
 
-    vis.displayData = vis.data;
-    // TO DO
-    var selectBox = document.getElementById("selectBoxMedium");
-    var selection = selectBox.options[selectBox.selectedIndex].value;
+        var buttons = document.getElementsByName("timeBtn");
+    var selection;
+    for (var i = 0, length = buttons.length; i < length; i++) {
+        if (buttons[i].checked) {
+            selection = buttons[i].value;
+            break;
+        }
+    }
 
     console.log(selection);
 
     vis.displayData = vis.data;
 
-    if (selection == "all") {
-        vis.displayData = vis.data;
-    }
-    else if (selection == "Paintings") {
+    vis.displayData.sort(function(a,b) {
+        return (a.dateend - b.dateend);
+    });
+
+    if (selection == "Paintings") {
         vis.svg.select("line").remove();
         vis.displayData = vis.displayData.filter(function(d) {
             return d.classification == "Paintings";
@@ -122,7 +127,7 @@ Brushed.prototype.wrangleData = function() {
             return d.classification == "Sculpture";
         }); 
     }
-    else {
+    else if (selection == "Other") {
         vis.svg.select("line").remove();
         vis.displayData = vis.displayData.filter(function(d) {
             return (d.classification == "Vessels" || 
@@ -134,10 +139,69 @@ Brushed.prototype.wrangleData = function() {
                 d.classification == "Furnitures");
         }); 
     }
+    else {
+        vis.displayData = vis.data;
+    }
 
     vis.updateVis();
-};
 
+    // vis.displayData = vis.data;
+    // // TO DO
+    // var selectBox = document.getElementById("selectBoxMedium");
+    // var selection = selectBox.options[selectBox.selectedIndex].value;
+
+    // console.log(selection);
+
+    // vis.displayData = vis.data;
+
+    // if (selection == "all") {
+    //     vis.displayData = vis.data;
+    // }
+    // else if (selection == "Paintings") {
+    //     vis.svg.select("line").remove();
+    //     vis.displayData = vis.displayData.filter(function(d) {
+    //         return d.classification == "Paintings";
+    //     });    
+    // }
+    // else if (selection == "Prints") {
+    //     vis.svg.select("line").remove();
+    //     vis.displayData = vis.displayData.filter(function(d) {
+    //         return d.classification == "Prints";
+    //     }); 
+    // }
+    // else if (selection == "Drawings") {
+    //     vis.svg.select("line").remove();
+    //     vis.displayData = vis.displayData.filter(function(d) {
+    //         return d.classification == "Drawings";
+    //     }); 
+    // }
+    // else if (selection == "Photographs") {
+    //     vis.svg.select("line").remove();
+    //     vis.displayData = vis.displayData.filter(function(d) {
+    //         return d.classification == "Photographs";
+    //     }); 
+    // }
+    // else if (selection == "Sculpture") {
+    //     vis.svg.select("line").remove();
+    //     vis.displayData = vis.displayData.filter(function(d) {
+    //         return d.classification == "Sculpture";
+    //     }); 
+    // }
+    // else {
+    //     vis.svg.select("line").remove();
+    //     vis.displayData = vis.displayData.filter(function(d) {
+    //         return (d.classification == "Vessels" || 
+    //             d.classification == "Artists' Tools" || 
+    //             d.classification == "Multiples" || 
+    //             d.classification == "Books" || 
+    //             d.classification == "Textile Arts" ||
+    //             d.classification == "Medals and Medallions" ||
+    //             d.classification == "Furnitures");
+    //     }); 
+    // }
+
+    // vis.updateVis();
+};
 
 Brushed.prototype.updateVis = function() {
     var vis = this;
@@ -154,7 +218,7 @@ Brushed.prototype.updateVis = function() {
 
     function color(c) {
         if (c == "Paintings") {
-            return "F0810F";
+            return "#91219E";
         }
         else if (c == "Prints") {
             return "#6EB5C0";
@@ -166,7 +230,7 @@ Brushed.prototype.updateVis = function() {
             return "F18D9E";
         }
         else if (c == "Sculpture") {
-            return "#91219E";
+            return "F0810F";
         }
         else {
             return "#CF3721";
@@ -209,7 +273,8 @@ Brushed.prototype.updateVis = function() {
             tooltip.transition()
                 .duration(200)
                 .style("opacity", .9)
-                .style("background", "white");
+                .style("background", "white")
+                .style("border-radius", "2px");
             tooltip.html(d.title + "<br/>" + formatTime(d.dateend) + " " + d.classification)
                 .style("left", (d3.event.pageX + 5) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
