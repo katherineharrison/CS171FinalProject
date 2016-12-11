@@ -151,53 +151,17 @@ Timeline.prototype.wrangleData = function() {
 			return d.classification == "Sculpture";
 		}); 
     }
-    else if (selection == "Vessels") {
+	else {
         vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Vessels";
-		}); 
-    }
-    else if (selection == "Artists' Tools") {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Artists' Tools";
-		}); 
-    }
-    else if (selection == "Multiples") {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Multiples";
-		}); 
-    }
-    else if (selection == "Books") {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Books";
-		}); 
-    }
-    else if (selection == "Textile Arts") {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Textile Arts";
-		}); 
-    }
-    else if (selection == "Medals and Medallions") {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Medals and Medallions";
-		}); 
-    }
-    else if (selection == "Furnitures") {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Furnitures";
-		}); 
-    }
-    else {
-        vis.svg.select("line").remove();
-		vis.displayData = vis.displayData.filter(function(d) {
-			return d.classification == "Other";
-		}); 
+        vis.displayData = vis.displayData.filter(function(d) {
+            return (d.classification == "Vessels" || 
+                d.classification == "Artists' Tools" || 
+                d.classification == "Multiples" || 
+                d.classification == "Books" || 
+                d.classification == "Textile Arts" ||
+                d.classification == "Medals and Medallions" ||
+                d.classification == "Furnitures");
+        }); 
     }
 
 	vis.x.domain(d3.extent(vis.displayData, function (d) {
@@ -206,8 +170,68 @@ Timeline.prototype.wrangleData = function() {
 
 	vis.updateVis();
 
-	// TO DO
+	// var buttons = document.getElementsByName("timeBtn");
+	// var selection;
+	// for (var i = 0, length = buttons.length; i < length; i++) {
+ //    	if (buttons[i].checked) {
+ //        	selection = buttons[i].value;
+ //        	break;
+ //    	}
+	// }
 
+	// console.log(selection);
+
+	// vis.displayData = vis.data;
+
+	// vis.displayData.sort(function(a,b) {
+	// 	return (a.dateend - b.dateend);
+	// });
+
+	// if (selection == "Paintings") {
+ //        vis.svg.select("line").remove();
+	// 	vis.displayData = vis.displayData.filter(function(d) {
+	// 		return d.classification == "Paintings";
+	// 	});    
+ //    }
+ //    else if (selection == "Prints") {
+ //        vis.svg.select("line").remove();
+	// 	vis.displayData = vis.displayData.filter(function(d) {
+	// 		return d.classification == "Prints";
+	// 	}); 
+ //    }
+ //    else if (selection == "Drawings") {
+ //        vis.svg.select("line").remove();
+	// 	vis.displayData = vis.displayData.filter(function(d) {
+	// 		return d.classification == "Drawings";
+	// 	}); 
+ //    }
+ //    else if (selection == "Photographs") {
+ //        vis.svg.select("line").remove();
+	// 	vis.displayData = vis.displayData.filter(function(d) {
+	// 		return d.classification == "Photographs";
+	// 	}); 
+ //    }
+ //    else if (selection == "Sculpture") {
+ //        vis.svg.select("line").remove();
+	// 	vis.displayData = vis.displayData.filter(function(d) {
+	// 		return d.classification == "Sculpture";
+	// 	}); 
+ //    }
+	// else if (selection == "Other") {
+ //        vis.svg.select("line").remove();
+ //        vis.displayData = vis.displayData.filter(function(d) {
+ //            return (d.classification == "Vessels" || 
+ //                d.classification == "Artists' Tools" || 
+ //                d.classification == "Multiples" || 
+ //                d.classification == "Books" || 
+ //                d.classification == "Textile Arts" ||
+ //                d.classification == "Medals and Medallions" ||
+ //                d.classification == "Furnitures");
+ //        }); 
+ //    }
+ //    else {
+	// 	vis.displayData = vis.data;
+ //    }
 
 };
 
@@ -310,18 +334,18 @@ Timeline.prototype.updateVis = function() {
 			return color(vis.cValue(d));
 		})
 		.on("mouseover", function(d) {
-			// tooltip.transition()
-			// 	.duration(200)
-			// 	.style("opacity", .9)
-			// 	.style("background", "white");
-			// tooltip.html(d.title + "<br/>" + formatTime(d.dateend) + " " + d.classification)
-			// 	.style("left", (d3.event.pageX + 5) + "px")
-			// 	.style("top", (d3.event.pageY - 28) + "px");
+			tooltip.transition()
+				.duration(200)
+				.style("opacity", .9)
+				.style("background", "white");
+			tooltip.html(formatTime(d.dateend))
+				.style("left", (d3.event.pageX + 5) + "px")
+				.style("top", (d3.event.pageY - 28) + "px");
 		})
 		.on("mouseout", function(d) {
-			// tooltip.transition()
-			// 	.duration(500)
-			// 	.style("opacity", 0);
+			tooltip.transition()
+				.duration(500)
+				.style("opacity", 0);
 		})
 		.on("click", onclick)
 
@@ -339,99 +363,62 @@ Timeline.prototype.updateVis = function() {
 
 		console.log(d);
 
-		// var imagesObject = d.images;
-  //    	if(imagesObject.length > 0) {
-		// 	$("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
-		// }
-		// $("#" + vis.parentElement + "Info").html(d.title);
+	    vis.focus.append("line")
+	        .attr("class", "x")
+	        .style("stroke", "black")
+			.on("click", function(d) {
+				vis.svg.select("line").remove();
 
-			    vis.focus.append("line")
-		        .attr("class", "x")
-		        .style("stroke", "black")
-		.on("click", function(d) {
-			// the height is cy
-
-			vis.svg.select("line").remove();
-
-			vis.focus.append("line")
-				.attr("class", "line")
-				.style("stroke", "black")
-				.attr("y1", 0)
-				.attr("y2", function () {
-					if (d.classification == "Paintings") {
-						return 10;
-					}
-					else if (d.classification == "Prints") {
-						return 20;
-					}
-					else if (d.classification == "Drawings") {
-						return 30;
-					}
-					else if (d.classification == "Photographs") {
-						return 40;
-					}
-					else if (d.classification == "Sculpture") {
-						return 50;
-					}
-					else if (d.classification == "Vessels") {
-						return 60;
-					}
-					else if (d.classification == "Artists' Tools") {
-						return 70;
-					}
-					else if (d.classification == "Multiples") {
-						return 80;
-					}
-					else if (d.classification == "Books") {
-						return 90;
-					}
-					else if (d.classification == "Textile Arts") {
-						return 100;
-					}
-					else if (d.classification == "Medals and Medallions") {
-						return 110;
-					}
-					else if (d.classification == "Furnitures") {
-						return 120;
-					}
-					else {
-						return 130;
-					}
-				})
-				.attr("x1", vis.x(d.dateend))
-				.attr("x2", vis.x(d.dateend));
+				vis.focus.append("line")
+					.attr("class", "line")
+					.style("stroke", "black")
+					.attr("y1", 0)
+					.attr("y2", function () {
+						if (d.classification == "Paintings") {
+							return 10;
+						}
+						else if (d.classification == "Prints") {
+							return 20;
+						}
+						else if (d.classification == "Drawings") {
+							return 30;
+						}
+						else if (d.classification == "Photographs") {
+							return 40;
+						}
+						else if (d.classification == "Sculpture") {
+							return 50;
+						}
+						else if (d.classification == "Vessels") {
+							return 60;
+						}
+						else if (d.classification == "Artists' Tools") {
+							return 70;
+						}
+						else if (d.classification == "Multiples") {
+							return 80;
+						}
+						else if (d.classification == "Books") {
+							return 90;
+						}
+						else if (d.classification == "Textile Arts") {
+							return 100;
+						}
+						else if (d.classification == "Medals and Medallions") {
+							return 110;
+						}
+						else if (d.classification == "Furnitures") {
+							return 120;
+						}
+						else {
+							return 130;
+						}
+					})
+					.attr("x1", vis.x(d.dateend))
+					.attr("x2", vis.x(d.dateend));
 		});
 
 			vis.focus.style("display", null);
-			// var line = d3.line()
-			   //  		.x(function(d) { return cx; })
-			   //  		.y(function(d) { return cy; })
-			   //  		.style("fill", "black");
-			// the height is cy
-			// var line = d3.line()
-				// .x(function(d) { return cx; })
-				// .y(function(d) { return cy; })
-				// .style("fill", "black");
-	
 
-		// document.getElementById("title").innerHTML
-		// 	= "<h2>" + d.title + "</h2>";
-
-		// document.getElementById("stats").innerHTML
-		// 	= "<table><tr><th>Year: </th><td>" + formatTime(d.dateend)
-  //           + "</td></tr><tr><th>Medium: </th><td>" + d.classification
-  //           + "</td></tr></tr></table>";
-
-  //       document.getElementById("pic").innerHTML
-  //       	= var imagesObject = d.images;
-  //    	if(imagesObject.length > 0) {
-		// 	$("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
-		// }
-		// $("#" + vis.parentElement + "Info").html(d.title);
 	}
-
-		// });
-
-
-	// TO DO
 };

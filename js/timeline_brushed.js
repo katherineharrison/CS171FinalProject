@@ -89,87 +89,51 @@ Brushed.prototype.wrangleData = function() {
 
     vis.displayData = vis.data;
 
-            if (selection == "all") {
-                vis.displayData = vis.data;
-            }
-            else if (selection == "Paintings") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Paintings";
-                });    
-            }
-            else if (selection == "Prints") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Prints";
-                }); 
-            }
-            else if (selection == "Drawings") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Drawings";
-                }); 
-            }
-            else if (selection == "Photographs") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Photographs";
-                }); 
-            }
-            else if (selection == "Sculpture") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Sculpture";
-                }); 
-            }
-            else if (selection == "Vessels") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Vessels";
-                }); 
-            }
-            else if (selection == "Artists' Tools") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Artists' Tools";
-                }); 
-            }
-            else if (selection == "Multiples") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Multiples";
-                }); 
-            }
-            else if (selection == "Books") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Books";
-                }); 
-            }
-            else if (selection == "Textile Arts") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Textile Arts";
-                }); 
-            }
-            else if (selection == "Medals and Medallions") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Medals and Medallions";
-                }); 
-            }
-            else if (selection == "Furnitures") {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Furnitures";
-                }); 
-            }
-            else {
-                vis.svg.select("line").remove();
-                vis.displayData = vis.displayData.filter(function(d) {
-                    return d.classification == "Other";
-                }); 
-            }
+    if (selection == "all") {
+        vis.displayData = vis.data;
+    }
+    else if (selection == "Paintings") {
+        vis.svg.select("line").remove();
+        vis.displayData = vis.displayData.filter(function(d) {
+            return d.classification == "Paintings";
+        });    
+    }
+    else if (selection == "Prints") {
+        vis.svg.select("line").remove();
+        vis.displayData = vis.displayData.filter(function(d) {
+            return d.classification == "Prints";
+        }); 
+    }
+    else if (selection == "Drawings") {
+        vis.svg.select("line").remove();
+        vis.displayData = vis.displayData.filter(function(d) {
+            return d.classification == "Drawings";
+        }); 
+    }
+    else if (selection == "Photographs") {
+        vis.svg.select("line").remove();
+        vis.displayData = vis.displayData.filter(function(d) {
+            return d.classification == "Photographs";
+        }); 
+    }
+    else if (selection == "Sculpture") {
+        vis.svg.select("line").remove();
+        vis.displayData = vis.displayData.filter(function(d) {
+            return d.classification == "Sculpture";
+        }); 
+    }
+    else {
+        vis.svg.select("line").remove();
+        vis.displayData = vis.displayData.filter(function(d) {
+            return (d.classification == "Vessels" || 
+                d.classification == "Artists' Tools" || 
+                d.classification == "Multiples" || 
+                d.classification == "Books" || 
+                d.classification == "Textile Arts" ||
+                d.classification == "Medals and Medallions" ||
+                d.classification == "Furnitures");
+        }); 
+    }
 
     vis.updateVis();
 };
@@ -236,7 +200,6 @@ Brushed.prototype.updateVis = function() {
                 return (2 * vis.timeArray[1]);
             }
 
-
         })
         .style("fill", function(d) {
             return color(vis.cValue(d));
@@ -258,62 +221,57 @@ Brushed.prototype.updateVis = function() {
                 .style("opacity", 0);
         })
         .on("click", function(d) {
-            // the height is cy
             console.log(d.datebegin);
-
-            if (d != null){
+            if (d != null) {
                 console.log(d.division);
+                var objectContent = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
+                    + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
+                    + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
+                    + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
+                    + "</td></tr></tr></table>";
+                if (d.images.length > 0) {
+                    swal({
+                        title: d.title,
+                        text:  objectContent,
+                        // "Artist: " object[0].people[0].displayname ,
+                        imageUrl: d.images[0].baseimageurl,
+                        html: true,
+                        showCancelButton: true,
+                        confirmButtonColor: "#8CD4F5",
+                        confirmButtonText: "Add to Gallery",
+                        cancelButtonText: "Cancel",
+                        closeOnConfirm: false
+                    },
+                        function(){
+                            addToGallery(d.id);
+                            swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+                        });
+                }
+                else {
+                    swal({
+                        title: d.title,
+                        text: objectContent,
+                        imageUrl: "img/noimage.jpg",
+                        html: true,
+                        showCancelButton: true,
+                        confirmButtonColor: "#8CD4F5",
+                        confirmButtonText: "Add to Gallery",
+                        cancelButtonText: "Cancel",
+                        closeOnConfirm: false
+                    },
+                        function(){
+                            addToGallery(d.id);
+                            swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+                        });
+                }
+            }
+            if(d.length == 0) {
+                swal({
+                    title: "Sorry! No info to display.",
+                    imageUrl: "img/noimage.jpg"
+                });
+            }
 
-                                var objectContent = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
-                                    + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
-                                    + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
-                                    + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
-                                    + "</td></tr></tr></table>";
-
-                            if (d.images.length > 0){
-                                swal({
-                                    title: d.title,
-                                    text:  objectContent,
-                                    // "Artist: " object[0].people[0].displayname ,
-                                    imageUrl: d.images[0].baseimageurl,
-                                    html: true,
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#8CD4F5",
-                                    confirmButtonText: "Add to Gallery",
-                                    cancelButtonText: "Cancel",
-                                    closeOnConfirm: false
-                                },
-                                    function(){
-                                        addToGallery(d.id);
-                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-                                    });
-                            }
-
-                            else{
-                                swal({
-                                    title: d.title,
-                                    text: objectContent,
-                                    imageUrl: "img/noimage.jpg",
-                                    html: true,
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#8CD4F5",
-                                    confirmButtonText: "Add to Gallery",
-                                    cancelButtonText: "Cancel",
-                                    closeOnConfirm: false
-                                },
-                                    function(){
-                                        addToGallery(d.id);
-                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-                                    });
-                            }
-                        }
-
-                        if(d.length == 0){
-                            swal({
-                                title: "Sorry! No info to display.",
-                                imageUrl: "img/noimage.jpg"
-                            });
-                        }
         });
 
     // Define the clipping region
