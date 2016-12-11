@@ -33,13 +33,6 @@ ColorVis.prototype.initVis = function() {
 
 ColorVis.prototype.wrangleColorData = function() {
   var vis = this;
-  
-  // var selectBox = document.getElementById("selectBoxColor");
- //    var selection = selectBox.options[selectBox.selectedIndex].value;
-
-  // var slider = d3.slider().axis(true).min(2000).max(2100).step(5);
-
-  // vis.svg.append(slider);
 
   vis.col = vis.data.filter(function(d) {
     var colorObjects = d.colors;
@@ -311,65 +304,85 @@ ColorVis.prototype.updateVis = function() {
             // the height is cy
             console.log(d.datebegin);
 
-            if (d != null){
-                console.log(d.division);
+            var imagesObject = d.images;
+            if(imagesObject.length > 0) {
+              $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
+            }
 
-              var objectContent = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
+            else{
+              $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + "/img/noimage.jpg" + ">");
+            }
+            $("#" + vis.parentElement + "Info").html(d.title);
+
+            var infoTable = d3.select("#RedInfo");
+            infoTable.append("div")
+            .attr("id", "artInfo")
+            .attr("class", "table");
+
+            // onclick update info on table
+              // var imagesObject = d.images;
+              // if(imagesObject.length > 0) {
+              //   $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
+              // }
+              
+              document.getElementById("artInfo").innerHTML
+              = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
               + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
               + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
               + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
               + "</td></tr></tr></table>";
 
-              if (d.images.length > 0){
-                swal({
-                    title: d.title,
-                                    text:  objectContent,
-                                    // "Artist: " object[0].people[0].displayname ,
-                                    imageUrl: d.images[0].baseimageurl,
-                                    html: true,
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#8CD4F5",
-                                    confirmButtonText: "Add to Gallery",
-                                    cancelButtonText: "Cancel",
-                                    closeOnConfirm: false
-                                },
-                                    function(){
-                                        addToGallery(d.id);
-                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-                                    });
-                            }
+              // BUTTON ADD TO GALLERY
 
-                            else{
-                                swal({
-                                    title: d.title,
-                                    text: objectContent,
-                                    imageUrl: "img/noimage.jpg",
-                                    html: true,
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#8CD4F5",
-                                    confirmButtonText: "Add to Gallery",
-                                    cancelButtonText: "Cancel",
-                                    closeOnConfirm: false
-                                },
-                                    function(){
-                                        addToGallery(d.id);
-                                        swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
-                                    });
-                            }
-                        }
 
-                        if(d.length == 0){
-                            swal({
-                                title: "Sorry! No info to display.",
-                                imageUrl: "img/noimage.jpg"
-                            });
-                        }
-        
-    // var imagesObject = d.images;
-    //   if(imagesObject.length > 0) {
-    //   $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
-    // }
-    // $("#" + vis.parentElement + "Info").html(d.title);
+          // // sweet alert for color (old)
+          //   if (d != null){
+          //       console.log(d.division);
+
+          //     if (d.images.length > 0){
+          //       swal({
+          //           title: d.title,
+          //                           text:  objectContent,
+          //                           // "Artist: " object[0].people[0].displayname ,
+          //                           imageUrl: d.images[0].baseimageurl,
+          //                           html: true,
+          //                           showCancelButton: true,
+          //                           confirmButtonColor: "#8CD4F5",
+          //                           confirmButtonText: "Add to Gallery",
+          //                           cancelButtonText: "Cancel",
+          //                           closeOnConfirm: false
+          //                       },
+          //                           function(){
+          //                               addToGallery(d.id);
+          //                               swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+          //                           });
+          //                   }
+
+          //                   else{
+          //                       swal({
+          //                           title: d.title,
+          //                           text: objectContent,
+          //                           imageUrl: "img/noimage.jpg",
+          //                           html: true,
+          //                           showCancelButton: true,
+          //                           confirmButtonColor: "#8CD4F5",
+          //                           confirmButtonText: "Add to Gallery",
+          //                           cancelButtonText: "Cancel",
+          //                           closeOnConfirm: false
+          //                       },
+          //                           function(){
+          //                               addToGallery(d.id);
+          //                               swal("Added to Gallery!", "This piece has been added to your gallery.", "success");
+          //                           });
+          //                   }
+          //               }
+
+          //               if(d.length == 0){
+          //                   swal({
+          //                       title: "Sorry! No info to display.",
+          //                       imageUrl: "img/noimage.jpg"
+          //                   });
+          //               }
 
 
   });
