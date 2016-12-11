@@ -1,14 +1,63 @@
+/* General */
+
 body {
     font-family: avenir;
-}
-
-h2 {
-  text-align: center;
 }
 
 hr {
   width: 700px;
 }
+
+h2 {
+    text-align: center;
+    margin-bottom: 5%;
+    margin-top: 2%;
+}
+
+.visDescrip {
+  text-align: center;
+  font-family: avenir;
+  font-size: 17px;
+  margin-bottom: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.tooltip {
+  font-family: avenir;
+}
+
+/* Introduction */
+
+.story {
+  padding-top: 5%;
+  text-align: center;
+  fill: #555;
+}
+
+.txt {
+  font-family: avenir;
+  text-align: center;
+  font-size: 150px;
+}
+
+#tagline {
+  font-size: 27px;
+  fill: #555;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+#problemText {
+  padding-top: 7px;
+  padding-left: 25%;
+  padding-right: 25%;
+  text-align: center;
+  font-size: 15px;
+  fill: #555;
+}
+
+/* Color Visual */
 
 .colorImage {
   width: 200px;
@@ -20,31 +69,9 @@ hr {
   margin-right: auto;
 }
 
-/*title {
-  margin-bottom: 5%;
-  margin-top: 5%;
-}
-*/
-
-.selectBoxes {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.visDescrip {
-  text-align: center;
-  font-family: avenir;
-  font-size: 17px;
-  margin-bottom: 3%;
-}
-
 #ColorTitle {
   font-family: avenir;
   text-align: left;
-}
-
-#timeline #timeline_brushed #timecard {
-  font-family: avenir;
 }
 
 .RedGroup .OrangeGroup .YellowGroup .GreenGroup .BlueGroup {
@@ -55,6 +82,22 @@ hr {
 .RedInfo .OrangeInfo .YellowInfo .GreenInfo .BlueInfo {
   font-family: avenir;
   font-style: italic;
+}
+
+.selectBoxes {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#radioBtns {
+  text-align: center;
+  padding-right: 5px;
+}
+
+/* Timeline Visual */
+
+#timeline #timeline_brushed #timecard {
+  font-family: avenir;
 }
 
 .axis line,
@@ -74,6 +117,19 @@ path {
     fill: black;
     stroke: white;
 }
+
+.brush .extent {
+    stroke: #fff;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}
+
+#timelineBtns {
+  text-align: center;
+  padding-right: 5px;
+}
+
+/* Map Visual */
 
 .country {
     fill: #ff9999;
@@ -105,34 +161,6 @@ path {
     padding-top: 2%;
 }
 
-.story{
-  padding-top: 5%;
-  text-align: center;
-  fill: #555;
-}
-
-.txt{
-  font-family: avenir;
-  text-align: center;
-  font-size: 150px;
-}
-
-#tagline{
-  font-size: 27px;
-  fill: #555;
-  padding-left: 15%;
-  padding-right: 15%;
-}
-
-#problemText{
-  padding-top: 7px;
-  padding-left: 25%;
-  padding-right: 25%;
-  text-align: center;
-  font-size: 15px;
-  fill: #555;
-}
-
 .img-circle {
     border-radius: 50%;
     height: 100px;
@@ -145,6 +173,7 @@ path {
 
 table {
   margin: 0 auto;
+  background-color: #f6f6f6;
 }
 
 .alnleft { 
@@ -154,10 +183,6 @@ table {
 #radioBtns{
   text-align: center;
   padding-right: 5px;
-}
-
-table {
-  background-color: #f6f6f6;
 }
 
 table th , table td{
@@ -180,6 +205,7 @@ img{
   padding-right: 10px;
 }
 
+
 nav.navbar-findcond { background: #fff; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }
 nav.navbar-findcond a { color: #6C7B8B; }
 nav.navbar-findcond ul.navbar-nav a { color: #6C7B8B; border-style: solid; border-width: 0 0 2px 0; border-color: #fff; }
@@ -198,35 +224,14 @@ nav.navbar-findcond ul.dropdown-menu > li > a:hover { background: #6C7B8B; color
 nav.navbar-findcond span.badge { background: #6C7B8B; font-weight: normal; font-size: 11px; margin: 0 4px; }
 nav.navbar-findcond span.badge.new { background: #6C7B8B; color: #fff; }
 
+/* Popup */
 
-h2 {
-    text-align: center;
-    margin-bottom: 5%;
-    margin-top: 2%;
+table {
+  margin: 0 auto;
 }
 
-/*#page {
-    display: none;
-}
-#loading {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(192, 192, 192, 0.5);
-    background-image: url("http://i.stack.imgur.com/MnyxU.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-}*/
-
-
-.brush .extent {
-    stroke: #fff;
-    fill-opacity: .125;
-    shape-rendering: crispEdges;
+.alnleft { 
+  text-align: left; 
 }
 
 .white-popup {

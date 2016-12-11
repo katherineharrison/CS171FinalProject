@@ -93,28 +93,34 @@
 
 		<div id="time" class="row">
 			<h2 class="title">Explore Art by Century</h2>
-			<div class="visDescrip">Brush the bottom timeline to explore a time period of interest. Use the drop down boxes to filter by century or movement. Click the dots to view art and add it to your gallery.</div>
-				<div class="selectBoxes">
-					<div class="col-md-3"><h4>Medium</h4><br>
-						<select id="selectBoxMedium" class="form-control" onchange="updateTimeline()">
-							<option value="all">All</option>
-							<option value="Paintings">Paintings</option>
-							<option value="Prints">Prints</option>
-							<option value="Drawings">Drawings</option>
-							<option value="Photographs">Photographs</option>
-							<option value="Sculpture">Sculpture</option>
-							<option value="Vessels">Vessels</option>
-							<option value="Artists' Tools">Artists' Tools</option>
-							<option value="Multiples">Multiples</option>
-							<option value="Books">Books</option>
-							<option value="Textile Arts">Textile Arts</option>
-							<option value="Medal and Medallions">Medals and Medallions</option>
-							<option value="Furnitures">Furnitures</option>
-					</select></div>
+			<div class="visDescrip">Brush the top timeline to explore a time period of interest. Use the drop down boxes to filter by medium. Click the dots to view art and add it to your gallery.</div>
+<!-- 			<div id="timelineBtns">
+				<form action="">
+	  				<input type="radio" name="timeBtn" value="all"> All  
+	  				<input type="radio" name="timeBtn" value="Paintings"> Paintings  
+	  				<input type="radio" name="timeBtn" value="Prints"> Prints   
+	  				<input type="radio" name="timeBtn" value="Drawings"> Drawings  
+	  				<input type="radio" name="timeBtn" value="Photographs"> Photographs
+	  				<input type="radio" name="timeBtn" value="Sculpture"> Sculpture  
+	  				<input type="radio" name="timeBtn" value="Other"> Other 
+				</form>
+			</div> -->
+			<div class="selectBoxes">
+				<div class="col-md-3"><h4>Medium</h4><br>
+					<select id="selectBoxMedium" class="form-control" onchange="updateTimeline()">
+						<option value="all">All</option>
+						<option value="Paintings">Paintings</option>
+						<option value="Prints">Prints</option>
+						<option value="Drawings">Drawings</option>
+						<option value="Photographs">Photographs</option>
+						<option value="Sculpture">Sculpture</option>
+						<option value="Other">Other</option>
+					</select>
 				</div>
-				<div id="timeline_brushed"></div>
-				<div id="timeline"></div>
-				<div id="timecard"></div>
+			</div>
+			<div id="timeline"></div>
+			<div id="timeline_brushed"></div>
+			<div id="timecard"></div>
 		</div>
 
 		<br>
