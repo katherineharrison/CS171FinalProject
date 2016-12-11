@@ -129,6 +129,36 @@ path {
   padding-right: 5px;
 }
 
+
+table {
+  margin: 0 auto;
+  background-color: #f6f6f6;
+}
+
+.alnleft { 
+  text-align: left; 
+}
+
+#radioBtns{
+  text-align: center;
+  padding-right: 5px;
+}
+
+table th , table td{
+  border-bottom: .5px white solid;
+  opacity: 0.8;
+  padding: 10px 10px 5px 5px;
+  background-color: #f6f6f6;
+}
+
+
+img{
+  height: auto;
+  width: auto;
+  display: block;
+}
+
+
 /* Map Visual */
 
 .country {
@@ -170,40 +200,6 @@ path {
 .column-left{ float: left; width: 33%; }
 .column-right{ float: right; width: 33%; }
 .column-center{ display: inline-block; width: 33%; }
-
-table {
-  margin: 0 auto;
-  background-color: #f6f6f6;
-}
-
-.alnleft { 
-  text-align: left; 
-}
-
-#radioBtns{
-  text-align: center;
-  padding-right: 5px;
-}
-
-table th , table td{
-  border-bottom: .5px white solid;
-  opacity: 0.8;
-  padding: 10px 10px 5px 5px;
-  background-color: #f6f6f6;
-}
-
-.chart{
-  display: block;
-  margin: auto;
-}
-
-img{
-  height: auto;
-  width: auto;
-  display: block;
-  padding-left: 25px;
-  padding-right: 10px;
-}
 
 
 nav.navbar-findcond { background: #fff; border-color: #ccc; box-shadow: 0 0 2px 0 #ccc; }
