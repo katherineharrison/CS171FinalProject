@@ -13,10 +13,10 @@ Brushed = function(_parentElement, _data){
 Brushed.prototype.initVis = function() {
     var vis = this;
 
-    vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
+    vis.margin = { top: 2, right: 0, bottom: 60, left: 60 };
 
     vis.width = $("#" + vis.parentElement).width() - vis.margin.left - vis.margin.right,
-        vis.height = 300 - vis.margin.top - vis.margin.bottom;
+        vis.height = 450 - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -29,44 +29,50 @@ Brushed.prototype.initVis = function() {
         .range([0, vis.width])
         .domain(d3.extent(vis.data, function(d) { return d.dateend; }));
 
-    vis.y = d3.scale.linear()
-        .domain([10, 130])
-        .range([10, vis.height - 30]);
-
-    vis.names = d3.scale.ordinal()
-        .domain(["Paintings", "Prints", "Drawings", "Photographs",  "Sculpture", "Vessels", "Artists' Tools", "Multiples",
-            "Books", "Textile Arts", "Medallions", "Furniture", "Other"])
-        .rangeRoundBands([10, vis.height]);
-
-    vis.yAxis = d3.svg.axis()
-        .scale(vis.names)
-        .orient("left");
-
     vis.xAxis = d3.svg.axis()
         .scale(vis.x)
         .orient("top");
 
     vis.svg.append("g")
         .attr("class", "x-axis axis")
-        .attr("transform", "translate(29, 35)");
-
-    vis.svg.append("g")
-        .attr("class", "y-axis axis")
-        .attr("transform", "translate(29, 25)");
+        .attr("transform", "translate(15, 35)");
 
     vis.svg.select(".x-axis").call(vis.xAxis);
-    vis.svg.select(".y-axis").call(vis.yAxis);
 
     vis.g = vis.svg.append('g')
-         .attr('transform', 'translate(32, 32)');
+         .attr('transform', 'translate(15, 32)');
 
     vis.circles = vis.g.append('g')
         .attr("transform", "translate(0, 5)");
 
     vis.dots = vis.circles.selectAll(".dot").data(vis.data);
 
-    vis.cValue = function(d) { return d.classification;};
-    vis.color = d3.scale.category20();
+    vis.cValue = function(d) { 
+            if (d.classification == "Vessels") {
+                return "Other";
+            }
+            else if (d.classification == "Artists' Tools") {
+                return "Other";
+            }
+            else if (d.classification == "Multiples") {
+                return "Other";
+            }
+            else if (d.classification == "Books") {
+                return "Other";
+            }
+            else if (d.classification == "Textile Arts") {
+                return "Other";
+            }
+            else if (d.classification == "Medals and Medallions") {
+                return "Other";
+            }
+            else if (d.classification == "Furnitures") {
+                return "Other";
+            }
+            else {
+                return d.classification;
+            };
+    };
 
     vis.wrangleData();
 };
@@ -169,7 +175,6 @@ Brushed.prototype.wrangleData = function() {
 };
 
 
-
 Brushed.prototype.updateVis = function() {
     var vis = this;
 
@@ -181,8 +186,28 @@ Brushed.prototype.updateVis = function() {
 
     vis.timeArray = [0,1];
 
-    var cValue = function(d) { return d.classification;},
-        color = d3.scale.category20();
+    var cValue = function(d) { return d.classification;};
+
+    function color(c) {
+        if (c == "Paintings") {
+            return "F0810F";
+        }
+        else if (c == "Prints") {
+            return "#6EB5C0";
+        }
+        else if (c == "Drawings") {
+            return "#89DA59";
+        }
+        else if (c == "Photographs") {
+            return "F18D9E";
+        }
+        else if (c == "Sculpture") {
+            return "#91219E";
+        }
+        else {
+            return "#CF3721";
+        }
+    }
 
     vis.dot = vis.circles.selectAll('.dot').data(vis.displayData);
 
@@ -191,55 +216,33 @@ Brushed.prototype.updateVis = function() {
     vis.dot.exit().remove();
 
     vis.dot.style("opacity", 0.7)
-        .attr("r", 4)
+        .attr("r", 2)
         .attr("cx", function(d) {
             return vis.x(d.dateend);
         })
         .attr("cy", function(d) {
-                if (d.classification == "Paintings") {
-                    return vis.y(10);
-                }
-                else if (d.classification == "Prints") {
-                    return vis.y(20);
-                }
-                else if (d.classification == "Drawings") {
-                    return vis.y(30);
-                }
-                else if (d.classification == "Photographs") {
-                    return vis.y(40);
-                }
-                else if (d.classification == "Sculpture") {
-                    return vis.y(50);
-                }
-                else if (d.classification == "Vessels") {
-                    return vis.y(60);
-                }
-                else if (d.classification == "Artists' Tools") {
-                    return vis.y(70);
-                }
-                else if (d.classification == "Multiples") {
-                    return vis.y(80);
-                }
-                else if (d.classification == "Books") {
-                    return vis.y(90);
-                }
-                else if (d.classification == "Textile Arts") {
-                    return vis.y(100);
-                }
-                else if (d.classification == "Medals and Medallions") {
-                    return vis.y(110);
-                }
-                else if (d.classification == "Furnitures") {
-                    return vis.y(120);
-                }
-                else {
-                    return vis.y(130);
-                }
-            })
+
+            if (vis.timeArray[0] == 0) {
+                vis.timeArray[0] = d.dateend;
+                return (2 * vis.timeArray[1]);
+            }
+            else if (vis.timeArray[0] >= d.dateend) {
+                vis.timeArray[1] = vis.timeArray[1] + 1;
+                return (2 * vis.timeArray[1]);
+            }
+            else {
+                vis.timeArray[0] = d.dateend;
+                vis.timeArray[1] = 1;
+                return (2 * vis.timeArray[1]);
+            }
+
+
+        })
         .style("fill", function(d) {
-            return vis.color(vis.cValue(d));
+            return color(vis.cValue(d));
         })
         .on("mouseover", function(d) {
+            d3.select(this).attr("r", 5).style("opacity", 1);
             tooltip.transition()
                 .duration(200)
                 .style("opacity", .9)
@@ -249,6 +252,7 @@ Brushed.prototype.updateVis = function() {
                 .style("top", (d3.event.pageY - 28) + "px");
         })
         .on("mouseout", function(d) {
+            d3.select(this).attr("r", 2).style("opacity", 0.7);
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
@@ -326,6 +330,6 @@ Brushed.prototype.updateVis = function() {
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
-    vis.svg.select(".y-axis").call(vis.yAxis);
+    // vis.svg.select(".y-axis").call(vis.yAxis);
 
 };
