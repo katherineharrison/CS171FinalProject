@@ -155,6 +155,8 @@ img{
   height: auto;
   width: auto;
   display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 input[type=checkbox], input[type=radio] {
