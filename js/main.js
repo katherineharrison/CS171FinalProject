@@ -59,6 +59,21 @@ function updateTimeline() {
     timeline_brushed.wrangleData();
 }
 
+function check(id) {
+    if (myGallery.length > 0) {
+        myGallery.forEach(function(d) {
+            if (d.id != id) {
+                console.log(id);
+                addToGallery(id);
+                console.log("added!");
+            }
+        });
+    }
+    else {
+        addToGallery(id);
+    }
+}
+
 function addToGallery(id) {
     var galleryPiece = allData.filter(function(d) {
         return d.id == id;

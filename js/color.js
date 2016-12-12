@@ -291,21 +291,20 @@ ColorVis.prototype.updateVis = function() {
             infoTable.append("div")
             .attr("id", "art" + vis.parentElement + "Info")
             .attr("class", "table");
-              
+
               document.getElementById("art" + vis.parentElement + "Info").innerHTML
-              = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
-              + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
+              = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname
+              + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin
               + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
               + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
               + "</td></tr></tr></table>" + "<a class = 'btn btn-info' id='added' type='button'> Add to Gallery </a>";
 
               $(document).on("click", "#added", function() {
-                addToGallery(d.id);
+                console.log(d.id);
                 $(this).addClass('selected');
-                $(this).text("Added!")
-              })
-
-              // BUTTON ADD TO GALLERY
+                $(this).text("Added!");
+                check(d.id);
+              });
 
 
           // // sweet alert for color (old)
