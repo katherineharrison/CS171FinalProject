@@ -60,8 +60,12 @@ h2 {
 /* Color Visual */
 
 .colorImage {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 #color {
@@ -71,7 +75,13 @@ h2 {
 
 #ColorTitle {
   font-family: avenir;
-  text-align: left;
+  text-align: center;
+}
+
+#RedCount #OrangeCount #YellowCount #GreenCount #BlueCount{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .RedGroup .OrangeGroup .YellowGroup .GreenGroup .BlueGroup {
@@ -92,6 +102,15 @@ h2 {
 #radioBtns {
   text-align: center;
   padding-right: 5px;
+}
+
+#btn-info {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn {
+  margin-top: 3px;
 }
 
 /* Timeline Visual */
@@ -148,6 +167,7 @@ table th , table td{
   opacity: 0.8;
   padding: 10px 10px 5px 5px;
   background-color: #f6f6f6;
+  font-size: 12px;
 }
 
 
@@ -240,3 +260,14 @@ table {
     max-width: 500px;
     margin: 20px auto;
 }
+
+.selected {
+  background-color: #93DB70;
+  border-color: #93DB70;
+}
+
+.selected:hover {
+  background-color: #93DB70;
+  border-color: #93DB70;
+}
+
