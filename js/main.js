@@ -61,13 +61,16 @@ function updateTimeline() {
 
 function check(id) {
     if (myGallery.length > 0) {
-        myGallery.forEach(function(d) {
-            if (d.id != id) {
-                console.log(id);
-                addToGallery(id);
-                console.log("added!");
-            }
+        var decide = myGallery.filter(function(d) {
+            return d.id == id;
         });
+
+        if (decide.length == 0) {
+            addToGallery(id);
+        }
+        else {
+            console.log("no go");
+        }
     }
     else {
         addToGallery(id);
