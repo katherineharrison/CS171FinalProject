@@ -63,35 +63,6 @@ ColorVis.prototype.wrangleColorData = function() {
     }
   });
 
-// // radio button functinality 
-//   var selectBox = document.getElementById("radioBtns");
-//   var selection = selectBox.options[selectBox.selectedIndex].value;
-
-//   console.log(selection);
-
-//   if (selection == "red") {
-//     red = new ColorVis("Red", allData);
-//   }
-//     else if (selection == "orange") {
-//            orange = new ColorVis("Orange", allData);
-   
-//     }
-//     else if (selection == "yellow") {
-//      yellow = new ColorVis("Yellow", allData);
-    
-//     }
-//     else if (selection == "green") {
-//    green = new ColorVis("Green", allData);
-    
-//     }
-//     else if (selection == "blue") {
-//  blue = new ColorVis("Blue", allData);
-//     }
-//     else {
-// red = new ColorVis("Red", allData);
-
-//     }
-
   vis.updateVis();  
 };
 
@@ -314,25 +285,25 @@ ColorVis.prototype.updateVis = function() {
             else{
               $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + "/img/noimage.jpg" + ">");
             }
-            $("#" + vis.parentElement + "Info").html(d.title);
+            $("#" + vis.parentElement + "Count").html(d.title);
 
-            var infoTable = d3.select("#RedInfo");
+            var infoTable = d3.select("#" + vis.parentElement + "Info");
             infoTable.append("div")
-            .attr("id", "artInfo")
+            .attr("id", "art" + vis.parentElement + "Info")
             .attr("class", "table");
-
-            // onclick update info on table
-              // var imagesObject = d.images;
-              // if(imagesObject.length > 0) {
-              //   $("#" + vis.parentElement + "Image").html("<img class='colorImage' src=" + imagesObject[0].baseimageurl + ">");
-              // }
               
-              document.getElementById("artInfo").innerHTML
+              document.getElementById("art" + vis.parentElement + "Info").innerHTML
               = "<table><tr><th>Artist: </th><td class='alnleft'>" + d.people[0].displayname 
               + "</td></tr><tr><th>Year: </th><td class='alnleft'>" + d.datebegin 
               + "</td></tr><tr><th>Medium: </th><td class='alnleft'>" + d.classification
               + "</td></tr><tr><th>Category: </th><td class='alnleft'>" + d.division
-              + "</td></tr></tr></table>";
+              + "</td></tr></tr></table>" + "<a class = 'btn btn-info' id='added' type='button'> Add to Gallery </a>";
+
+              $(document).on("click", "#added", function() {
+                addToGallery(d.id);
+                $(this).addClass('selected');
+                $(this).text("Added!")
+              })
 
               // BUTTON ADD TO GALLERY
 
