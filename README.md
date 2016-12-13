@@ -1,4 +1,6 @@
 seeingthruthefogg.herokuapp.com
+https://www.youtube.com/watch?v=mf0Gmdj46Bk&t=4s
+github.com/mariamcl/cs171_project
 
 Hello, World and welcome to "Seeing Through the Fogg"!
 
